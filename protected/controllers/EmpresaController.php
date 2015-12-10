@@ -15,7 +15,7 @@ class EmpresaController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
+			'postOnly + delete + deleteAreaOperativa', // we only allow deletion via POST request
 		);
 	}
 
@@ -28,7 +28,7 @@ class EmpresaController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','createTipoEmpresa','adminTipoEmpresa','createAreaOperativa','adminAreaOperativa'),
+				'actions'=>array('index','view','tipoempresa','AreaOperativa',),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -47,33 +47,22 @@ class EmpresaController extends Controller
 /** 
 	Tipo Empresa
 */
-	public function actioncreateTipoEmpresa()
+
+	public function actionTipoEmpresa()
 	{
-		$this->render('createTipoEmpresa',array(
-			//'model'=>$model,
+		$List=TipoEmpresa::model()->findAll();
+		$this->render('adminTipoEmpresa',array(
+			'List'=>$List,
 		));
 	}
-
-	public function actionadminTipoEmpresa()
-	{
-		$this->render('adminTipoEmpresa',array(
-			//'model'=>$model,
-		));	}
 /** 
 	Area Operativa
 */
-	public function actioncreateAreaOperativa()
+	public function actionAreaOperativa()
 	{
-		$model=new AreaOperativa;
-		$this->render('createAreaOperativa',array(
-			'model'=>$model,
-		));
-	}
-
-	public function actionadminAreaOperativa()
-	{
+		$List=AreaOperativa::model()->findAll();
 		$this->render('adminAreaOperativa',array(
-			//'model'=>$model,
+			'List'=>$List,
 		));
 	}
 /**

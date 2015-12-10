@@ -27,7 +27,7 @@ class AreaOperativa extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('are_nombre, are_fecha_creacion', 'required'),
+			array('are_nombre', 'required'),
 			array('are_desabilitado', 'numerical', 'integerOnly'=>true),
 			array('are_nombre', 'length', 'max'=>256),
 			// The following rule is used by search().
@@ -54,7 +54,7 @@ class AreaOperativa extends CActiveRecord
 	{
 		return array(
 			'are_id' => 'Are',
-			'are_nombre' => 'Are Nombre',
+			'are_nombre' => 'Nombre',
 			'are_fecha_creacion' => 'Are Fecha Creacion',
 			'are_desabilitado' => 'Are Desabilitado',
 		);
