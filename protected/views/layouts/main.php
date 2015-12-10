@@ -48,9 +48,21 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                     ),
                     'items' => array(
                         array(
-                            'label' => 'Empresa',
+                            'label' => 'Administrar Empresas',
                             'url' => array(
-                                '#'
+                                'empresa/admin'
+                            )
+                        ),
+                        array(
+                            'label' => 'Area Operativa',
+                            'url' => array(
+                                'empresa/areaoperativa'
+                            )
+                        ),
+                        array(
+                            'label' => 'Tipo Empresa',
+                            'url' => array(
+                                'empresa/tipoempresa'
                             )
                         ),
 
