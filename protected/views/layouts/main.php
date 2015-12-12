@@ -32,6 +32,9 @@
 				array('label'=>'Home', 'url'=>array('/site/index')),
 				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
 				array('label'=>'Contact', 'url'=>array('/site/contact')),
+				array('label'=>'Pregunta', 'url'=>array('/pregunta/admin')),
+				array('label'=>'TipoPregunta', 'url'=>array('/tipopregunta/admin')),
+				array('label'=>'TipoEvaluacion', 'url'=>array('/tipoevaluacion/admin')),
 				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 			),
