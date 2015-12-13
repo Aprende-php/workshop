@@ -32,7 +32,7 @@ class Pregunta extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('tpr_id, tev_id, pre_descripcion, pre_imagen, pre_imagen_admin, pre_fecha_creacion', 'required'),
+			array('tpr_id, tev_id, pre_descripcion, pre_imagen, pre_fecha_creacion', 'required'),
 			array('pre_desabilitado', 'numerical', 'integerOnly'=>true),
 			array('tpr_id, tev_id', 'length', 'max'=>10),
 			array('pre_descripcion', 'length', 'max'=>512),

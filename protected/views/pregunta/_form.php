@@ -54,11 +54,11 @@
 		<?php echo $form->error($model,'pre_imagen'); ?>
 	</div>
 
-	<div class="row">
+<!-- 	<div class="row">
 		<?php echo $form->labelEx($model,'pre_imagen_admin'); ?>
 		<?php echo CHtml::activeFileField($model,'pre_imagen_admin',array('size'=>60,'maxlength'=>2048)); ?>
 		<?php echo $form->error($model,'pre_imagen_admin'); ?>
-	</div>
+	</div> -->
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'pre_fecha_creacion'); ?>
