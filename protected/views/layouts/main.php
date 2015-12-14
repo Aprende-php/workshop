@@ -1,59 +1,197 @@
-<?php /* @var $this Controller */ ?>
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<meta name="language" content="en">
-
-	<!-- blueprint CSS framework -->
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/screen.css" media="screen, projection">
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/print.css" media="print">
-	<!--[if lt IE 8]>
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/ie.css" media="screen, projection">
-	<![endif]-->
-
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css">
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css">
-
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?php 
+    $baseUrl = Yii::app()->baseUrl; 
+	Yii::app()->getClientScript()
+		->registerCssFile($baseUrl.'/css/bootstrap.cerulean.min.css')
+		->registerCoreScript('jquery')
+		->registerScriptFile($baseUrl.'/js/bootstrap.js',CClientScript::POS_END);
+	?>
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
-
 <body>
 
-<div class="container" id="page">
+<div class="container">    <?php
+$this->widget('bootstrap.widgets.BsNavbar', array(
+    'collapse' => true,
+    'brandLabel' => BsHtml::icon(BsHtml::GLYPHICON_FIRE).BsHtml::bold(' WorkShop').BsHtml::small(' Qualitatcorp'),
+    'brandUrl' => Yii::app()->homeUrl,
+    'items' => array(
+        array(
+            'class' => 'bootstrap.widgets.BsNav',
+            'type' => 'navbar',
+            'activateParents' => true,
+            'items' => array(
+                array(
+                    'label' => 'Usuario',
+                    'url' => array(
+                        '#'
+                    ),
+                    'items' => array(
+                        array(
+                            'label' => 'Usuario',
+                            'url' => array(
+                                '#'
+                            )
+                        ),
 
-	<div id="header">
-		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
-	</div><!-- header -->
+                    )
+                ),
+                array(
+                    'label' => 'Empresa',
+                    'url' => array(
+                        '#'
+                    ),
+                    'items' => array(
+                        array(
+                            'label' => 'Administrar Empresas',
+                            'url' => array(
+                                'empresa/admin'
+                            )
+                        ),
+                        array(
+                            'label' => 'Area Operativa',
+                            'url' => array(
+                                'empresa/areaoperativa'
+                            )
+                        ),
+                        array(
+                            'label' => 'Tipo Empresa',
+                            'url' => array(
+                                'empresa/tipoempresa'
+                            )
+                        ),
 
-	<div id="mainmenu">
-		<?php $this->widget('zii.widgets.CMenu',array(
-			'items'=>array(
-				array('label'=>'Home', 'url'=>array('/site/index')),
-				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
-				array('label'=>'Contact', 'url'=>array('/site/contact')),
-				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
-			),
-		)); ?>
-	</div><!-- mainmenu -->
-	<?php if(isset($this->breadcrumbs)):?>
-		<?php $this->widget('zii.widgets.CBreadcrumbs', array(
-			'links'=>$this->breadcrumbs,
-		)); ?><!-- breadcrumbs -->
-	<?php endif?>
+                    )
+                ),
+                array(
+                	'label'=>'Licencia',
+                    'url' => array(
+                        '#'
+                    ),
+                    'items' => array(
+                        array(
+                			'label'=>'Licencia',
+                            'url' => array(
+                                '#'
+                            )
+                        ),
 
-	<?php echo $content; ?>
+                    )
+                ),
+                array(
+                	'label'=>'Pregunta',
+                    'url' => array(
+                        '#'
+                    ),
+                    'items' => array(
+                        array(
+                			'label'=>'Pregunta',
+                            'url' => array(
+                                '#'
+                            )
+                        ),
 
-	<div class="clear"></div>
+                    )
+                ),
+                array(
+                	'label'=>'Informes',
+                    'url' => array(
+                        '#'
+                    ),
+                    'items' => array(
+                        array(
+                			'label'=>'Informes',
+                            'url' => array(
+                                '#'
+                            )
+                        ),
 
-	<div id="footer">
-		Copyright &copy; <?php echo date('Y'); ?> by My Company.<br/>
-		All Rights Reserved.<br/>
-		<?php echo Yii::powered(); ?>
-	</div><!-- footer -->
+                    )
+                ),
+                array(
+                	'label'=>'Evaluaciones',
+                    'url' => array(
+                        '#'
+                    ),
+                    'items' => array(
+                        array(
+                			'label'=>'Evaluaciones',
+                            'url' => array(
+                                '#'
+                            )
+                        ),
 
-</div><!-- page -->
+                    )
+                ),
+            )
+        ),
+        array(
+            'class' => 'bootstrap.widgets.BsNav',
+            'type' => 'navbar',
+            'activateParents' => true,
+            'items' => array(
+                array(
+                    'label' => 'About',
+                    'url' => array(
+                        '/site/page',
+                        'view' => 'about'
+                    )
+                ),
+                array(
+                    'label' => 'Contact',
+                    'url' => array(
+                        '/site/contact'
+                    )
+                ),
+                array(
+                    'label' => 'Login',
+                    'url' => array(
+                        '/site/login'
+                    ),
+                    'pull' => BsHtml::NAVBAR_NAV_PULL_RIGHT,
+                    'visible' => Yii::app()->user->isGuest
+                ),
+                array(
+                    'label' => 'Logout (' . Yii::app()->user->name . ')',
+                    'pull' => BsHtml::NAVBAR_NAV_PULL_RIGHT,
+                    'url' => array(
+                        '/site/logout'
+                    ),
+                    'visible' => !Yii::app()->user->isGuest
+                )
+            ),
+            'htmlOptions' => array(
+                'pull' => BsHtml::NAVBAR_NAV_PULL_RIGHT
+            )
+        )
+        
+    )
+));
+?>
+		 <?php 
+
+		// breadcrumbs
+			$this->widget('bootstrap.widgets.BsBreadCrumb', array(
+				'links' => $this->breadcrumbs,
+				// will change the container to ul
+				'tagName' => 'ul',
+				// will generate the clickable breadcrumb links
+				'activeLinkTemplate' => '<li><a href="{url}">{label}</a></li>',
+				// will generate the current page url : <li>News</li>
+				'inactiveLinkTemplate' => '<li>{label}</li>',
+				// will generate your homeurl item : <li><a href="/dr/dr/public_html/">Home</a></li>
+				'homeLink' => BsHtml::openTag('li') . BsHtml::icon(BsHtml::GLYPHICON_HOME) . BsHtml::closeTag('li')
+			));
+	?>
+<div class="content">
+	<?php echo $content ?>
+</div>
+</div>
 
 </body>
 </html>
