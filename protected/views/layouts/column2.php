@@ -1,22 +1,18 @@
 <?php /* @var $this Controller */ ?>
 <?php $this->beginContent('//layouts/main'); ?>
-<div class="span-19">
+
 	<div id="content">
+<?php if (!empty($this->menu)) 
+echo BsHtml::buttonDropdown('Opciones',
+$this->menu
+, array(
+    // 'split' => true,
+    'size' => BsHtml::BUTTON_SIZE_SMALL,
+    'color' => BsHtml::BUTTON_COLOR_PRIMARY,
+));
+?>
 		<?php echo $content; ?>
 	</div><!-- content -->
 </div>
-<div class="span-5 last">
-	<div id="sidebar">
-	<?php
-		$this->beginWidget('zii.widgets.CPortlet', array(
-			'title'=>'Operations',
-		));
-		$this->widget('zii.widgets.CMenu', array(
-			'items'=>$this->menu,
-			'htmlOptions'=>array('class'=>'operations'),
-		));
-		$this->endWidget();
-	?>
-	</div><!-- sidebar -->
 </div>
 <?php $this->endContent(); ?>
