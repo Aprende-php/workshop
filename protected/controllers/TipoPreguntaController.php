@@ -161,6 +161,34 @@ class TipoPreguntaController extends Controller
 		return $model;
 	}
 
+	public function renderButtons($data, $row) {
+   		echo BsHtml::buttonDropdown('', array(
+   			array(
+        		'label' => 'Detalle',
+        		'url' => array('view', 'id'=>$data->tpr_id)
+    		),
+    		array(
+        		'label' => 'Editar',
+        		'url' => array('update', 'id'=>$data->tpr_id)
+    		),
+    		array(
+        		'label' => 'Eliminar',
+        		'url' => '#','linkOptions'=>array('submit'=>array('delete','id'=>$data->tpr_id),'confirm'=>'Esta seguro de borrar este item?')
+    		),
+    		BsHtml::menuDivider(),
+    		array(
+        		'label' => 'Lo que sea...',
+        		'url' => '#'
+    		)
+			), array(
+    			'split' => false,
+    			'size' => BsHtml::BUTTON_SIZE_SMALL,
+    			'color' => BsHtml::BUTTON_COLOR_PRIMARY,
+    			'icon'=>BsHtml::GLYPHICON_COG,
+			));
+		}
+
+
 	/**
 	 * Performs the AJAX validation.
 	 * @param TipoPregunta $model the model to be validated

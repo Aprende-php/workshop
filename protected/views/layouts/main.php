@@ -90,11 +90,47 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                     ),
                     'items' => array(
                         array(
-                			'label'=>'Pregunta',
+                            'label'=>'Preguntas',
+                            'htmlOptions' => array(
+                                'style' =>  'font-size:130%;text-decoration: underline'
+                                ),
+                        ),
+                        // BsHtml::menuDivider(),
+                        array(
+                			'label'=>'Administrar Preguntas',
                             'url' => array(
-                                '#'
+                                'pregunta/admin'
                             )
                         ),
+                        array(
+                            'label'=>'Registrar Preguntas',
+                            'url' => array(
+                                'pregunta/create'
+                            )
+                        ),
+                        BsHtml::menuDivider(),
+                        array(
+
+                            'label'=>'Tipo de Preguntas',
+                            'htmlOptions' => array(
+                                'style' => 'font-size:130%;text-decoration: underline;'
+                                // color:#2E9AFE
+                                ),
+                        ),
+                        // BsHtml::menuDivider(),
+                        array(
+                            'label'=>'Administrar Tipos de Preguntas',
+                            'url' => array(
+                                '//tipopregunta/admin'
+                            )
+                        ),
+                        array(
+                            'label'=>'Registrar Tipo de Pregunta',
+                            'url' => array(
+                                '//tipopregunta/create'
+                            )
+                        ),
+                        
 
                     )
                 ),
