@@ -49,10 +49,6 @@ return array(
             'class' => 'bootstrap.components.BsApi'
         ),
 		// uncomment the following to enable URLs in path-format
-<<<<<<< HEAD
-=======
-		
->>>>>>> refs/remotes/origin/master
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'rules'=>array(
@@ -61,11 +57,6 @@ return array(
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
 		),
-<<<<<<< HEAD
-=======
-		
->>>>>>> refs/remotes/origin/master
-
 		// database settings are configured in database.php
 		'db'=>require(dirname(__FILE__).'/database.php'),
 
