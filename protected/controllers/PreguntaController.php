@@ -72,12 +72,9 @@ class PreguntaController extends Controller
 		{	
 			$model->attributes=$_POST['Pregunta'];
 			$model->pre_imagen=CUploadedFile::getInstance($model,'pre_imagen');
-			$model->attributes=$_POST['Pregunta'];
-			// var_dump(basename($_FILES['Pregunta']['type']['pre_imagen']));
-			// die();
 			if($model->save()){
 				if ($model->pre_imagen!=null) {
-						$model->pre_imagen->saveAs('images/pregunta/'.$model->pre_id.'.png');
+						$model->pre_imagen->saveAs('images/pregunta/'.$model->pre_imagen.'.png');
 					}
 				$this->redirect(array('view','id'=>$model->pre_id));
 				}
@@ -103,10 +100,14 @@ class PreguntaController extends Controller
 		if(isset($_POST['Pregunta']))
 		{
 			$model->attributes=$_POST['Pregunta'];
-			if($model->save())
+			$model->pre_imagen=CUploadedFile::getInstance($model,'pre_imagen');
+			if($model->save()){
+				if ($model->pre_imagen!=null) {
+						$model->pre_imagen->saveAs('images/pregunta/'.$model->pre_imagen.'.png');
+					}
 				$this->redirect(array('view','id'=>$model->pre_id));
+				}
 		}
-
 		$this->render('update',array(
 			'model'=>$model,
 		));

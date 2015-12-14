@@ -23,8 +23,8 @@ $this->menu=array(
 		// 'pre_imagen',
 		array(	'name'=>'pre_imagen',
 				'type'=>'image',
-				// 'htmlOptions'=>array('width'=>'40px','height'=>'30px'),
-				'value'=>'Yii::app()->request->baseUrl."/images/pregunta/".$data->pre_id.".png"'),
+				// 'htmlOptions'=>array('width'=>'20px','height'=>'20px'),
+				'value'=>'Yii::app()->request->baseUrl."/images/pregunta/".$data->pre_imagen.".png"'),
 		array(	'name'=>'tpr_id',
 				'value'=>'TipoPregunta::model()->findByPk($data->tpr_id)->tpr_nombre'),
 		// 'tev_id',
@@ -33,15 +33,15 @@ $this->menu=array(
 		'pre_descripcion',
 		'pre_comentario',
 		
+
+		
+		// 'pre_imagen_admin',
+		'pre_fecha_creacion',
+		'pre_desabilitado',
 		array(
         	//call the function 'renderButtons' from the current controller
         	'value'=>array($this,'renderButtons'),
     		),
-
-		/*
-		'pre_imagen_admin',
-		'pre_fecha_creacion',
-		'pre_desabilitado',
-		*/
+		
 	),
 )); ?>
