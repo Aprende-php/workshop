@@ -6,7 +6,7 @@ $this->breadcrumbs=array(
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
       
-<?= BsHtml::pageHeader('Crear área operativa', 'Empresa') ?>
+<?= BsHtml::pageHeader('Crear nuevo tipo', 'Empresa') ?>
 <?php $form=$this->beginWidget('bootstrap.widgets.BsActiveForm', array(
     'layout' => BsHtml::FORM_LAYOUT_HORIZONTAL,
     'enableClientValidation'=>true,
@@ -16,7 +16,7 @@ $this->breadcrumbs=array(
 
     <?php echo $form->errorSummary($model); ?>
 
-    <?php echo $form->textFieldControlGroup($model,'are_nombre',array('required'=>'required'))?>
+    <?php echo $form->textFieldControlGroup($model,'tem_nombre',array('required'=>'required'))?>
 
     <?php echo BsHtml::formActions(array(BsHtml::submitButton('Guardar', array('color' => BsHtml::BUTTON_COLOR_PRIMARY))));?>
 
