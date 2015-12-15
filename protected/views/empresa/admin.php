@@ -2,14 +2,15 @@
 /* @var $this EmpresaController */
 /* @var $model Empresa */
 
+
 $this->breadcrumbs=array(
 	'Empresas'=>array('index'),
 	'Manage',
 );
 
 $this->menu=array(
-	array('label'=>'List Empresa', 'url'=>array('index')),
-	array('label'=>'Create Empresa', 'url'=>array('create')),
+	array('icon' => 'glyphicon glyphicon-list','label'=>'List Empresa', 'url'=>array('index')),
+	array('icon' => 'glyphicon glyphicon-plus-sign','label'=>'Create Empresa', 'url'=>array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -26,26 +27,31 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage Empresas</h1>
+<?php echo BsHtml::pageHeader('Manage','Empresas') ?>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title"><?php echo BsHtml::button('Advanced search',array('class' =>'search-button', 'icon' => BsHtml::GLYPHICON_SEARCH,'color' => BsHtml::BUTTON_COLOR_PRIMARY), '#'); ?></h3>
+    </div>
+    <div class="panel-body">
+        <p>
+            You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>
+                &lt;&gt;</b>
+            or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
+        </p>
 
-<p>
-You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
-or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
-</p>
+        <div class="search-form" style="display:none">
+            <?php $this->renderPartial('_search',array(
+                'model'=>$model,
+            )); ?>
+        </div>
+        <!-- search-form -->
 
-<?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
-<div class="search-form" style="display:none">
-<?php $this->renderPartial('_search',array(
-	'model'=>$model,
-)); ?>
-</div><!-- search-form -->
-
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'empresa-grid',
-	'dataProvider'=>$model->search(),
-	'filter'=>$model,
-	'columns'=>array(
-		'emp_rut',
+        <?php $this->widget('bootstrap.widgets.BsGridView',array(
+			'id'=>'empresa-grid',
+			'dataProvider'=>$model->search(),
+			'filter'=>$model,
+			'columns'=>array(
+        		'emp_rut',
 		'tem_id',
 		'are_id',
 		'emp_nombre',
@@ -56,8 +62,14 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'emp_fecha_creacion',
 		'emp_desabilitado',
 		*/
-		array(
-			'class'=>'CButtonColumn',
-		),
-	),
-)); ?>
+				array(
+					'class'=>'bootstrap.widgets.BsButtonColumn',
+				),
+			),
+        )); ?>
+    </div>
+</div>
+
+
+
+

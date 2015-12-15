@@ -3,32 +3,32 @@
 class EmpresaController extends Controller
 {
 	/**
-	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-	 * using two-column layout. See 'protected/views/layouts/column2.php'.
-	 */
+	* @var string the default layout for the views. Defaults to '//layouts/column2', meaning
+	* using two-column layout. See 'protected/views/layouts/column2.php'.
+	*/
 	public $layout='//layouts/column2';
 
 	/**
-	 * @return array action filters
-	 */
+	* @return array action filters
+	*/
 	public function filters()
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete + deleteAreaOperativa', // we only allow deletion via POST request
+			'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
 
 	/**
-	 * Specifies the access control rules.
-	 * This method is used by the 'accessControl' filter.
-	 * @return array access control rules
-	 */
+	* Specifies the access control rules.
+	* This method is used by the 'accessControl' filter.
+	* @return array access control rules
+	*/
 	public function accessRules()
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','tipoempresa','areaoperativa',),
+				'actions'=>array('index','view','areaoperativa','createAO','deleteAO','updateAO','tipoempresa','createTE','updateTE','deleteTE'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -50,30 +50,103 @@ class EmpresaController extends Controller
 
 	public function actionTipoEmpresa()
 	{
-		$List=TipoEmpresa::model()->findAll();
+		$List=TipoEmpresa::model()->findAll('tem_desabilitado=0');
 		$this->render('adminTipoEmpresa',array(
 			'List'=>$List,
 		));
 	}
+	public function actioncreateTE()
+	{
+		$model=new TipoEmpresa;
+		if(isset($_POST['TipoEmpresa'])){
+			$model->attributes=$_POST['TipoEmpresa'];
+			if($model->save())
+				$this->redirect(array('tipoempresa'));
+		}
+		$this->render('createTE',array(
+			'model'=>$model,
+		));
+	}	
+	public function actionupdateTE($id)
+	{
+		$model=TipoEmpresa::model()->findByPk($id);
+		if(isset($_POST['TipoEmpresa'])){
+			$model->attributes=$_POST['TipoEmpresa'];
+			if($model->save())
+				$this->redirect(array('tipoempresa'));
+		}
+		$this->render('updateTE',array(
+			'model'=>$model,
+		));
+	}
+	public function actiondeleteTE($id)
+	{
+		$model=TipoEmpresa::model()->findByPk($id);
+		$model->tem_desabilitado=1;
+		$model->save();
+		$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('tipoempresa'));
+	}
+	
 /** 
 	Area Operativa
 */
 	public function actionAreaOperativa()
 	{
-		$List=AreaOperativa::model()->findAll();
+		$List=AreaOperativa::model()->findAll('are_desabilitado=0');
 		$this->render('adminAreaOperativa',array(
 			'List'=>$List,
 		));
 	}
+	public function actioncreateAO()
+	{
+		$model=new AreaOperativa;
+		if(isset($_POST['AreaOperativa'])){
+			$model->attributes=$_POST['AreaOperativa'];
+			if($model->save())
+				$this->redirect(array('areaoperativa'));
+		}
+		$this->render('createAO',array(
+			'model'=>$model,
+		));
+	}	
+	public function actionupdateAO($id)
+	{
+		$model=AreaOperativa::model()->findByPk($id);
+		if(isset($_POST['AreaOperativa'])){
+			$model->attributes=$_POST['AreaOperativa'];
+			if($model->save())
+				$this->redirect(array('areaoperativa'));
+		}
+		$this->render('updateAO',array(
+			'model'=>$model,
+		));
+	}
+	public function actiondeleteAO($id)
+	{
+		$model=AreaOperativa::model()->findByPk($id);
+		$model->are_desabilitado=1;
+		$model->save();
+		$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('areaoperativa'));
+	}
+
 /**
 	Empresa
 */
+	/**
+	* Displays a particular model.
+	* @param integer $id the ID of the model to be displayed
+	*/
 	public function actionView($id)
 	{
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
 		));
 	}
+
+	/**
+	* Creates a new model.
+	* If creation is successful, the browser will be redirected to the 'view' page.
+	*/
 	public function actionCreate()
 	{
 		$model=new Empresa;
@@ -88,16 +161,16 @@ class EmpresaController extends Controller
 				$this->redirect(array('view','id'=>$model->emp_rut));
 		}
 
-		$this->render('createEmpresa',array(
-			'model'=>$model,
+		$this->render('create',array(
+		'model'=>$model,
 		));
 	}
 
 	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
+	* Updates a particular model.
+	* If update is successful, the browser will be redirected to the 'view' page.
+	* @param integer $id the ID of the model to be updated
+	*/
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
@@ -118,22 +191,28 @@ class EmpresaController extends Controller
 	}
 
 	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
+	* Deletes a particular model.
+	* If deletion is successful, the browser will be redirected to the 'admin' page.
+	* @param integer $id the ID of the model to be deleted
+	*/
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
+		if(Yii::app()->request->isPostRequest)
+		{
+			// we only allow deletion via POST request
+			$this->loadModel($id)->delete();
 
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+			if(!isset($_GET['ajax']))
+				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+		}
+		else
+			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 
 	/**
-	 * Lists all models.
-	 */
+	* Lists all models.
+	*/
 	public function actionIndex()
 	{
 		$dataProvider=new CActiveDataProvider('Empresa');
@@ -143,8 +222,8 @@ class EmpresaController extends Controller
 	}
 
 	/**
-	 * Manages all models.
-	 */
+	* Manages all models.
+	*/
 	public function actionAdmin()
 	{
 		$model=new Empresa('search');
@@ -158,12 +237,12 @@ class EmpresaController extends Controller
 	}
 
 	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer $id the ID of the model to be loaded
-	 * @return Empresa the loaded model
-	 * @throws CHttpException
-	 */
+	* Returns the data model based on the primary key given in the GET variable.
+	* If the data model is not found, an HTTP exception will be raised.
+	* @param integer $id the ID of the model to be loaded
+	* @return Empresa the loaded model
+	* @throws CHttpException
+	*/
 	public function loadModel($id)
 	{
 		$model=Empresa::model()->findByPk($id);
@@ -173,9 +252,9 @@ class EmpresaController extends Controller
 	}
 
 	/**
-	 * Performs the AJAX validation.
-	 * @param Empresa $model the model to be validated
-	 */
+	* Performs the AJAX validation.
+	* @param Empresa $model the model to be validated
+	*/
 	protected function performAjaxValidation($model)
 	{
 		if(isset($_POST['ajax']) && $_POST['ajax']==='empresa-form')

@@ -47,6 +47,10 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                         '#'
                     ),
                     'items' => array(
+                        BsHtml::menuHeader(BsHtml::italics('Empresa'), array(
+                            // 'class' => 'text-center',
+                            // 'style' => 'color:#99cc32;font-size:32px;'
+                        )),
                         array(
                             'label' => 'Administrar Empresas',
                             'url' => array(
@@ -54,15 +58,37 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                             )
                         ),
                         array(
-                            'label' => 'Area Operativa',
+                            'label' => 'Crear Empresa',
+                            'url' => array(
+                                'empresa/create'
+                            )
+                        ),
+                        BsHtml::menuDivider(),
+                        BsHtml::menuHeader(BsHtml::italics('Área Operativa')),
+                        array(
+                            'label' => 'Administrar área Operativa',
                             'url' => array(
                                 'empresa/areaoperativa'
                             )
                         ),
                         array(
+                            'label' => 'Crear área operativa',
+                            'url' => array(
+                                'empresa/createAO'
+                            )
+                        ),
+                        BsHtml::menuDivider(),
+                        BsHtml::menuHeader(BsHtml::italics('Tipo de Empresa')),
+                        array(
                             'label' => 'Tipo Empresa',
                             'url' => array(
                                 'empresa/tipoempresa'
+                            )
+                        ),
+                        array(
+                            'label' => 'Crear Empresa',
+                            'url' => array(
+                                'empresa/createTE'
                             )
                         ),
 
