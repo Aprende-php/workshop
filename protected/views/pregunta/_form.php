@@ -2,6 +2,7 @@
 /* @var $this PreguntaController */
 /* @var $model Pregunta */
 /* @var $form CActiveForm */
+
 ?>
 
 <div class="form">
@@ -29,7 +30,8 @@
 	<div class="row">
 		<?php echo $form->dropDownListControlGroup($model,'tev_id',
 			CHtml::listData(TipoEvaluacion::model()->findAll(),'tev_id','tev_nombre'),
-			array('empty' => 'Seleccione Tipo de Evaluacion'));?>
+			array('empty' => 'Seleccione Tipo de Evaluacion'));
+			?>
 	</div>
 
 	<div class="row">
@@ -42,12 +44,13 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'pre_imagen'); ?>
-		<?php echo $form->fileField($model, 'pre_imagen', array('placeholder' => 'pre_imagen'));?>
+		<?php echo $form->fileField($model, 'pre_imagen', array('value'	=>$model->pre_imagen));?>
 	</div>
 
 	<div class="row">
-     <?php 
-     	echo CHtml::image(Yii::app()->request->baseUrl.'/images/pregunta/'.$model->pre_imagen,"imagen",array("width"=>200)); ?> 
+     <?php
+     if (is_file('images/pregunta/'.$model->pre_imagen))
+     	echo CHtml::image(Yii::app()->request->baseUrl."/images/pregunta/".$model->pre_imagen,'',array("width"=>150)); ?> 
 	</div>
 
 	<div class="row">

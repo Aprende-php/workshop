@@ -10,6 +10,14 @@ $this->menu=array(
 	array('label'=>'Registrar', 'url'=>array('create')),
 );
 ?>
+<?php 
+
+// echo (CHtml::image(Yii::app()->baseUrl . 
+// 	'/images/pregunta/black-dofus-149440.png.png','black-dofus-149440.png.png',array('width'=>100)));
+// die();
+
+
+ ?>
 
 <h1>Administrar Preguntas</h1>
 
@@ -21,10 +29,10 @@ $this->menu=array(
 		// 'pre_id',
 		// 'tpr_id',
 		// 'pre_imagen',
-		array(	'name'=>'pre_imagen',
-				'type'=>'image',
-				// 'htmlOptions'=>array('width'=>'20px','height'=>'20px'),
-				'value'=>'Yii::app()->request->baseUrl."/images/pregunta/".$data->pre_imagen.".png"'),
+		array(
+        	//call the function 'renderButtons' from the current controller
+        	'value'=>array($this,'renderImage'),
+    		),
 		array(	'name'=>'tpr_id',
 				'value'=>'TipoPregunta::model()->findByPk($data->tpr_id)->tpr_nombre'),
 		// 'tev_id',
@@ -32,10 +40,6 @@ $this->menu=array(
 				'value'=>'TipoEvaluacion::model()->findByPk($data->tev_id)->tev_nombre'),
 		'pre_descripcion',
 		'pre_comentario',
-		
-
-		
-		// 'pre_imagen_admin',
 		'pre_fecha_creacion',
 		'pre_desabilitado',
 		array(

@@ -63,7 +63,9 @@ class PreguntaController extends Controller
 	public function actionCreate()
 	{
 		$model=new Pregunta;
-
+		$aux=null;	
+		$var=null;	
+		$var2=null;
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -72,12 +74,27 @@ class PreguntaController extends Controller
 		{	
 			$model->attributes=$_POST['Pregunta'];
 			$model->pre_imagen=CUploadedFile::getInstance($model,'pre_imagen');
-			if($model->save()){
-				if ($model->pre_imagen!=null) {
-						$model->pre_imagen->saveAs('images/pregunta/'.$model->pre_imagen.'.png');
+
+			if(is_file('images/pregunta/'.$model->pre_imagen)){	//Consulta si el nombre de imagen ingresada ya existe en servidor
+					$var=explode(".",$model->pre_imagen);	// Guarda nombre de la imagen y extension en un arreglo
+					$var2=explode("-copia-",$var[0]);	// Guarda nombre de la imagen y una extension "-copia-"
+					for($i=0;$i<999;$i++){
+						if(!is_file('images/pregunta/'.$var2[0]."-copia-".$i.".".$var[1])){
+							$aux=$var2[0]."-copia-".$i.".".$var[1];	// Asigna un nombre a la imagen
+							break;
+						}
 					}
-				$this->redirect(array('view','id'=>$model->pre_id));
 				}
+			else{
+					$aux=$_FILES['Pregunta']['name']['pre_imagen'];
+					$var='1';
+				}
+			if ($model->pre_imagen!=null&&$var!=null){
+				$model->pre_imagen->saveAs('images/pregunta/'.$aux);
+			}
+			$model->pre_imagen=$aux;
+			if($model->save())
+				$this->redirect(array('view','id'=>$model->pre_id));
 		}
 
 		$this->render('create',array(
@@ -93,20 +110,40 @@ class PreguntaController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-
+		$aux=null;	
+		$var=null;	
+		$var2=null;
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
+		$aux=$model->pre_imagen;	// Guarda el valor de la imagen antes de recibir datos del formulario		
 		if(isset($_POST['Pregunta']))
 		{
 			$model->attributes=$_POST['Pregunta'];
 			$model->pre_imagen=CUploadedFile::getInstance($model,'pre_imagen');
-			if($model->save()){
-				if ($model->pre_imagen!=null) {
-						$model->pre_imagen->saveAs('images/pregunta/'.$model->pre_imagen.'.png');
+			if ($model->pre_imagen==null&&$aux!=null)	// Verifica si no se ingreso una nueva imagen por formulario
+				$model->pre_imagen=$aux;
+			else{
+				if(is_file('images/pregunta/'.$model->pre_imagen)){	//Consulta si el nombre de imagen ingresada ya existe en servidor
+					$var=explode(".",$model->pre_imagen);	// Guarda nombre de la imagen y extension en un arreglo
+					$var2=explode("-copia-",$var[0]);	// Guarda nombre de la imagen y una extension "-copia-"
+					for($i=0;$i<999;$i++){
+						if(!is_file('images/pregunta/'.$var2[0]."-copia-".$i.".".$var[1])){
+							$aux=$var2[0]."-copia-".$i.".".$var[1];	// Asigna un nombre a la imagen
+							break;
+						}
 					}
-				$this->redirect(array('view','id'=>$model->pre_id));
 				}
+				else{
+					$aux=$_FILES['Pregunta']['name']['pre_imagen'];
+					$var='1';
+				}
+			}
+			if ($model->pre_imagen!=null&&$var!=null){
+				$model->pre_imagen->saveAs('images/pregunta/'.$aux);
+			}
+			$model->pre_imagen=$aux;
+			if($model->save())
+				$this->redirect(array('view','id'=>$model->pre_id));
 		}
 		$this->render('update',array(
 			'model'=>$model,
@@ -195,6 +232,12 @@ class PreguntaController extends Controller
     			'icon'=>BsHtml::GLYPHICON_COG,
 			));
 		}
+
+		public function renderImage($data, $row) {
+			echo BsHtml::imageThumbnail(
+				Yii::app()->request->baseUrl."/images/pregunta/".$data->pre_imagen,'',$htmlOptions = array(
+					'style'=> 'width: 120px; height: 120px;border-radius: 15px;margin-top: 5px;'));
+   			}
 
 
 	/**
