@@ -42,70 +42,29 @@ class Telefono extends CActiveRecord
 		);
 	}
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-		);
-	}
-
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
 	public function attributeLabels()
 	{
 		return array(
-			'tel_numero' => 'Tel Numero',
-			'emp_rut' => 'Emp Rut',
-			'com_id' => 'Com',
-			'tel_mac' => 'Tel Mac',
-			'tel_activado' => 'Tel Activado',
-			'tel_fecha_creacion' => 'Tel Fecha Creacion',
-			'tel_desabilitado' => 'Tel Desabilitado',
+			'tel_numero' => 'Numero',
+			'emp_rut' => 'Empresa',
+			'com_id' => 'Compañia',
+			'tel_mac' => 'MAC',
+			'tel_activado' => 'Activado',
+			'tel_fecha_creacion' => 'Tel Fecha Creación',
+			'tel_desabilitado' => 'Desabilitado',
 		);
 	}
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * Typical usecase:
-	 * - Initialize the model fields with values from filter form.
-	 * - Execute this method to get CActiveDataProvider instance which will filter
-	 * models according to data in model fields.
-	 * - Pass data provider to CGridView, CListView or any similar widget.
-	 *
-	 * @return CActiveDataProvider the data provider that can return the models
-	 * based on the search/filter conditions.
-	 */
-	public function search()
+	public function getcom_nombre()
 	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
-
-		$criteria=new CDbCriteria;
-
-		$criteria->compare('tel_numero',$this->tel_numero,true);
-		$criteria->compare('emp_rut',$this->emp_rut,true);
-		$criteria->compare('com_id',$this->com_id,true);
-		$criteria->compare('tel_mac',$this->tel_mac,true);
-		$criteria->compare('tel_activado',$this->tel_activado);
-		$criteria->compare('tel_fecha_creacion',$this->tel_fecha_creacion,true);
-		$criteria->compare('tel_desabilitado',$this->tel_desabilitado);
-
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
+		return Compania::model()->findByPk($this->com_id)->com_nombre;
 	}
 
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return Telefono the static model class
-	 */
+	public function getemp_nombre()
+	{
+		return ($model=Empresa::model()->findByPk($this->emp_rut))?$model->emp_nombre:"SIN EMPRESA";
+	}
+
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
