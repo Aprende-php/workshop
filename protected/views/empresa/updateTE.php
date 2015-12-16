@@ -1,13 +1,13 @@
 <?php
 $this->breadcrumbs=array(
-    'Administar Área Operativa'=>array('areaoperativa'),
+    'Administar Tipo'=>array('tipoempresa'),
     'Modificar',
 );?>
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
       
-<?= BsHtml::pageHeader('Modificar área operativa', 'Empresa') ?>
+<?= BsHtml::pageHeader('Modificar Tipo', 'Empresa') ?>
 <?php $form=$this->beginWidget('bootstrap.widgets.BsActiveForm', array(
     'layout' => BsHtml::FORM_LAYOUT_HORIZONTAL,
     'enableClientValidation'=>true,

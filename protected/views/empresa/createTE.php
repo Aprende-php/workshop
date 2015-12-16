@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-    'Administación Área Operativa'=>array('areaoperativa'),
+    'Administación Tipo'=>array('tipoempresa'),
     'Crear',
 );?>
 <div class="row">

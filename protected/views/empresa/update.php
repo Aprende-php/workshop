@@ -7,16 +7,17 @@
 $this->breadcrumbs=array(
 	'Empresas'=>array('index'),
 	$model->emp_rut=>array('view','id'=>$model->emp_rut),
-	'Update',
+	'Modificar',
 );
 
 $this->menu=array(
-    array('icon' => 'glyphicon glyphicon-list','label'=>'List Empresa', 'url'=>array('index')),
-	array('icon' => 'glyphicon glyphicon-plus-sign','label'=>'Create Empresa', 'url'=>array('create')),
-    array('icon' => 'glyphicon glyphicon-list-alt','label'=>'View Empresa', 'url'=>array('view', 'id'=>$model->emp_rut)),
-    array('icon' => 'glyphicon glyphicon-tasks','label'=>'Manage Empresa', 'url'=>array('admin')),
+	array('icon' => 'glyphicon glyphicon-plus-sign','label'=>'Crear Empresa', 'url'=>array('create')),
+    array('icon' => 'glyphicon glyphicon-tasks','label'=>'Administrar Empresa', 'url'=>array('admin')),
 );
 ?>
-
-<?php echo BsHtml::pageHeader('Update','Empresa '.$model->emp_rut) ?>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+<?php echo BsHtml::pageHeader('Modificar','Empresa '.$model->emp_rut) ?>
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>
+</div>
+</div>
