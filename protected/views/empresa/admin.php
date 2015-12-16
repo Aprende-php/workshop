@@ -1,75 +1,83 @@
 <?php
-/* @var $this EmpresaController */
-/* @var $model Empresa */
-
+$baseUrl=Yii::app()->baseUrl;
+Yii::app()->getClientScript()
+	->registerCssFile($baseUrl.'/css/dataTables.bootstrap.min.css')
+	->registerScriptFile($baseUrl.'/js/jquery.dataTables.min.js',CClientScript::POS_END)
+	->registerScriptFile($baseUrl.'/js/dataTables.bootstrap.min.js',CClientScript::POS_END)
+	->registerScript('dataTables', "$('.table').DataTable({
+        'language': {
+ 			\"url\": \"$baseUrl/js/Spanish.json\"
+		}
+	})", CClientScript::POS_READY);
 
 $this->breadcrumbs=array(
 	'Empresas'=>array('index'),
-	'Manage',
+	'Administrar',
 );
-
 $this->menu=array(
-	array('icon' => 'glyphicon glyphicon-list','label'=>'List Empresa', 'url'=>array('index')),
-	array('icon' => 'glyphicon glyphicon-plus-sign','label'=>'Create Empresa', 'url'=>array('create')),
+	array('icon' => 'glyphicon glyphicon-plus-sign','label'=>'Crear Empresa', 'url'=>array('create')),
 );
 
-Yii::app()->clientScript->registerScript('search', "
-$('.search-button').click(function(){
-	$('.search-form').toggle();
-	return false;
-});
-$('.search-form form').submit(function(){
-	$('#empresa-grid').yiiGridView('update', {
-		data: $(this).serialize()
-	});
-	return false;
-});
-");
 ?>
 
-<?php echo BsHtml::pageHeader('Manage','Empresas') ?>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title"><?php echo BsHtml::button('Advanced search',array('class' =>'search-button', 'icon' => BsHtml::GLYPHICON_SEARCH,'color' => BsHtml::BUTTON_COLOR_PRIMARY), '#'); ?></h3>
-    </div>
-    <div class="panel-body">
-        <p>
-            You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>
-                &lt;&gt;</b>
-            or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
-        </p>
+<?= BsHtml::pageHeader('Administración', 'Empresas') ?>
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th style="width:20px">#</th>
+			<th>RUT</th>
+			<th>Nombre</th>
+			<th>Tipo</th>
+			<th>Área Operativa</th>
+			<th>Teléfonos</th>
+			<th>Licencias</th>
+			<th style="width:160px">Opciones</th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php foreach ($List as $key=>$model): ?>
+		<tr>
+			<td><?php echo $key+1; ?></td>
+			<td><?php echo $model->emp_rut ?></td>
+			<td><?php echo $model->emp_nombre ?></td>
+			<td><?php echo $model->tem_nombre ?></td>
+			<td><?php echo $model->are_nombre ?></td>
+			<td><?php echo $model->tel_count ?></td>
+			<td><?php echo $model->lic_count ?></td>
+			<td>
+				<?php
+					echo BsHtml::Button(BsHtml::icon(BsHtml::GLYPHICON_TRASH).' Eliminar', array(
+					    'color' => BsHtml::BUTTON_COLOR_PRIMARY,
+					    'size' => BsHtml::BUTTON_SIZE_SMALL,
+					    'data-target'=>'#Eliminar'.$key,
+					    'data-toggle'=>'modal'
+					));
+					$this->widget('bootstrap.widgets.BsModal', array(
+					    'id' => 'Eliminar'.$key,
+					    'header' => "¿Desea eliminar a '$model->emp_nombre' ?",
+					    'content' => "<p>Se quitara de la lista $model->emp_nombre</p>",
+					    'footer' => array(
+					        BsHtml::Button('Eliminar de todos modos', array(
+								'onclick'=>"window.location.href='deleteE?rut=$model->emp_rut'",
+							    'color' => BsHtml::BUTTON_COLOR_PRIMARY
+							)),
+					        BsHtml::button('Cancelar', array(
+					            'data-dismiss' => 'modal'
+					        )),
 
-        <div class="search-form" style="display:none">
-            <?php $this->renderPartial('_search',array(
-                'model'=>$model,
-            )); ?>
-        </div>
-        <!-- search-form -->
+					    )
+					));
 
-        <?php $this->widget('bootstrap.widgets.BsGridView',array(
-			'id'=>'empresa-grid',
-			'dataProvider'=>$model->search(),
-			'filter'=>$model,
-			'columns'=>array(
-        		'emp_rut',
-		'tem_id',
-		'are_id',
-		'emp_nombre',
-		'emp_direccion',
-		'emp_fono',
-		/*
-		'emp_email',
-		'emp_fecha_creacion',
-		'emp_desabilitado',
-		*/
-				array(
-					'class'=>'bootstrap.widgets.BsButtonColumn',
-				),
-			),
-        )); ?>
-    </div>
-</div>
-
-
-
-
+					?>
+					<?php
+					echo BsHtml::Button(BsHtml::icon(BsHtml::GLYPHICON_EDIT).' Modificar', array(
+					    'color' => BsHtml::BUTTON_COLOR_PRIMARY,
+					    'size' => BsHtml::BUTTON_SIZE_SMALL,
+						'onclick'=>"window.location.href='update?rut=$model->emp_rut'",
+					));
+				?>
+			</td>
+		</tr>
+	<?php endforeach ?>
+	</tbody>
+</table>

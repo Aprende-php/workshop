@@ -1,15 +1,15 @@
 <?php
 $this->breadcrumbs=array(
-	'Administración Área Operativa'
+	'Administración Tipo'
 );
 
 $this->menu=array(
 
-    array('icon' => 'glyphicon glyphicon-plus','label'=>'Crear Área Operativa', 'url'=>array('createAO')),
+    array('icon' => 'glyphicon glyphicon-plus','label'=>'Crear Tipo', 'url'=>array('createTE')),
 );
 ?>
 
-<?= BsHtml::pageHeader('Administración área operativa', 'Empresa') ?>
+<?= BsHtml::pageHeader('Administración Tipo', 'Empresa') ?>
 <table class="table table-bordered table-striped">
 	<thead>
 		<tr>

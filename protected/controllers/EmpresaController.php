@@ -28,7 +28,7 @@ class EmpresaController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','areaoperativa','createAO','deleteAO','updateAO','tipoempresa','createTE','updateTE','deleteTE'),
+				'actions'=>array('index','view','areaoperativa','deleteE','createAO','deleteAO','updateAO','tipoempresa','createTE','updateTE','deleteTE'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -132,33 +132,15 @@ class EmpresaController extends Controller
 /**
 	Empresa
 */
-	/**
-	* Displays a particular model.
-	* @param integer $id the ID of the model to be displayed
-	*/
-	public function actionView($id)
-	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
-	}
 
-	/**
-	* Creates a new model.
-	* If creation is successful, the browser will be redirected to the 'view' page.
-	*/
 	public function actionCreate()
 	{
 		$model=new Empresa;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
 		if(isset($_POST['Empresa']))
 		{
 			$model->attributes=$_POST['Empresa'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->emp_rut));
+				$this->redirect(array('admin'));
 		}
 
 		$this->render('create',array(
@@ -166,23 +148,15 @@ class EmpresaController extends Controller
 		));
 	}
 
-	/**
-	* Updates a particular model.
-	* If update is successful, the browser will be redirected to the 'view' page.
-	* @param integer $id the ID of the model to be updated
-	*/
-	public function actionUpdate($id)
+	public function actionUpdate()
 	{
-		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
+		$id=$_GET['rut'];
+		$model=Empresa::model()->findByPk($id);
 		if(isset($_POST['Empresa']))
 		{
 			$model->attributes=$_POST['Empresa'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->emp_rut));
+				$this->redirect(array('admin'));
 		}
 
 		$this->render('update',array(
@@ -190,29 +164,15 @@ class EmpresaController extends Controller
 		));
 	}
 
-	/**
-	* Deletes a particular model.
-	* If deletion is successful, the browser will be redirected to the 'admin' page.
-	* @param integer $id the ID of the model to be deleted
-	*/
-	public function actionDelete($id)
+	public function actionDeleteE()
 	{
-		if(Yii::app()->request->isPostRequest)
-		{
-			// we only allow deletion via POST request
-			$this->loadModel($id)->delete();
-
-			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-			if(!isset($_GET['ajax']))
-				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-		}
-		else
-			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+		$id=$_GET['rut'];
+		$model=Empresa::model()->findByPk($id);
+		$model->emp_desabilitado=1;
+		$model->save();
+		$this->redirect(array('admin'));
 	}
 
-	/**
-	* Lists all models.
-	*/
 	public function actionIndex()
 	{
 		$dataProvider=new CActiveDataProvider('Empresa');
@@ -221,46 +181,11 @@ class EmpresaController extends Controller
 		));
 	}
 
-	/**
-	* Manages all models.
-	*/
 	public function actionAdmin()
 	{
-		$model=new Empresa('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Empresa']))
-			$model->attributes=$_GET['Empresa'];
-
+		$List=Empresa::model()->findAll('emp_desabilitado=0');
 		$this->render('admin',array(
-			'model'=>$model,
+			'List'=>$List,
 		));
-	}
-
-	/**
-	* Returns the data model based on the primary key given in the GET variable.
-	* If the data model is not found, an HTTP exception will be raised.
-	* @param integer $id the ID of the model to be loaded
-	* @return Empresa the loaded model
-	* @throws CHttpException
-	*/
-	public function loadModel($id)
-	{
-		$model=Empresa::model()->findByPk($id);
-		if($model===null)
-			throw new CHttpException(404,'The requested page does not exist.');
-		return $model;
-	}
-
-	/**
-	* Performs the AJAX validation.
-	* @param Empresa $model the model to be validated
-	*/
-	protected function performAjaxValidation($model)
-	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='empresa-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
 	}
 }
