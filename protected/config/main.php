@@ -8,6 +8,9 @@
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Qualitatcorp WorkShop',
+	
+    'language'=>'es',
+	'sourceLanguage' => 'es',
 	'aliases' => array(
         'bootstrap' => 'ext.bootstrap'
     ),
