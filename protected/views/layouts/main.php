@@ -28,9 +28,6 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
             'items' => array(
                 array(
                     'label' => 'Usuario',
-                    'url' => array(
-                        '#'
-                    ),
                     'items' => array(
                         array(
                             'label' => 'Usuario',
@@ -43,9 +40,6 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 ),
                 array(
                     'label' => 'Empresa',
-                    'url' => array(
-                        '#'
-                    ),
                     'items' => array(
                         BsHtml::menuHeader(BsHtml::italics('Empresa'), array(
                             // 'class' => 'text-center',
@@ -95,25 +89,39 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                     )
                 ),
                 array(
-                	'label'=>'Licencia',
-                    'url' => array(
-                        '#'
-                    ),
+                	'label'=>'Teléfono',
                     'items' => array(
+                        BsHtml::menuHeader(BsHtml::italics('Teléfono')),
                         array(
-                			'label'=>'Licencia',
+                            'label' => 'Administrar Teléfonos',
                             'url' => array(
-                                '#'
+                                'telefono/admin'
                             )
                         ),
-
+                        array(
+                            'label' => 'Crear Teléfono',
+                            'url' => array(
+                                'telefono/create'
+                            )
+                        ),
+                        BsHtml::menuDivider(),
+                        BsHtml::menuHeader(BsHtml::italics('Licencias de uso')),
+                        array(
+                            'label' => 'Administrar Licencias',
+                            'url' => array(
+                                'telefono/licencia'
+                            )
+                        ),
+                        array(
+                            'label' => 'Crear licencia',
+                            'url' => array(
+                                'telefono/createLI'
+                            )
+                        ),
                     )
                 ),
                 array(
                 	'label'=>'Pregunta',
-                    'url' => array(
-                        '#'
-                    ),
                     'items' => array(
                         array(
                 			'label'=>'Pregunta',
@@ -126,9 +134,6 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 ),
                 array(
                 	'label'=>'Informes',
-                    'url' => array(
-                        '#'
-                    ),
                     'items' => array(
                         array(
                 			'label'=>'Informes',
@@ -141,9 +146,6 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 ),
                 array(
                 	'label'=>'Evaluaciones',
-                    'url' => array(
-                        '#'
-                    ),
                     'items' => array(
                         array(
                 			'label'=>'Evaluaciones',
