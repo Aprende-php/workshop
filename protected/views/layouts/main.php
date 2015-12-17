@@ -29,11 +29,24 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 array(
                     'label' => 'Usuario',
                     'items' => array(
+                        BsHtml::menuHeader(BsHtml::italics('Usuarios')),
                         array(
-                            'label' => 'Usuario',
+                            'label' => 'Administar Usuarios',
                             'url' => array(
-                                '#'
-                            )
+                                'usuario/admin'
+                            ),
+                        ),
+                        array(
+                            'label' => 'Crear Usuario',
+                            'url' => array(
+                                'usuario/create'
+                            ),
+                        ),
+                        array(
+                            'label' => 'Registros de ingresos',
+                            'url' => array(
+                                'usuario/records'
+                            ),
                         ),
 
                     )
@@ -169,19 +182,19 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
             'type' => 'navbar',
             'activateParents' => true,
             'items' => array(
-                array(
-                    'label' => 'About',
-                    'url' => array(
-                        '/site/page',
-                        'view' => 'about'
-                    )
-                ),
-                array(
-                    'label' => 'Contact',
-                    'url' => array(
-                        '/site/contact'
-                    )
-                ),
+                // array(
+                //     'label' => 'About',
+                //     'url' => array(
+                //         '/site/page',
+                //         'view' => 'about'
+                //     )
+                // ),
+                // array(
+                //     'label' => 'Contact',
+                //     'url' => array(
+                //         '/site/contact'
+                //     )
+                // ),
                 array(
                     'label' => 'Login',
                     'url' => array(
