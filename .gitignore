@@ -7,3 +7,4 @@ index.php
 protected/config/database.php
 index.php
 protected/config/database.php
+*.php
