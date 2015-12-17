@@ -50,7 +50,7 @@
 	<div class="row">
      <?php
      if (is_file('images/pregunta/'.$model->pre_imagen))
-     	echo CHtml::image(Yii::app()->request->baseUrl."/images/pregunta/".$model->pre_imagen,'',array("width"=>150)); ?> 
+     	echo CHtml::image(Yii::app()->request->baseUrl."/images/pregunta/".$model->pre_imagen,'',array("width"=>100,"height"=>100)); ?> 
 	</div>
 
 	<div class="row">

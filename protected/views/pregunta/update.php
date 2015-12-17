@@ -14,6 +14,9 @@ $this->menu=array(
 	array('label'=>'Detalle', 'url'=>array('view', 'id'=>$model->pre_id)),
 	array('label'=>'Cancelar', 'url'=>array('admin')),
 );
+if($id==false){
+	echo BsHtml::alert(BsHtml::ALERT_COLOR_DANGER, BsHtml::bold('Campo faltante') . " ".'Debe agregar un achivo de imagen.');
+}
 ?>
 
 <h1>Editar Pregunta <?php echo $model->pre_descripcion; ?></h1>

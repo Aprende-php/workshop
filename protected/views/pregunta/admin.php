@@ -30,7 +30,7 @@ $this->menu=array(
 		// 'tpr_id',
 		// 'pre_imagen',
 		array(
-        	//call the function 'renderButtons' from the current controller
+        	//call the function 'renderImage' from the current controller
         	'value'=>array($this,'renderImage'),
     		),
 		array(	'name'=>'tpr_id',
@@ -42,7 +42,7 @@ $this->menu=array(
 		'pre_comentario',
 		'pre_fecha_creacion',
 		'pre_desabilitado',
-		array(
+		array(	'name'=>'pre_imagen',
         	//call the function 'renderButtons' from the current controller
         	'value'=>array($this,'renderButtons'),
     		),
