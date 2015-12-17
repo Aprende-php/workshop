@@ -1,22 +1,23 @@
 <?php
 
 /**
- * This is the model class for table "area_operativa".
+ * This is the model class for table "licencia".
  *
- * The followings are the available columns in table 'area_operativa':
- * @property string $are_id
- * @property string $are_nombre
- * @property string $are_fecha_creacion
- * @property integer $are_desabilitado
+ * The followings are the available columns in table 'licencia':
+ * @property string $lic_id
+ * @property string $emp_rut
+ * @property string $lic_usos
+ * @property string $lic_fecha_creacion
+ * @property integer $lic_desabilitado
  */
-class AreaOperativa extends CActiveRecord
+class Licencia extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'area_operativa';
+		return 'licencia';
 	}
 
 	/**
@@ -27,12 +28,13 @@ class AreaOperativa extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('are_nombre', 'required'),
-			array('are_desabilitado', 'numerical', 'integerOnly'=>true),
-			array('are_nombre', 'length', 'max'=>256),
+			array('emp_rut, lic_usos, lic_fecha_creacion', 'required'),
+			array('lic_desabilitado', 'numerical', 'integerOnly'=>true),
+			array('emp_rut', 'length', 'max'=>13),
+			array('lic_usos', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('are_id, are_nombre, are_fecha_creacion, are_desabilitado', 'safe', 'on'=>'search'),
+			array('lic_id, emp_rut, lic_usos, lic_fecha_creacion, lic_desabilitado', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -53,10 +55,11 @@ class AreaOperativa extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'are_id' => 'Area Operativa',
-			'are_nombre' => 'Nombre',
-			'are_fecha_creacion' => 'Fecha Creación',
-			'are_desabilitado' => 'Desabilitado',
+			'lic_id' => 'Lic',
+			'emp_rut' => 'Emp Rut',
+			'lic_usos' => 'Lic Usos',
+			'lic_fecha_creacion' => 'Lic Fecha Creacion',
+			'lic_desabilitado' => 'Lic Desabilitado',
 		);
 	}
 
@@ -78,10 +81,11 @@ class AreaOperativa extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('are_id',$this->are_id,true);
-		$criteria->compare('are_nombre',$this->are_nombre,true);
-		$criteria->compare('are_fecha_creacion',$this->are_fecha_creacion,true);
-		$criteria->compare('are_desabilitado',$this->are_desabilitado);
+		$criteria->compare('lic_id',$this->lic_id,true);
+		$criteria->compare('emp_rut',$this->emp_rut,true);
+		$criteria->compare('lic_usos',$this->lic_usos,true);
+		$criteria->compare('lic_fecha_creacion',$this->lic_fecha_creacion,true);
+		$criteria->compare('lic_desabilitado',$this->lic_desabilitado);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -92,7 +96,7 @@ class AreaOperativa extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return AreaOperativa the static model class
+	 * @return Licencia the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

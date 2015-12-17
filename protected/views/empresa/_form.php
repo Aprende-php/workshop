@@ -1,82 +1,31 @@
 <?php
-/* @var $this EmpresaController */
-/* @var $model Empresa */
-/* @var $form CActiveForm */
+$baseUrl=Yii::app()->baseUrl;
+Yii::app()->getClientScript()
+    ->registerScriptFile($baseUrl.'/js/jquery.Rut.min.js',CClientScript::POS_END)
+    ->registerScript('ValidaRut', "$('#Empresa_emp_rut').Rut({
+   on_error: function(){ alert('El rut ingresado es incorrecto'); }
+})
+");
+
 ?>
 
-<div class="form">
-
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'empresa-form',
-	// Please note: When you enable ajax validation, make sure the corresponding
-	// controller action is handling ajax validation correctly.
-	// There is a call to performAjaxValidation() commented in generated controller code.
-	// See class documentation of CActiveForm for details on this.
-	'enableAjaxValidation'=>false,
+<?php $form=$this->beginWidget('bootstrap.widgets.BsActiveForm', array(
+    'layout' => BsHtml::FORM_LAYOUT_HORIZONTAL,
+    'enableClientValidation'=>true,
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
+    <p class="help-block">Los campos con un <span class="required">*</span> son requeridos.</p>
 
-	<?php echo $form->errorSummary($model); ?>
+    <?php echo $form->errorSummary($model); ?>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'emp_rut'); ?>
-		<?php echo $form->textField($model,'emp_rut',array('size'=>13,'maxlength'=>13)); ?>
-		<?php echo $form->error($model,'emp_rut'); ?>
-	</div>
+    <?php echo $form->textFieldControlGroup($model,'emp_rut',array('maxlength'=>13)); ?>
+    <?php echo $form->dropDownListControlGroup($model, 'tem_id', CHtml::listData(TipoEmpresa::model()->findAll('tem_desabilitado=0'),'tem_id', 'tem_nombre'), array('empty' => 'Seleccione un tipo'));?>
+    <?php echo $form->dropDownListControlGroup($model, 'are_id', CHtml::listData(AreaOperativa::model()->findAll('are_desabilitado=0'),'are_id', 'are_nombre'), array('empty' => 'Seleccione un Área'));?>
+    <?php echo $form->textFieldControlGroup($model,'emp_nombre',array('maxlength'=>256)); ?>
+    <?php echo $form->textFieldControlGroup($model,'emp_direccion',array('maxlength'=>512)); ?>
+    <?php echo $form->textFieldControlGroup($model,'emp_fono',array('maxlength'=>64)); ?>
+    <?php echo $form->textFieldControlGroup($model,'emp_email',array('maxlength'=>256)); ?>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'tem_id'); ?>
-		<?php echo $form->textField($model,'tem_id',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'tem_id'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'are_id'); ?>
-		<?php echo $form->textField($model,'are_id',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'are_id'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'emp_nombre'); ?>
-		<?php echo $form->textField($model,'emp_nombre',array('size'=>60,'maxlength'=>256)); ?>
-		<?php echo $form->error($model,'emp_nombre'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'emp_direccion'); ?>
-		<?php echo $form->textField($model,'emp_direccion',array('size'=>60,'maxlength'=>512)); ?>
-		<?php echo $form->error($model,'emp_direccion'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'emp_fono'); ?>
-		<?php echo $form->textField($model,'emp_fono',array('size'=>60,'maxlength'=>64)); ?>
-		<?php echo $form->error($model,'emp_fono'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'emp_email'); ?>
-		<?php echo $form->textField($model,'emp_email',array('size'=>60,'maxlength'=>256)); ?>
-		<?php echo $form->error($model,'emp_email'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'emp_fecha_creacion'); ?>
-		<?php echo $form->textField($model,'emp_fecha_creacion'); ?>
-		<?php echo $form->error($model,'emp_fecha_creacion'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'emp_desabilitado'); ?>
-		<?php echo $form->textField($model,'emp_desabilitado'); ?>
-		<?php echo $form->error($model,'emp_desabilitado'); ?>
-	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
-	</div>
+    <?php echo BsHtml::formActions(array(BsHtml::submitButton('Guardar', array('color' => BsHtml::BUTTON_COLOR_PRIMARY))));?>
 
 <?php $this->endWidget(); ?>
-
-</div><!-- form -->

@@ -1,6 +1,6 @@
 <?php
 
-class EmpresaController extends Controller
+class TelefonoController extends Controller
 {
 	/**
 	* @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -28,7 +28,7 @@ class EmpresaController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','areaoperativa','deleteE','createAO','deleteAO','updateAO','tipoempresa','createTE','updateTE','deleteTE'),
+				'actions'=>array(),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -45,59 +45,59 @@ class EmpresaController extends Controller
 		);
 	}
 /** 
-	Tipo Empresa
+	Telefono
 */
 
-	public function actionTipoEmpresa()
+	public function actionadmin()
 	{
-		$List=TipoEmpresa::model()->findAll('tem_desabilitado=0');
-		$this->render('adminTipoEmpresa',array(
+		$List=Telefono::model()->findAll('tel_desabilitado=0');
+		$this->render('admin',array(
 			'List'=>$List,
 		));
 	}
-	public function actioncreateTE()
+	public function actioncreate()
 	{
-		$model=new TipoEmpresa;
-		if(isset($_POST['TipoEmpresa'])){
-			$model->attributes=$_POST['TipoEmpresa'];
+		$model=new Telefono;
+		if(isset($_POST['Telefono'])){
+			$model->attributes=$_POST['Telefono'];
 			if($model->save())
-				$this->redirect(array('tipoempresa'));
+				$this->redirect(array('admin'));
 		}
-		$this->render('createTE',array(
+		$this->render('create',array(
 			'model'=>$model,
 		));
 	}	
-	public function actionupdateTE($id)
+	public function actionupdate($id)
 	{
-		$model=TipoEmpresa::model()->findByPk($id);
-		if(isset($_POST['TipoEmpresa'])){
-			$model->attributes=$_POST['TipoEmpresa'];
+		$model=Telefono::model()->findByPk($id);
+		if(isset($_POST['Telefono'])){
+			$model->attributes=$_POST['Telefono'];
 			if($model->save())
-				$this->redirect(array('tipoempresa'));
+				$this->redirect(array('admin'));
 		}
 		$this->render('updateTE',array(
 			'model'=>$model,
 		));
 	}
-	public function actiondeleteTE($id)
+	public function actiondelete($id)
 	{
-		$model=TipoEmpresa::model()->findByPk($id);
+		$model=Telefono::model()->findByPk($id);
 		$model->tem_desabilitado=1;
 		$model->save();
 		$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('tipoempresa'));
 	}
 	
 /** 
-	Area Operativa
+	Licencia
 */
-	public function actionAreaOperativa()
+	public function actionlicencia()
 	{
 		$List=AreaOperativa::model()->findAll('are_desabilitado=0');
 		$this->render('adminAreaOperativa',array(
 			'List'=>$List,
 		));
 	}
-	public function actioncreateAO()
+	public function actioncreateLI()
 	{
 		$model=new AreaOperativa;
 		if(isset($_POST['AreaOperativa'])){
@@ -109,7 +109,7 @@ class EmpresaController extends Controller
 			'model'=>$model,
 		));
 	}	
-	public function actionupdateAO($id)
+	public function actionupdateLI($id)
 	{
 		$model=AreaOperativa::model()->findByPk($id);
 		if(isset($_POST['AreaOperativa'])){
@@ -121,7 +121,7 @@ class EmpresaController extends Controller
 			'model'=>$model,
 		));
 	}
-	public function actiondeleteAO($id)
+	public function actiondeleteLI($id)
 	{
 		$model=AreaOperativa::model()->findByPk($id);
 		$model->are_desabilitado=1;
@@ -129,63 +129,63 @@ class EmpresaController extends Controller
 		$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('areaoperativa'));
 	}
 
-/**
-	Empresa
-*/
+// /**
+// 	Empresa
+// */
 
-	public function actionCreate()
-	{
-		$model=new Empresa;
-		if(isset($_POST['Empresa']))
-		{
-			$model->attributes=$_POST['Empresa'];
-			if($model->save())
-				$this->redirect(array('admin'));
-		}
+// 	public function actionCreate()
+// 	{
+// 		$model=new Empresa;
+// 		if(isset($_POST['Empresa']))
+// 		{
+// 			$model->attributes=$_POST['Empresa'];
+// 			if($model->save())
+// 				$this->redirect(array('admin'));
+// 		}
 
-		$this->render('create',array(
-		'model'=>$model,
-		));
-	}
+// 		$this->render('create',array(
+// 		'model'=>$model,
+// 		));
+// 	}
 
-	public function actionUpdate()
-	{
-		$id=$_GET['rut'];
-		$model=Empresa::model()->findByPk($id);
-		if(isset($_POST['Empresa']))
-		{
-			$model->attributes=$_POST['Empresa'];
-			if($model->save())
-				$this->redirect(array('admin'));
-		}
+// 	public function actionUpdate()
+// 	{
+// 		$id=$_GET['rut'];
+// 		$model=Empresa::model()->findByPk($id);
+// 		if(isset($_POST['Empresa']))
+// 		{
+// 			$model->attributes=$_POST['Empresa'];
+// 			if($model->save())
+// 				$this->redirect(array('admin'));
+// 		}
 
-		$this->render('update',array(
-			'model'=>$model,
-		));
-	}
+// 		$this->render('update',array(
+// 			'model'=>$model,
+// 		));
+// 	}
 
-	public function actionDeleteE()
-	{
-		$id=$_GET['rut'];
-		$model=Empresa::model()->findByPk($id);
-		$model->emp_desabilitado=1;
-		$model->save();
-		$this->redirect(array('admin'));
-	}
+// 	public function actionDeleteE()
+// 	{
+// 		$id=$_GET['rut'];
+// 		$model=Empresa::model()->findByPk($id);
+// 		$model->emp_desabilitado=1;
+// 		$model->save();
+// 		$this->redirect(array('admin'));
+// 	}
 
-	public function actionIndex()
-	{
-		$dataProvider=new CActiveDataProvider('Empresa');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
-	}
+// 	public function actionIndex()
+// 	{
+// 		$dataProvider=new CActiveDataProvider('Empresa');
+// 		$this->render('index',array(
+// 			'dataProvider'=>$dataProvider,
+// 		));
+// 	}
 
-	public function actionAdmin()
-	{
-		$List=Empresa::model()->findAll('emp_desabilitado=0');
-		$this->render('admin',array(
-			'List'=>$List,
-		));
-	}
+// 	public function actionAdmin()
+// 	{
+// 		$List=Empresa::model()->findAll('emp_desabilitado=0');
+// 		$this->render('admin',array(
+// 			'List'=>$List,
+// 		));
+// 	}
 }

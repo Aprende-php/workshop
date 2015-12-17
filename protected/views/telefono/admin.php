@@ -15,22 +15,21 @@ $this->breadcrumbs=array(
 	'Administrar',
 );
 $this->menu=array(
-	array('icon' => 'glyphicon glyphicon-plus-sign','label'=>'Crear Empresa', 'url'=>array('create')),
+	array('icon' => 'glyphicon glyphicon-plus-sign','label'=>'Crear Teléfono', 'url'=>array('create')),
 );
 
 ?>
 
-<?= BsHtml::pageHeader('Administración', 'Empresas') ?>
+<?= BsHtml::pageHeader('Administración', 'Teléfono') ?>
 <table class="table table-bordered table-striped">
 	<thead>
 		<tr>
 			<th style="width:20px">#</th>
-			<th>RUT</th>
-			<th>Nombre</th>
-			<th>Tipo</th>
-			<th>Área Operativa</th>
-			<th>Teléfonos</th>
-			<th>Licencias</th>
+			<th>Número</th>
+			<th>Compañia</th>
+			<th>MAC</th>
+			<th>Activado</th>
+			<th>Empresa</th>
 			<th style="width:160px">Opciones</th>
 		</tr>
 	</thead>
@@ -38,12 +37,11 @@ $this->menu=array(
 	<?php foreach ($List as $key=>$model): ?>
 		<tr>
 			<td><?php echo $key+1; ?></td>
-			<td><?php echo $model->emp_rut ?></td>
+			<td><?php echo $model->tel_numero ?></td>
+			<td><?php echo $model->com_nombre ?></td>
+			<td><?php echo $model->tel_mac ?></td>
+			<td><?php echo $model->tel_activado ?></td>
 			<td><?php echo $model->emp_nombre ?></td>
-			<td><?php echo $model->tem_nombre ?></td>
-			<td><?php echo $model->are_nombre ?></td>
-			<td><?php echo $model->tel_count ?></td>
-			<td><?php echo $model->lic_count ?></td>
 			<td>
 				<?php
 					echo BsHtml::Button(BsHtml::icon(BsHtml::GLYPHICON_TRASH).' Eliminar', array(
@@ -67,9 +65,6 @@ $this->menu=array(
 
 					    )
 					));
-
-					?>
-					<?php
 					echo BsHtml::Button(BsHtml::icon(BsHtml::GLYPHICON_EDIT).' Modificar', array(
 					    'color' => BsHtml::BUTTON_COLOR_PRIMARY,
 					    'size' => BsHtml::BUTTON_SIZE_SMALL,

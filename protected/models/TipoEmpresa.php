@@ -27,7 +27,7 @@ class TipoEmpresa extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('tem_nombre, tem_fecha_creacion', 'required'),
+			array('tem_nombre', 'required'),
 			array('tem_desabilitado', 'numerical', 'integerOnly'=>true),
 			array('tem_nombre', 'length', 'max'=>256),
 			// The following rule is used by search().
@@ -53,10 +53,10 @@ class TipoEmpresa extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'tem_id' => 'Tem',
-			'tem_nombre' => 'Tem Nombre',
+			'tem_id' => 'Tipo',
+			'tem_nombre' => 'Nombre',
 			'tem_fecha_creacion' => 'Tem Fecha Creacion',
-			'tem_desabilitado' => 'Tem Desabilitado',
+			'tem_desabilitado' => 'Deshabilitado',
 		);
 	}
 

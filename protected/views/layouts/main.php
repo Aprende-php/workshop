@@ -28,9 +28,6 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
             'items' => array(
                 array(
                     'label' => 'Usuario',
-                    'url' => array(
-                        '#'
-                    ),
                     'items' => array(
                         array(
                             'label' => 'Usuario',
@@ -43,10 +40,11 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 ),
                 array(
                     'label' => 'Empresa',
-                    'url' => array(
-                        '#'
-                    ),
                     'items' => array(
+                        BsHtml::menuHeader(BsHtml::italics('Empresa'), array(
+                            // 'class' => 'text-center',
+                            // 'style' => 'color:#99cc32;font-size:32px;'
+                        )),
                         array(
                             'label' => 'Administrar Empresas',
                             'url' => array(
@@ -54,40 +52,76 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                             )
                         ),
                         array(
-                            'label' => 'Area Operativa',
+                            'label' => 'Crear Empresa',
+                            'url' => array(
+                                'empresa/create'
+                            )
+                        ),
+                        BsHtml::menuDivider(),
+                        BsHtml::menuHeader(BsHtml::italics('Área Operativa')),
+                        array(
+                            'label' => 'Administrar área Operativa',
                             'url' => array(
                                 'empresa/areaoperativa'
                             )
                         ),
+                        array(
+                            'label' => 'Crear área operativa',
+                            'url' => array(
+                                'empresa/createAO'
+                            )
+                        ),
+                        BsHtml::menuDivider(),
+                        BsHtml::menuHeader(BsHtml::italics('Tipo de Empresa')),
                         array(
                             'label' => 'Tipo Empresa',
                             'url' => array(
                                 'empresa/tipoempresa'
                             )
                         ),
-
-                    )
-                ),
-                array(
-                	'label'=>'Licencia',
-                    'url' => array(
-                        '#'
-                    ),
-                    'items' => array(
                         array(
-                			'label'=>'Licencia',
+                            'label' => 'Crear Empresa',
                             'url' => array(
-                                '#'
+                                'empresa/createTE'
                             )
                         ),
 
                     )
                 ),
                 array(
+                	'label'=>'Teléfono',
+                    'items' => array(
+                        BsHtml::menuHeader(BsHtml::italics('Teléfono')),
+                        array(
+                            'label' => 'Administrar Teléfonos',
+                            'url' => array(
+                                'telefono/admin'
+                            )
+                        ),
+                        array(
+                            'label' => 'Crear Teléfono',
+                            'url' => array(
+                                'telefono/create'
+                            )
+                        ),
+                        BsHtml::menuDivider(),
+                        BsHtml::menuHeader(BsHtml::italics('Licencias de uso')),
+                        array(
+                            'label' => 'Administrar Licencias',
+                            'url' => array(
+                                'telefono/licencia'
+                            )
+                        ),
+                        array(
+                            'label' => 'Crear licencia',
+                            'url' => array(
+                                'telefono/createLI'
+                            )
+                        ),
+                    )
+                ),
+                array(
                 	'label'=>'Pregunta',
-                    'url' => array(
-                        '#'
-                    ),
                     'items' => array(
                         array(
                 			'label'=>'Pregunta',
@@ -100,9 +134,6 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 ),
                 array(
                 	'label'=>'Informes',
-                    'url' => array(
-                        '#'
-                    ),
                     'items' => array(
                         array(
                 			'label'=>'Informes',
@@ -115,9 +146,6 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 ),
                 array(
                 	'label'=>'Evaluaciones',
-                    'url' => array(
-                        '#'
-                    ),
                     'items' => array(
                         array(
                 			'label'=>'Evaluaciones',
