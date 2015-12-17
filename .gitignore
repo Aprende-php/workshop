@@ -3,4 +3,4 @@ assets/*
 !assets/.gitignore
 protected/runtime/*
 !protected/runtime/.gitignore
-protected/config/database.php
+/protected/config/database.php
