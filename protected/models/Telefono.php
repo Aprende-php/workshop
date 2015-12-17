@@ -30,7 +30,7 @@ class Telefono extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('tel_numero, emp_rut, com_id, tel_mac, tel_fecha_creacion', 'required'),
+			array('tel_numero, emp_rut, com_id, tel_mac', 'required'),
 			array('tel_activado, tel_desabilitado', 'numerical', 'integerOnly'=>true),
 			array('tel_numero', 'length', 'max'=>32),
 			array('emp_rut', 'length', 'max'=>13),

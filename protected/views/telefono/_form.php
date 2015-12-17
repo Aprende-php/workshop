@@ -8,7 +8,6 @@
     <?php echo $form->errorSummary($model); ?>
     <?php echo $form->dropDownListControlGroup($model, 'emp_rut', CHtml::listData(Empresa::model()->findAll('emp_desabilitado=0'),'emp_rut', 'emp_nombre'), array('empty' => 'Seleccione una Empresa'));?>
     <?php echo $form->dropDownListControlGroup($model, 'com_id', CHtml::listData(Compania::model()->findAll('com_desabilitado=0'),'com_id', 'com_nombre'), array('empty' => 'Seleccione una Compañia'));?>
-
     <?php echo $form->textFieldControlGroup($model,'tel_mac'); ?>
     <?php echo $form->textFieldControlGroup($model,'tel_numero'); ?>  
     <?php echo $form->dropDownListControlGroup($model, 'tel_activado',array('No','Si'), array('empty' => 'Seleccione un Opcion'));?>

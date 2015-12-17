@@ -113,9 +113,15 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                             )
                         ),
                         array(
-                            'label' => 'Crear licencia',
+                            'label' => 'Recargar licencia',
                             'url' => array(
                                 'telefono/createLI'
+                            )
+                        ),
+                        array(
+                            'label' => 'Listado Recargas',
+                            'url' => array(
+                                'telefono/recargas'
                             )
                         ),
                     )
