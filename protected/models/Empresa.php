@@ -32,7 +32,7 @@ class Empresa extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('emp_rut, tem_id, are_id, emp_nombre, emp_direccion, emp_fono, emp_email, emp_fecha_creacion', 'required'),
+			array('emp_rut, tem_id, are_id, emp_nombre, emp_direccion, emp_fono, emp_email', 'required'),
 			array('emp_desabilitado', 'numerical', 'integerOnly'=>true),
 			array('emp_rut', 'length', 'max'=>13),
 			array('tem_id, are_id', 'length', 'max'=>10),
@@ -45,74 +45,38 @@ class Empresa extends CActiveRecord
 		);
 	}
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-		);
-	}
-
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
 	public function attributeLabels()
 	{
 		return array(
-			'emp_rut' => 'Emp Rut',
-			'tem_id' => 'Tem',
-			'are_id' => 'Are',
-			'emp_nombre' => 'Emp Nombre',
-			'emp_direccion' => 'Emp Direccion',
-			'emp_fono' => 'Emp Fono',
-			'emp_email' => 'Emp Email',
-			'emp_fecha_creacion' => 'Emp Fecha Creacion',
-			'emp_desabilitado' => 'Emp Desabilitado',
+			'emp_rut' => 'Rut',
+			'tem_id' => 'Tipo',
+			'are_id' => 'Area',
+			'emp_nombre' => 'Nombre',
+			'emp_direccion' => 'Dirección',
+			'emp_fono' => 'Fono',
+			'emp_email' => 'Email',
+			'emp_fecha_creacion' => 'Fecha Creación',
+			'emp_desabilitado' => 'Deshabilitado',
 		);
 	}
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * Typical usecase:
-	 * - Initialize the model fields with values from filter form.
-	 * - Execute this method to get CActiveDataProvider instance which will filter
-	 * models according to data in model fields.
-	 * - Pass data provider to CGridView, CListView or any similar widget.
-	 *
-	 * @return CActiveDataProvider the data provider that can return the models
-	 * based on the search/filter conditions.
-	 */
-	public function search()
+	public function gettem_nombre()
 	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
-
-		$criteria=new CDbCriteria;
-
-		$criteria->compare('emp_rut',$this->emp_rut,true);
-		$criteria->compare('tem_id',$this->tem_id,true);
-		$criteria->compare('are_id',$this->are_id,true);
-		$criteria->compare('emp_nombre',$this->emp_nombre,true);
-		$criteria->compare('emp_direccion',$this->emp_direccion,true);
-		$criteria->compare('emp_fono',$this->emp_fono,true);
-		$criteria->compare('emp_email',$this->emp_email,true);
-		$criteria->compare('emp_fecha_creacion',$this->emp_fecha_creacion,true);
-		$criteria->compare('emp_desabilitado',$this->emp_desabilitado);
-
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
+		return TipoEmpresa::model()->findByPk($this->tem_id)->tem_nombre;
+	}
+	public function getare_nombre()
+	{
+		return AreaOperativa::model()->findByPk($this->are_id)->are_nombre;
+	}
+	public function gettel_count()
+	{
+		return Telefono::model()->count("emp_rut='$this->emp_rut'");
+	}
+	public function getlic_count()
+	{
+		return Licencia::model()->count("emp_rut='$this->emp_rut'");
 	}
 
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return Empresa the static model class
-	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);

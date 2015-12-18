@@ -3,16 +3,14 @@
 /* @var $model TipoPregunta */
 
 $this->breadcrumbs=array(
-	// 'Index'=>array('index'),
 	'Administrar',
 );
 
 $this->menu=array(
 	array('label'=>'Registrar', 'url'=>array('create')),
-);
-?>
+);?>
 
-<h1>Administrar Tipo de Preguntas</h1>
+<?php echo BsHtml::pageHeader('Administar','Tipo Pregunta') ?>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'tipo-pregunta-grid',

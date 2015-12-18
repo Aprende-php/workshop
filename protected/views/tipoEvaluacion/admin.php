@@ -8,20 +8,18 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-
 	array('label'=>'Registrar', 'url'=>array('create')),
 );
 
 ?>
 
-<h1>Administrar Tipo de Evaluación</h1>
+<?= BsHtml::pageHeader('Administrar', 'Tipo Evaluación') ?>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'tipo-evaluacion-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
-		// 'tev_id',
 		'tev_nombre',
 		'tev_fecha_creacion',
 		'tev_desabilitado',

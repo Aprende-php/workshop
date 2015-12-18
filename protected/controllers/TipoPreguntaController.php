@@ -111,7 +111,7 @@ class TipoPreguntaController extends Controller
 	public function actionDelete($id)
 	{
 		$model= TipoPregunta::model()->findByPk($id);
-		$model->tpr_desabilitado=0;
+		$model->tpr_desabilitado=1;
 		$model->save();
 		// $this->loadModel($id)->delete();
 
@@ -163,10 +163,6 @@ class TipoPreguntaController extends Controller
 
 	public function renderButtons($data, $row) {
    		echo BsHtml::buttonDropdown('', array(
-   			array(
-        		'label' => 'Detalle',
-        		'url' => array('view', 'id'=>$data->tpr_id)
-    		),
     		array(
         		'label' => 'Editar',
         		'url' => array('update', 'id'=>$data->tpr_id)
@@ -175,11 +171,6 @@ class TipoPreguntaController extends Controller
         		'label' => 'Eliminar',
         		'url' => '#','linkOptions'=>array('submit'=>array('delete','id'=>$data->tpr_id),'confirm'=>'Esta seguro de borrar este item?')
     		),
-    		BsHtml::menuDivider(),
-    		array(
-        		'label' => 'Lo que sea...',
-        		'url' => '#'
-    		)
 			), array(
     			'split' => false,
     			'size' => BsHtml::BUTTON_SIZE_SMALL,

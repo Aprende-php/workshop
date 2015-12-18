@@ -182,7 +182,7 @@ class PreguntaController extends Controller
 	public function actionDelete($id)
 	{
 		$model= Pregunta::model()->findByPk($id);
-		$model->pre_desabilitado=0;
+		$model->pre_desabilitado=1;
 		$model->save();
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
@@ -232,10 +232,6 @@ class PreguntaController extends Controller
 
 	public function renderButtons($data, $row) {
    		echo BsHtml::buttonDropdown('', array(
-   			array(
-        		'label' => 'Detalle',
-        		'url' => array('view', 'id'=>$data->pre_id)
-    		),
     		array(
         		'label' => 'Editar',
         		'url' => array('update', 'id'=>$data->pre_id)
@@ -244,11 +240,6 @@ class PreguntaController extends Controller
         		'label' => 'Eliminar',
         		'url' => '#','linkOptions'=>array('submit'=>array('delete','id'=>$data->pre_id),'confirm'=>'Esta seguro de borrar este item?')
     		),
-    		BsHtml::menuDivider(),
-    		array(
-        		'label' => 'Lo que sea...',
-        		'url' => '#'
-    		)
 			), array(
     			'split' => false,
     			'size' => BsHtml::BUTTON_SIZE_SMALL,
