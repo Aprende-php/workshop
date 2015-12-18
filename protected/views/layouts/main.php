@@ -28,9 +28,6 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
             'items' => array(
                 array(
                     'label' => 'Usuario',
-                    'url' => array(
-                        '#'
-                    ),
                     'items' => array(
                         array(
                             'label' => 'Usuario',
@@ -43,10 +40,11 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 ),
                 array(
                     'label' => 'Empresa',
-                    'url' => array(
-                        '#'
-                    ),
                     'items' => array(
+                        BsHtml::menuHeader(BsHtml::italics('Empresa'), array(
+                            // 'class' => 'text-center',
+                            // 'style' => 'color:#99cc32;font-size:32px;'
+                        )),
                         array(
                             'label' => 'Administrar Empresas',
                             'url' => array(
@@ -54,47 +52,80 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                             )
                         ),
                         array(
-                            'label' => 'Area Operativa',
+                            'label' => 'Crear Empresa',
+                            'url' => array(
+                                'empresa/create'
+                            )
+                        ),
+                        BsHtml::menuDivider(),
+                        BsHtml::menuHeader(BsHtml::italics('Área Operativa')),
+                        array(
+                            'label' => 'Administrar área Operativa',
                             'url' => array(
                                 'empresa/areaoperativa'
                             )
                         ),
+                        array(
+                            'label' => 'Crear área operativa',
+                            'url' => array(
+                                'empresa/createAO'
+                            )
+                        ),
+                        BsHtml::menuDivider(),
+                        BsHtml::menuHeader(BsHtml::italics('Tipo de Empresa')),
                         array(
                             'label' => 'Tipo Empresa',
                             'url' => array(
                                 'empresa/tipoempresa'
                             )
                         ),
-
-                    )
-                ),
-                array(
-                	'label'=>'Licencia',
-                    'url' => array(
-                        '#'
-                    ),
-                    'items' => array(
                         array(
-                			'label'=>'Licencia',
+                            'label' => 'Crear Empresa',
                             'url' => array(
-                                '#'
+                                'empresa/createTE'
                             )
                         ),
 
                     )
                 ),
                 array(
-                	'label'=>'Pregunta',
-                    'url' => array(
-                        '#'
-                    ),
+                	'label'=>'Teléfono',
                     'items' => array(
+                        BsHtml::menuHeader(BsHtml::italics('Teléfono')),
                         array(
-                            'label'=>'Preguntas',
-                            'htmlOptions' => array(
-                                'style' =>  'font-size:130%;text-decoration: underline'
-                                ),
+                            'label' => 'Administrar Teléfonos',
+                            'url' => array(
+                                'telefono/admin'
+                            )
                         ),
+                        array(
+                            'label' => 'Crear Teléfono',
+                            'url' => array(
+                                'telefono/create'
+                            )
+                        ),
+                        BsHtml::menuDivider(),
+                        BsHtml::menuHeader(BsHtml::italics('Licencias de uso')),
+                        array(
+                            'label' => 'Administrar Licencias',
+                            'url' => array(
+                                'telefono/licencia'
+                            )
+                        ),
+                        array(
+                            'label' => 'Crear licencia',
+                            'url' => array(
+                                'telefono/createLI'
+                            )
+                        ),
+                    )
+                ),
+                array(
+                	'label'=>'Pregunta',
+                    'items' => array(
+                        BsHtml::menuDivider(),
+                        BsHtml::menuHeader(BsHtml::italics('Preguntas',
+                            $htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;'))),
                         // BsHtml::menuDivider(),
                         array(
                 			'label'=>'Administrar Preguntas',
@@ -109,14 +140,8 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                             )
                         ),
                         BsHtml::menuDivider(),
-                        array(
-
-                            'label'=>'Tipo de Preguntas',
-                            'htmlOptions' => array(
-                                'style' => 'font-size:130%;text-decoration: underline;'
-                                // color:#2E9AFE
-                                ),
-                        ),
+                        BsHtml::menuHeader(BsHtml::italics('Tipo de Preguntas',
+                            $htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;'))),
                         // BsHtml::menuDivider(),
                         array(
                             'label'=>'Administrar Tipos de Preguntas',
@@ -130,15 +155,13 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                                 '//tipopregunta/create'
                             )
                         ),
+                        // BsHtml::menuDivider(),
                         
 
                     )
                 ),
                 array(
                 	'label'=>'Informes',
-                    'url' => array(
-                        '#'
-                    ),
                     'items' => array(
                         array(
                 			'label'=>'Informes',
@@ -151,19 +174,33 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 ),
                 array(
                 	'label'=>'Evaluaciones',
-                    'url' => array(
-                        '#'
-                    ),
                     'items' => array(
-                        array(
-                			'label'=>'Evaluaciones',
-                            'url' => array(
-                                '#'
-                            )
-                        ),
+                        BsHtml::menuHeader(BsHtml::italics('Evaluaciones',
+                            $htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;'))),
+
+                            array(
+                                'label' => 'Administrar Evaluaciones',
+                                'url' => array('evaluacion/admin')
+                                ),
+                            array(
+                                'label' => 'Registrar Evaluación',
+                                'url' => array('evaluacion/create')
+                                ),
+                            BsHtml::menuDivider(),
+                            BsHtml::menuHeader(BsHtml::italics('Tipo de Evaluaciones',
+                                $htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;'))),
+                            array(
+                                'label' => 'Administrar tipo Evaluaciones',
+                                'url' => array('tipoevaluacion/admin')
+                                ),
+                            array(
+                                'label' => 'Registrar tipo Evaluación',
+                                'url' => array('tipoevaluacion/create')
+                                ),
 
                     )
                 ),
+
             )
         ),
         array(
