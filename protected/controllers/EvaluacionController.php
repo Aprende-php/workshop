@@ -140,7 +140,7 @@ class EvaluacionController extends Controller
 		));
 	}
 
-	public function renderButtons($data, $row) {
+	public function renderButtons($data) {
    		echo BsHtml::buttonDropdown('', array(
     		array(
         		'label' => 'Editar',
@@ -152,7 +152,6 @@ class EvaluacionController extends Controller
     		),
     		array(
         		'label' => 'Infome en PDF',
-        		// 'url' => CHtml::normalizeUrl(array('pdf','id'=>$data->eva_id)),
         		'url'=>'',
         		'onclick'=>"window.open(href='pdf?id=$data->eva_id')",
         		// window.open(URL,"ventana1","width=120,height=300,scrollbars=NO") 

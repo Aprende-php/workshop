@@ -15,8 +15,7 @@
 
 	<?php echo $form->errorSummary($model); 
 		 echo $form->textFieldControlGroup($model,'tpr_nombre',array('size'=>60,'maxlength'=>256)); 
-		 echo $form->dateFieldControlGroup($model,'tpr_fecha_creacion', array('value'=>date('Y-m-d'))); 
-		 echo $form->textFieldControlGroup($model,'tpr_desabilitado'); 
+		 // echo $form->textFieldControlGroup($model,'tpr_desabilitado'); 
 		 echo BsHtml::submitButton('Aceptar', array('color' => BsHtml::BUTTON_COLOR_PRIMARY));
  	$this->endWidget(); ?>
 
