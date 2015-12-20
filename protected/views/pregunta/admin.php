@@ -30,6 +30,7 @@ $this->menu=array(
         	//call the function 'renderImage' from the current controller
         	'value'=>array($this,'renderImage'),
         	'filter'=>false,
+        	'htmlOptions'=>array('style'=>"width:135px"),
     		),
 		array(	'name'=>'tpr_id',
 				'value'=>'TipoPregunta::model()->findByPk($data->tpr_id)->tpr_nombre'),

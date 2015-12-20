@@ -39,7 +39,7 @@
     "<tr><td>".("<center>".BsHtml::bold(($key+"1"),
             $htmlOptions=array('style'=>'font-size:110%;color:#000;')))."</td>
     <td>".("<center>".BsHtml::imageThumbnail(Yii::app()->request->baseUrl."/images/pregunta/".$var3[$key]->pre_imagen,'',$htmlOptions = array(
-        'style'=> 'width: 120px; height: 120px;margin-top: 10px;margin-bottom: 10px;border:1px solid #dddddd;')))."</td>
+        'style'=> 'width: 110px; height: 110px;margin-top: 5px;margin-bottom: 5px;border:1px solid #dddddd;')))."</td>
     <td>". ("<center>".BsHtml::bold($var3[$key]->pre_descripcion,
             $htmlOptions=array('style'=>'font-size:110%;color:#000;'))."<br>".BsHtml::italics('"'.$var3[$key]->pre_comentario.'"',
             $htmlOptions=array('style'=>'font-size:90%;')))."</td>
@@ -51,7 +51,7 @@
 
 
 
-$header= BsHtml::pageHeader("Informe - Evaluación","<br>" .$var['emp_nombre']." - "."Usuario ".$var['usu_rut']);
+// $header= BsHtml::pageHeader("Informe - Evaluación","<br>" .$var['emp_nombre']." - "."Usuario ".$var['usu_rut']);
 $html=
 '<table class="table table-bordered table-striped">
   <thead>
@@ -72,13 +72,17 @@ $html=
 ';
 
 
-$logo='<img src="'.Yii::app()->request->baseUrl.'/images/Qualitat.jpg" height="100px" width="200px">';
+$logo='<div class="row">'.'<img src="'.Yii::app()->request->baseUrl.'/images/Qualitat.jpg" height="120px" width="240px">'.
+BsHtml::pageHeader("Informe - Evaluación","<br>" .$var['emp_nombre']." - "."Usuario ".$var['usu_rut'],$htmlOptions=array(
+  'style'=>'position: relative;
+      padding-top: -150px;
+      padding-left: 280px;')).'</div>';
 
 $pdf = Yii::createComponent('application.extensions.MPDF.mpdf');
 $mpdf=new mPDF('A4','LETTER','',10,10,5,10,12,5,7);
 $mpdf->WriteHTML($stylesheet,1);
 $mpdf->WriteHTML($logo);
-$mpdf->WriteHTML($header);
+// $mpdf->WriteHTML($header);
 $mpdf->WriteHTML($html);
 $mpdf->Footer();
 

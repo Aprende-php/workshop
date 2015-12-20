@@ -43,7 +43,7 @@ $this->menu=array(
 	<?php foreach ($List as $key=>$model): ?>
 		<tr>
 			<td><?php echo $key+1; ?></td>
-			<td><?php echo $model->tev_id ?></td>
+			<td><?php echo $model->tev_nombre ?></td>
 			<td><?php echo $model->emp_rut ?></td>
 			<td><?php echo $model->emp_nombre ?></td>
 			<td><?php echo $model->tel_numero ?></td>

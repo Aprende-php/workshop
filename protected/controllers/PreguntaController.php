@@ -94,7 +94,7 @@ class PreguntaController extends Controller
 				$model->pre_imagen->saveAs('images/pregunta/'.$aux);
 				$model->pre_imagen=$aux;
 				if($model->save())
-					$this->redirect(array('view','id'=>$model->pre_id));
+					$this->redirect(array('admin'));
 				else
 					unlink('images/pregunta/'.$aux);
 			}
@@ -155,14 +155,14 @@ class PreguntaController extends Controller
 				$model->pre_imagen->saveAs('images/pregunta/'.$aux);
 				$model->pre_imagen=$aux;
 				if($model->save())
-					$this->redirect(array('view','id'=>$model->pre_id));
+					$this->redirect(array('admin'));
 				else
 					unlink('images/pregunta/'.$aux);
 			}
 			else{
 				if ($model->pre_imagen!=null&&$id==true) {
 					if($model->save())
-					$this->redirect(array('view','id'=>$model->pre_id));
+					$this->redirect(array('admin'));
 				}
 				$id=false;
 			}
@@ -251,7 +251,7 @@ class PreguntaController extends Controller
 		public function renderImage($data, $row) {
 			echo BsHtml::imageThumbnail(
 				Yii::app()->request->baseUrl."/images/pregunta/".$data->pre_imagen,'',$htmlOptions = array(
-					'style'=> 'width: 120px; height: 120px;border-radius: 15px;margin-top: 5px;'));
+					'style'=> 'width: 120px; height: 130px;border-radius: 15px;margin-top: 5px;'));
    			}
 
 

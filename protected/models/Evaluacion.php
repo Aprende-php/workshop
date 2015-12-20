@@ -119,8 +119,12 @@ class Evaluacion extends CActiveRecord
 	{
 		return ($model=Empresa::model()->findByPk($this->emp_rut))?$model->emp_nombre:"Sin Empresa";
 	}
-	public function getUSU_nombre()
+	public function getUsu_nombre()
 	{
 		return ($model=Usuario::model()->findByPk($this->usu_rut))?$model->usu_nombre:"Sin Nombre";
+	}
+	public function getTev_nombre()
+	{
+		return ($model=TipoEvaluacion::model()->findByPk($this->tev_id))?$model->tev_nombre:"Sin Nombre";
 	}
 }
