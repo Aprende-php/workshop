@@ -28,7 +28,7 @@ class UsuarioController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','login'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -36,19 +36,41 @@ class UsuarioController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
+				'actions'=>array('admin','deleted','records'),
+				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
 			),
 		);
 	}
+/**
+		Autentificacion de Usuario
+*/	
 
-	/**
-	* Displays a particular model.
-	* @param integer $id the ID of the model to be displayed
-	*/
+public function actionLogin()
+	{
+		$this->layout='loginLayout';
+		$model=new LoginForm;
+		if(isset($_POST['LoginForm']))
+		{
+			$model->attributes=$_POST['LoginForm'];
+			if($model->validate() && $model->login())
+				$this->redirect(Yii::app()->user->returnUrl);
+		}
+		$this->render('login',array('model'=>$model));
+	}
+	public function actionLogout()
+	{
+		Yii::app()->user->logout();
+		$this->redirect(Yii::app()->homeUrl);
+	}
+
+/**
+		Usuario
+*/
+
+
 	public function actionView($id)
 	{
 		$this->render('view',array(
@@ -56,22 +78,15 @@ class UsuarioController extends Controller
 		));
 	}
 
-	/**
-	* Creates a new model.
-	* If creation is successful, the browser will be redirected to the 'view' page.
-	*/
 	public function actionCreate()
 	{
 		$model=new Usuario;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['Usuario']))
 		{
 			$model->attributes=$_POST['Usuario'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->usu_rut));
+				$this->redirect(array('admin'));
 		}
 
 		$this->render('create',array(
@@ -79,23 +94,15 @@ class UsuarioController extends Controller
 		));
 	}
 
-	/**
-	* Updates a particular model.
-	* If update is successful, the browser will be redirected to the 'view' page.
-	* @param integer $id the ID of the model to be updated
-	*/
-	public function actionUpdate($id)
+	public function actionUpdate()
 	{
-		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$model=Usuario::model()->findByPk($_GET['rut']);
 
 		if(isset($_POST['Usuario']))
 		{
 			$model->attributes=$_POST['Usuario'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->usu_rut));
+				$this->redirect(array('admin'));
 		}
 
 		$this->render('update',array(
@@ -103,12 +110,7 @@ class UsuarioController extends Controller
 		));
 	}
 
-	/**
-	* Deletes a particular model.
-	* If deletion is successful, the browser will be redirected to the 'admin' page.
-	* @param integer $id the ID of the model to be deleted
-	*/
-	public function actionDelete($id)
+	public function actionDeleted()
 	{
 		if(Yii::app()->request->isPostRequest)
 		{
@@ -123,9 +125,6 @@ class UsuarioController extends Controller
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 
-	/**
-	* Lists all models.
-	*/
 	public function actionIndex()
 	{
 		$dataProvider=new CActiveDataProvider('Usuario');
@@ -134,28 +133,19 @@ class UsuarioController extends Controller
 		));
 	}
 
-	/**
-	* Manages all models.
-	*/
+
 	public function actionAdmin()
 	{
-		$model=new Usuario('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Usuario']))
-			$model->attributes=$_GET['Usuario'];
-
-		$this->render('admin',array(
-			'model'=>$model,
-		));
+		$List = Yii::app()->db->createCommand()
+			->select('usu_rut, usu_nombre, usu_fono,usu_email,car_nombre,emp_nombre')
+			->from('usuario')
+			->leftJoin('cargo', 'usuario.car_id=cargo.car_id')
+			->leftJoin('empresa', 'usuario.emp_rut=empresa.emp_rut')
+			->where('usu_desabilitado=0')
+			->queryAll();
+		$this->render('admin',array('List'=>$List));
 	}
 
-	/**
-	* Returns the data model based on the primary key given in the GET variable.
-	* If the data model is not found, an HTTP exception will be raised.
-	* @param integer $id the ID of the model to be loaded
-	* @return Usuario the loaded model
-	* @throws CHttpException
-	*/
 	public function loadModel($id)
 	{
 		$model=Usuario::model()->findByPk($id);
@@ -164,10 +154,6 @@ class UsuarioController extends Controller
 		return $model;
 	}
 
-	/**
-	* Performs the AJAX validation.
-	* @param Usuario $model the model to be validated
-	*/
 	protected function performAjaxValidation($model)
 	{
 		if(isset($_POST['ajax']) && $_POST['ajax']==='usuario-form')
@@ -175,5 +161,13 @@ class UsuarioController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+	/** 
+		Registros Sistema
+	*/
+	public function actionRecords()
+	{
+		$model=IngresoSistema::model()->findAll();
+		var_dump($model);
 	}
 }

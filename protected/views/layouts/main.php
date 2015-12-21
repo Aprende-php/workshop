@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <?php 
     $baseUrl = Yii::app()->baseUrl; 
 	Yii::app()->getClientScript()
@@ -11,10 +12,10 @@
 		->registerCoreScript('jquery')
 		->registerScriptFile($baseUrl.'/js/bootstrap.js',CClientScript::POS_END);
 	?>
+    <link rel="icon" type="image/png" href="<?=$baseUrl ?>/images/favicon.png" />
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 <body>
-
 <div class="container">    <?php
 $this->widget('bootstrap.widgets.BsNavbar', array(
     'collapse' => true,
@@ -43,7 +44,7 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                             ),
                         ),
                         array(
-                            'label' => 'Registros de ingresos',
+                            'label' => 'Registros de ingreso',
                             'url' => array(
                                 'usuario/records'
                             ),

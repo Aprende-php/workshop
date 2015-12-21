@@ -10,11 +10,12 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-    array('icon' => 'glyphicon glyphicon-list','label'=>'List Usuario', 'url'=>array('index')),
-	array('icon' => 'glyphicon glyphicon-tasks','label'=>'Manage Usuario', 'url'=>array('admin')),
+	array('icon' => 'glyphicon glyphicon-tasks','label'=>'Administrar Usuario', 'url'=>array('admin')),
 );
 ?>
-
-<?php echo BsHtml::pageHeader('Create','Usuario') ?>
-
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+<?php echo BsHtml::pageHeader('Crear','Usuario') ?>
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>
+  </div>
+</div>
