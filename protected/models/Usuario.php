@@ -2,11 +2,6 @@
 
 class Usuario extends CActiveRecord
 {
-	/**
-	 * @return string the associated database table name
-	 */
-class Usuario extends CActiveRecord
-{
 	public function tableName()
 	{
 		return 'usuario';
