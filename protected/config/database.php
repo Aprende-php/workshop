@@ -2,9 +2,9 @@
 
 // This is the database connection configuration.
 return array(
-	'connectionString' => 'mysql:host=localhost;dbname=ko000361_workshop_v2',
+	'connectionString' => 'mysql:host=localhost;dbname=qualitat',
 	'emulatePrepare' => true,
 	'username' => 'root',
-	'password' => '164352',
+	'password' => '',
 	'charset' => 'utf8',
 );
