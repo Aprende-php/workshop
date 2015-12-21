@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-	'Empresas'=>array('index'),
+	'Empresas'=>array('admin'),
 	'Crear',
 );
 

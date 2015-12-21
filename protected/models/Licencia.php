@@ -28,76 +28,29 @@ class Licencia extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('emp_rut, lic_usos, lic_fecha_creacion', 'required'),
+			array('emp_rut, lic_usos', 'required'),
 			array('lic_desabilitado', 'numerical', 'integerOnly'=>true),
 			array('emp_rut', 'length', 'max'=>13),
-			array('lic_usos', 'length', 'max'=>10),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('lic_id, emp_rut, lic_usos, lic_fecha_creacion, lic_desabilitado', 'safe', 'on'=>'search'),
+			array('lic_usos', 'numerical','integerOnly'=>true,),
 		);
 	}
-
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-		);
-	}
-
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
 	public function attributeLabels()
 	{
 		return array(
-			'lic_id' => 'Lic',
-			'emp_rut' => 'Emp Rut',
-			'lic_usos' => 'Lic Usos',
-			'lic_fecha_creacion' => 'Lic Fecha Creacion',
-			'lic_desabilitado' => 'Lic Desabilitado',
+			'lic_id' => 'Licencia',
+			'emp_rut' => 'Empresa',
+			'lic_usos' => '# Usos',
+			'lic_fecha_creacion' => 'Fecha Creación',
+			'lic_desabilitado' => 'Desabilitado',
 		);
 	}
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * Typical usecase:
-	 * - Initialize the model fields with values from filter form.
-	 * - Execute this method to get CActiveDataProvider instance which will filter
-	 * models according to data in model fields.
-	 * - Pass data provider to CGridView, CListView or any similar widget.
-	 *
-	 * @return CActiveDataProvider the data provider that can return the models
-	 * based on the search/filter conditions.
-	 */
-	public function search()
+	public function getemp_nombre()
 	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
-
-		$criteria=new CDbCriteria;
-
-		$criteria->compare('lic_id',$this->lic_id,true);
-		$criteria->compare('emp_rut',$this->emp_rut,true);
-		$criteria->compare('lic_usos',$this->lic_usos,true);
-		$criteria->compare('lic_fecha_creacion',$this->lic_fecha_creacion,true);
-		$criteria->compare('lic_desabilitado',$this->lic_desabilitado);
-
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
+		return ($model=Empresa::model()->findByPk($this->emp_rut))?$model->emp_nombre:"SIN EMPRESA";
 	}
 
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return Licencia the static model class
-	 */
+
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);

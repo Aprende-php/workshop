@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <?php 
     $baseUrl = Yii::app()->baseUrl; 
 	Yii::app()->getClientScript()
@@ -11,10 +12,10 @@
 		->registerCoreScript('jquery')
 		->registerScriptFile($baseUrl.'/js/bootstrap.js',CClientScript::POS_END);
 	?>
+    <link rel="icon" type="image/png" href="<?=$baseUrl ?>/images/favicon.png" />
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 <body>
-
 <div class="container">    <?php
 $this->widget('bootstrap.widgets.BsNavbar', array(
     'collapse' => true,
@@ -29,11 +30,24 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 array(
                     'label' => 'Usuario',
                     'items' => array(
+                        BsHtml::menuHeader(BsHtml::italics('Usuarios')),
                         array(
-                            'label' => 'Usuario',
+                            'label' => 'Administar Usuarios',
                             'url' => array(
-                                '#'
-                            )
+                                'usuario/admin'
+                            ),
+                        ),
+                        array(
+                            'label' => 'Crear Usuario',
+                            'url' => array(
+                                'usuario/create'
+                            ),
+                        ),
+                        array(
+                            'label' => 'Registros de ingreso',
+                            'url' => array(
+                                'usuario/records'
+                            ),
                         ),
 
                     )
@@ -113,9 +127,15 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                             )
                         ),
                         array(
-                            'label' => 'Crear licencia',
+                            'label' => 'Recargar licencia',
                             'url' => array(
                                 'telefono/createLI'
+                            )
+                        ),
+                        array(
+                            'label' => 'Listado Recargas',
+                            'url' => array(
+                                'telefono/recargas'
                             )
                         ),
                     )
@@ -208,19 +228,19 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
             'type' => 'navbar',
             'activateParents' => true,
             'items' => array(
-                array(
-                    'label' => 'About',
-                    'url' => array(
-                        '/site/page',
-                        'view' => 'about'
-                    )
-                ),
-                array(
-                    'label' => 'Contact',
-                    'url' => array(
-                        '/site/contact'
-                    )
-                ),
+                // array(
+                //     'label' => 'About',
+                //     'url' => array(
+                //         '/site/page',
+                //         'view' => 'about'
+                //     )
+                // ),
+                // array(
+                //     'label' => 'Contact',
+                //     'url' => array(
+                //         '/site/contact'
+                //     )
+                // ),
                 array(
                     'label' => 'Login',
                     'url' => array(

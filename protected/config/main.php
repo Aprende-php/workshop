@@ -85,6 +85,7 @@ return array(
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
+			'loginUrl'=>array('Usuario/login'),
 		),
         'bootstrap' => array(
             'class' => 'bootstrap.components.BsApi'
