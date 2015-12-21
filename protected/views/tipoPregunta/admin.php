@@ -12,9 +12,10 @@ $this->menu=array(
 
 <?php echo BsHtml::pageHeader('Administar','Tipo Pregunta') ?>
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'tipo-pregunta-grid',
+<?php $this->widget('bootstrap.widgets.BsGridView', array(
+	'id'=>'pregunta-grid',
 	'dataProvider'=>$model->search(),
+	'type'=>array(BsHtml::GRID_TYPE_STRIPED,BsHtml::GRID_TYPE_BORDERED),
 	'filter'=>$model,
 	'columns'=>array(
 		'tpr_nombre',

@@ -21,9 +21,10 @@ $this->menu=array(
 
 <?= BsHtml::pageHeader('Administrar', 'Preguntas') ?>
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+<?php $this->widget('bootstrap.widgets.BsGridView', array(
 	'id'=>'pregunta-grid',
 	'dataProvider'=>$model->search(),
+	'type'=>array(BsHtml::GRID_TYPE_STRIPED,BsHtml::GRID_TYPE_BORDERED),
 	'filter'=>$model,
 	'columns'=>array(
 		array('name'=>'pre_imagen',
