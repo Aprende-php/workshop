@@ -16,7 +16,9 @@
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 <body>
-<div class="container">    <?php
+<div class="container">
+<?php $this->Widget('ext.toastr.ToastrWidget'); ?>
+<?php
 $this->widget('bootstrap.widgets.BsNavbar', array(
     'collapse' => true,
     'brandLabel' => BsHtml::icon(BsHtml::GLYPHICON_FIRE).BsHtml::bold(' WorkShop').BsHtml::small(' Qualitatcorp'),
