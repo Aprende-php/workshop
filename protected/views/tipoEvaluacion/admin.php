@@ -23,7 +23,9 @@ $this->menu=array(
 	'columns'=>array(
 		'tev_nombre',
 		'tev_fecha_creacion',
-		'tev_desabilitado',
+		array(	'name'=>'tev_desabilitado',
+				'value'=>'$data->tev_desabilitado',
+				'visible'=>Usuario::model()->findByPk(Yii::app()->user->id)->usu_rol=="admins"),
 		array(
         	//call the function 'renderButtons' from the current controller
         	'value'=>array($this,'renderButtons'),

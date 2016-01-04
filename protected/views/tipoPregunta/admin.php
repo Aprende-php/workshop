@@ -20,7 +20,9 @@ $this->menu=array(
 	'columns'=>array(
 		'tpr_nombre',
 		'tpr_fecha_creacion',
-		'tpr_desabilitado',
+		array(	'name'=>'tpr_desabilitado',
+				'value'=>'$data->tpr_desabilitado',
+				'visible'=>Usuario::model()->findByPk(Yii::app()->user->id)->usu_rol=="admins"),
 		array(
         	//call the function 'renderButtons' from the current controller
         	'value'=>array($this,'renderButtons'),

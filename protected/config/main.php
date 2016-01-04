@@ -43,23 +43,18 @@ return array(
 
 	// application components
 	'components'=>array(
-		    //...
-    'ePdf' => array(
-        'class'         => 'ext.yii-pdf.EYiiPdf',
-        'params'        => array(
-            'mpdf'     => array(
-                'librarySourcePath' => 'application.vendors.mpdf.*',
-                'constants'         => array(
-                    '_MPDF_TEMP_PATH' => Yii::getPathOfAlias('application.runtime'),
-                ),
-                'class'=>'mpdf', // the literal class filename to be loaded from the vendors folder
-            ),
-            'HTML2PDF' => array(
-                'librarySourcePath' => 'application.vendors.html2pdf.*',
-                'classFile'         => 'html2pdf.class.php', // For adding to Yii::$classMap
-            )
-        ),
-    ),
+	    'ePdf' => array(
+	        'class'=> 'ext.yii-pdf.EYiiPdf',
+	        'params'=> array(
+	            'mpdf'=> array(
+	                'librarySourcePath' => 'application.vendors.mpdf.*',
+	                'constants'         => array(
+	                    '_MPDF_TEMP_PATH' => Yii::getPathOfAlias('application.runtime'),
+	                ),
+	                'class'=>'mpdf', // the literal class filename to be loaded from the vendors folder
+	            ),
+	        ),
+	    ),
 
 		'user'=>array(
 			// enable cookie-based authentication
@@ -73,6 +68,7 @@ return array(
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'rules'=>array(
+				'/'=>'site/index',
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
@@ -107,6 +103,7 @@ return array(
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
 	'params'=>array(
+		
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
 	),

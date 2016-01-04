@@ -32,12 +32,8 @@ class EvaluacionController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','admin','delete','pdf','excel'),
 				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','pdf'),
-				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -132,13 +128,34 @@ class EvaluacionController extends Controller
 	/**
 	 * Manages all models.
 	 */
-	public function actionAdmin()
+	// public function actionAdmin()
+	// {
+	// 	$List=Evaluacion::model()->findAll('eva_desabilitado=0');
+	// 	$this->render('admin',array(
+	// 		'List'=>$List,
+	// 	));
+	// }
+		public function actionAdmin()
 	{
-		$List=Evaluacion::model()->findAll('eva_desabilitado=0');
+		$model=new Evaluacion('search');
+		$model->unsetAttributes();  // clear any default values
+		$model->eva_desabilitado=0;
+		if(isset($_GET['Evaluacion'])){
+			$model->attributes=$_GET['Evaluacion'];
+		}
+
 		$this->render('admin',array(
-			'List'=>$List,
+			'model'=>$model,
 		));
 	}
+	// public function behaviors()
+ //    {
+ //        return array(
+ //            // 'eexcelview'=>array(
+ //                // 'class'=>'ext.eexcelview.EExcelBehavior',
+ //            // ),
+ //        );
+ //    }
 
 	public function renderButtons($data) {
    		echo BsHtml::buttonDropdown('', array(
@@ -185,6 +202,141 @@ class EvaluacionController extends Controller
         $this->render('pdf'
         );
     }
+
+    public function actionExcel()
+{
+    Yii::import('ext.phpexcel.XPHPExcel');      
+	$objPHPExcel = XPHPExcel::createPHPExcel();
+
+	// Set document properties
+	$objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
+								 ->setLastModifiedBy("Maarten Balliauw")
+								 ->setTitle("Office 2007 XLSX Test Document")
+								 ->setSubject("Office 2007 XLSX Test Document")
+								 ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
+								 ->setKeywords("")
+								 ->setCategory("");
+	$var=Evaluacion::model()->findAll();//  Contiene datos de la Evaluacion a  imprimir
+	foreach ($var as $key => $value) {
+  		$var2=EvaluacionPregunta::model()->findAllByAttributes(array('eva_id'=>$value->eva_id));// datos de las respuestas a la evaluacion a imprimir
+	    $objPHPExcel->setActiveSheetIndex(0)
+	            ->setCellValue('A'.($key+2), ($key+1))
+	            ->setCellValue('B'.($key+2), $value->eva_fecha)
+	            ->setCellValue('C'.($key+2), $value->usu_rut)
+	            ->setCellValue('D'.($key+2), $value->emp_rut)
+	            ->setCellValue('E'.($key+2), $value->emp_nombre);
+	            // ->setCellValue('F'.($key+2), $fono->tel_numero);
+	            // ->setCellValue('G'.($key+2), $fono->tel->mac);
+	    $c=7;
+	    $k=0;
+	    $j=null;
+    foreach ($var2 as $key2 => $value2)
+	    {
+	    	if (Pregunta::model()->findByPk($value2->pre_id)!=null)
+	    	{
+	    		$descripcion=Pregunta::model()->findByPk($value2->pre_id)->pre_descripcion;
+	    		if($value2->pre_respuesta)
+          			$respuesta="SI";
+      			else
+         			$respuesta="NO";	
+	    	}
+	    	else
+	    		$descripcion="Sin resultados";
+	    	if ($c+$key2>25) {
+				$j=intval(($c+$key2)/26);
+				$k= ($c+$key2)%26;
+			}
+			if ($j==null)
+				{
+					$objPHPExcel->setActiveSheetIndex(0)
+		           	 			->setCellValue(chr($key2+65+$c).($key+2),$descripcion);
+				}
+			else
+					$objPHPExcel->setActiveSheetIndex(0)
+		        		    	->setCellValue(chr($j+64).chr($k+65).($key+2),$descripcion);
+		    $c++;
+		    if ($c+$key2>25) {
+				$j=intval(($c+$key2)/26);
+				$k= ($c+$key2)%26;
+			}
+			if ($j==null)
+				{
+					$objPHPExcel->setActiveSheetIndex(0)
+		           	 			->setCellValue(chr($key2+65+$c).($key+2),$respuesta);
+				}
+			else
+					$objPHPExcel->setActiveSheetIndex(0)
+		        		    	->setCellValue(chr($j+64).chr($k+65).($key+2),$respuesta);
+	    }
+		
+	}
+	$j=null;
+	$k=0;
+	$c=1;
+	for ($i=7;$i<87;$i++) {
+		if ($i>25) {
+			$j=intval($i/26);
+			$k=$i-intval($i/26)*26;
+		}
+		if ($i%2!=0) {
+			if ($j==null) {
+				$objPHPExcel->setActiveSheetIndex(0)
+		           	 		->setCellValue(chr($i+65).'1',"P".$c);
+			}
+			else
+				$objPHPExcel->setActiveSheetIndex(0)
+		        		    ->setCellValue(chr($j+64).chr($k+65).'1',"P".$c);
+		}
+		else
+		{
+			if ($j==null) {
+				$objPHPExcel->setActiveSheetIndex(0)
+		           	 		->setCellValue(chr($i+65).'1',"R".($c));
+		        $c++;
+			}
+			else{
+
+				$objPHPExcel->setActiveSheetIndex(0)
+		        		    ->setCellValue(chr($j+64).chr($k+65).'1',"R".$c);
+		       	$c++;
+				}
+		
+		}
+	}
+	$objPHPExcel->setActiveSheetIndex(0)
+	            ->setCellValue('A1', 'N°')
+	            ->setCellValue('B1', 'fecha')
+	            ->setCellValue('C1', 'Usuario')
+	            ->setCellValue('D1', 'Rut Empresa')
+	            ->setCellValue('E1', 'Empresa')
+	            ->setCellValue('F1', 'N° Telefono!')
+	            ->setCellValue('G1', 'Mac Telefono');
+
+	// Rename worksheet
+	$objPHPExcel->getActiveSheet()->setTitle('Simple');
+
+
+	// Set active sheet index to the first sheet, so Excel opens this as the first sheet
+	$objPHPExcel->setActiveSheetIndex(0);
+
+
+	// Redirect output to a client’s web browser (Excel5)
+	header('Content-Type: application/vnd.ms-excel');
+	header('Content-Disposition: attachment;filename="informe.xls"');
+	header('Cache-Control: max-age=0');
+	// If you're serving to IE 9, then the following may be needed
+	header('Cache-Control: max-age=1');
+
+	// If you're serving to IE over SSL, then the following may be needed
+	header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+	header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
+	header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+	header ('Pragma: public'); // HTTP/1.0
+
+	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+	$objWriter->save('php://output');
+	exit;
+}
 
 	/**
 	 * Performs the AJAX validation.

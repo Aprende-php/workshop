@@ -62,8 +62,10 @@ class Evaluacion extends CActiveRecord
 			'eva_id' => 'ID',
 			'tev_id' => 'Tipo Evaluación',
 			'emp_rut' => 'Rut Empresa',
+			'emp_nombre' => 'Empresa',
 			'tel_numero' => 'Numero Telefono',
 			'usu_rut' => 'Rut Usuario',
+			// 'usu_nombre' => 'Usuario',
 			'eva_fecha' => 'Fecha',
 			'eva_numero' => 'Numero Evaluación',
 			'eva_fecha_creacion' => 'Fecha Creación',
@@ -115,15 +117,15 @@ class Evaluacion extends CActiveRecord
 		return parent::model($className);
 	}
 
-	public function getEmp_nombre()
+	public function getemp_nombre()
 	{
 		return ($model=Empresa::model()->findByPk($this->emp_rut))?$model->emp_nombre:"Sin Empresa";
 	}
-	public function getUsu_nombre()
+	public function getusu_nombre()
 	{
 		return ($model=Usuario::model()->findByPk($this->usu_rut))?$model->usu_nombre:"Sin Nombre";
 	}
-	public function getTev_nombre()
+	public function gettev_nombre()
 	{
 		return ($model=TipoEvaluacion::model()->findByPk($this->tev_id))?$model->tev_nombre:"Sin Nombre";
 	}

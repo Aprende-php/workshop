@@ -116,8 +116,12 @@ class Pregunta extends CActiveRecord
 	{
 		return parent::model($className);
 	}
-	public function getTpr_nombre()
+	public function gettpr_nombre()
 	{
 		return ($model=TipoPregunta::model()->findByPk($this->tpr_id))?$model->tpr_nombre:"Sin Nombre";
+	}
+	public function gettev_nombre()
+	{
+		return ($model=TipoEvaluacion::model()->findByPk($this->tev_id))?$model->tev_nombre:"Sin Nombre";
 	}
 }

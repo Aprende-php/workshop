@@ -32,12 +32,8 @@ class PreguntaController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','admin','delete'),
 				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -207,6 +203,7 @@ class PreguntaController extends Controller
 	{
 		$model=new Pregunta('search');
 		$model->unsetAttributes();  // clear any default values
+		$model->pre_desabilitado=0;
 		if(isset($_GET['Pregunta']))
 			$model->attributes=$_GET['Pregunta'];
 
