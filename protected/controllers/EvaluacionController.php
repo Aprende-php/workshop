@@ -26,13 +26,37 @@ class EvaluacionController extends Controller
 	 */
 	public function accessRules()
 	{
+
+		if (!Yii::app()->user->isGuest) {
+			$usuario=Usuario::model()->findByPk(Yii::app()->user->id);
+			// echo $usuario->usu_rol;
+			if ($usuario->usu_rol=="admins") {
+				$permisos=array('update','admin','delete','pdf','excel');
+			}
+			else{
+				if($usuario->usu_rol=="viewver"){
+					if (isset($_GET['id'])) {
+						if (Evaluacion::model()->findByPk($_GET['id'])->emp_rut==$usuario->emp_rut)
+							$permisos=array('update','admin','pdf','delete');
+						else
+							$permisos=array('admin');
+					}
+					else
+						$permisos=array('admin');
+				}
+				else
+					$permisos=array('');
+			}
+		}
+		else
+			$permisos=array('');
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>$permisos,
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','admin','delete','pdf','excel'),
+				'actions'=>$permisos,
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -41,21 +65,6 @@ class EvaluacionController extends Controller
 		);
 	}
 
-	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
-	public function actionView($id)
-	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
-	}
-
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
 	public function actionCreate()
 	{
 		$model=new Evaluacion;
@@ -75,11 +84,6 @@ class EvaluacionController extends Controller
 		));
 	}
 
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
@@ -99,11 +103,6 @@ class EvaluacionController extends Controller
 		));
 	}
 
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
 	public function actionDelete($id)
 	{
 		$model= Evaluacion::model()->findByPk($id);
@@ -114,32 +113,16 @@ class EvaluacionController extends Controller
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
 
-	/**
-	 * Lists all models.
-	 */
-	public function actionIndex()
-	{
-		$dataProvider=new CActiveDataProvider('Evaluacion');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
-	}
-
-	/**
-	 * Manages all models.
-	 */
-	// public function actionAdmin()
-	// {
-	// 	$List=Evaluacion::model()->findAll('eva_desabilitado=0');
-	// 	$this->render('admin',array(
-	// 		'List'=>$List,
-	// 	));
-	// }
 		public function actionAdmin()
 	{
 		$model=new Evaluacion('search');
 		$model->unsetAttributes();  // clear any default values
 		$model->eva_desabilitado=0;
+		if (!Yii::app()->user->isGuest) {
+			$user=Usuario::model()->findByPk(Yii::app()->user->id);
+			if ($user->usu_rol=="viewver") 
+				$model->emp_rut=$user->emp_rut;
+		}
 		if(isset($_GET['Evaluacion'])){
 			$model->attributes=$_GET['Evaluacion'];
 		}
@@ -148,15 +131,6 @@ class EvaluacionController extends Controller
 			'model'=>$model,
 		));
 	}
-	// public function behaviors()
- //    {
- //        return array(
- //            // 'eexcelview'=>array(
- //                // 'class'=>'ext.eexcelview.EExcelBehavior',
- //            // ),
- //        );
- //    }
-
 	public function renderButtons($data) {
    		echo BsHtml::buttonDropdown('', array(
     		array(
@@ -171,9 +145,6 @@ class EvaluacionController extends Controller
         		'label' => 'Infome en PDF',
         		'url'=>'',
         		'onclick'=>"window.open(href='pdf?id=$data->eva_id')",
-        		// window.open(URL,"ventana1","width=120,height=300,scrollbars=NO") 
-        		// $htmlOptions=array('target'=> '_blank')
-        		// 'htmlOptions'=>array('target'=> '_blank')
     		),
 			), array(
     			'split' => false,
@@ -183,13 +154,6 @@ class EvaluacionController extends Controller
 			));
 		}
 
-	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer $id the ID of the model to be loaded
-	 * @return Evaluacion the loaded model
-	 * @throws CHttpException
-	 */
 	public function loadModel($id)
 	{
 		$model=Evaluacion::model()->findByPk($id);
@@ -197,12 +161,14 @@ class EvaluacionController extends Controller
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
 	}
+// Manejo de informes en PDF
 	 public function actionPdf($id=null)
     {
         $this->render('pdf'
         );
     }
 
+// Maneja los informes en excel
     public function actionExcel()
 {
     Yii::import('ext.phpexcel.XPHPExcel');      
@@ -273,7 +239,7 @@ class EvaluacionController extends Controller
 	$j=null;
 	$k=0;
 	$c=1;
-	for ($i=7;$i<87;$i++) {
+	for ($i=7;$i<107;$i++) {
 		if ($i>25) {
 			$j=intval($i/26);
 			$k=$i-intval($i/26)*26;
@@ -337,11 +303,6 @@ class EvaluacionController extends Controller
 	$objWriter->save('php://output');
 	exit;
 }
-
-	/**
-	 * Performs the AJAX validation.
-	 * @param Evaluacion $model the model to be validated
-	 */
 	protected function performAjaxValidation($model)
 	{
 		if(isset($_POST['ajax']) && $_POST['ajax']==='evaluacion-form')
