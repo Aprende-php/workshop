@@ -16,12 +16,42 @@ class UserIdentity extends CUserIdentity
 		elseif($user->usu_password!==md5($this->password))
 			$this->errorCode=self::ERROR_PASSWORD_INVALID;
 		else{
+			// Guarda variables de session
 			$this->_id=$user->usu_rut;
             $this->username=$user->usu_rol;
             $this->setState('rol', $user->usu_rol);
             $this->setState('rut', $user->usu_rut);
             $this->setState('nombre', $user->usu_rol);
-			$this->errorCode=self::ERROR_NONE;}
+			$this->errorCode=self::ERROR_NONE;
+
+			// Guardar Registro de session en la BD
+			$browser=array("IE","OPERA","MOZILLA","NETSCAPE","FIREFOX","SAFARI","CHROME");
+			$os=array("WINDOWS","MAC","LINUX");
+			$info['browser'] = "OTHER";
+			$info['os'] = "OTHER";
+			foreach($browser as $parent)
+			{
+				$s = strpos(strtoupper($_SERVER['HTTP_USER_AGENT']), $parent);
+				$f = $s + strlen($parent);
+				$version = substr($_SERVER['HTTP_USER_AGENT'], $f, 15);
+				$version = preg_replace('/[^0-9,.]/','',$version);
+				if ($s)
+				{
+					$info['browser'] = $parent;
+					$info['version'] = $version;
+				}
+			}
+			foreach($os as $val)
+			{
+				if (strpos(strtoupper($_SERVER['HTTP_USER_AGENT']),$val)!==false)
+					$info['os'] = $val;
+			}
+			Yii::app()->db->createCommand()->insert('ingreso_sistema',array(
+				'usu_rut'=>$user->usu_rut,
+				'ing_navegador'=>$info['os'].' '.$info['browser'].' '.$info['version'],
+				'ing_ip'=>Yii::app()->request->userHostAddress,
+			));
+		}
 		return !$this->errorCode;
 	}
 

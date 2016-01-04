@@ -33,71 +33,36 @@ Yii::app()->getClientScript()
 
 $this->breadcrumbs=array(
 	'Usuario',
-	'Administrar',
+	'registros',
 );
 $this->menu=array(
 	array('icon' => 'glyphicon glyphicon-plus-sign','label'=>'Crear Usuario', 'url'=>array('create')),
+	array('icon' => 'glyphicon glyphicon-plus-sign','label'=>'Administración Usuario', 'url'=>array('admin')),
 );
 
 ?>
-<?= BsHtml::pageHeader('Administración', 'Usuarios') ?>
+<?= BsHtml::pageHeader('Registros', 'Usuarios') ?>
 <table class="table table-bordered table-striped">
 	<thead>
 		<tr>
 			<th style="width:20px">#</th>
+			<th>Ingreso</th>
 			<th>RUT</th>
-			<th>Nombre</th>
-			<th>Fono</th>
-			<th>Email</th>
-			<th>Cargo</th>
-			<th>Empresa</th>
-			<th style="width:160px">Opciones</th>
+			<th>Navegador</th>
+			<th>IP</th>
 		</tr>
 	</thead>
 	<tbody>
 	<?php foreach ($List as $key=>$model): ?>
 		<tr>
 			<td><?php echo $key+1; ?></td>
+			<td><?php echo $model['ing_fecha_ingreso'] ?></td>
 			<td><?php echo $model['usu_rut'] ?></td>
-			<td><?php echo $model['usu_nombre'] ?></td>
-			<td><?php echo $model['usu_fono'] ?></td>
-			<td><?php echo $model['usu_email'] ?></td>
-			<td><?php echo $model['car_nombre'] ?></td>
-			<td><?php echo $model['emp_nombre'] ?></td>
-			<td>
-				<?php
-					echo BsHtml::Button(BsHtml::icon(BsHtml::GLYPHICON_TRASH).' Eliminar', array(
-					    'color' => BsHtml::BUTTON_COLOR_PRIMARY,
-					    'size' => BsHtml::BUTTON_SIZE_SMALL,
-					    'data-target'=>'#Eliminar'.$key,
-					    'data-toggle'=>'modal'
-					));
-					$this->widget('bootstrap.widgets.BsModal', array(
-					    'id' => 'Eliminar'.$key,
-					    'header' => "¿Desea eliminar a '".$model['usu_nombre']."' ?",
-					    'content' => "<p>Se quitara de la lista ".$model['usu_nombre']."</p>",
-					    'footer' => array(
-					        BsHtml::Button('Eliminar de todos modos', array(
-								'onclick'=>"window.location.href='deleted?rut=".$model['usu_rut']."'",
-							    'color' => BsHtml::BUTTON_COLOR_PRIMARY
-							)),
-					        BsHtml::button('Cancelar', array(
-					            'data-dismiss' => 'modal'
-					        )),
-
-					    )
-					));
-
-					?>
-					<?php
-					echo BsHtml::Button(BsHtml::icon(BsHtml::GLYPHICON_EDIT).' Modificar', array(
-					    'color' => BsHtml::BUTTON_COLOR_PRIMARY,
-					    'size' => BsHtml::BUTTON_SIZE_SMALL,
-						'onclick'=>"window.location.href='update?rut=".$model['usu_rut']."'",
-					));
-				?>
-			</td>
+			<td><?php echo $model['ing_navegador'] ?></td>
+			<td><?php echo $model['ing_ip'] ?></td>
 		</tr>
 	<?php endforeach ?>
 	</tbody>
 </table>
+
+<h1><?=Yii::app()->request->getUserHostAddress(); ?></h1>
