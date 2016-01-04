@@ -53,10 +53,10 @@ class AreaOperativa extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'are_id' => 'Are',
+			'are_id' => 'Area Operativa',
 			'are_nombre' => 'Nombre',
-			'are_fecha_creacion' => 'Are Fecha Creacion',
-			'are_desabilitado' => 'Are Desabilitado',
+			'are_fecha_creacion' => 'Fecha Creación',
+			'are_desabilitado' => 'Desabilitado',
 		);
 	}
 

@@ -1,42 +1,62 @@
-<?php var_dump($_POST) ?>
 <?php
-$form = $this->beginWidget('bootstrap.widgets.BsActiveForm');
+$this->breadcrumbs=array(
+	'Administración Área Operativa'
+);
+
+$this->menu=array(
+
+    array('icon' => 'glyphicon glyphicon-plus','label'=>'Crear Área Operativa', 'url'=>array('createAO')),
+);
 ?>
-<div class="well">
-<table class="table">
+
+<?= BsHtml::pageHeader('Administración área operativa', 'Empresa') ?>
+<table class="table table-bordered table-striped">
 	<thead>
 		<tr>
+			<th style="width:20px">#</th>
 			<th>Nombre</th>
-			<th>Opciones</th>
+			<th style="width:200px">Opciones</th>
 		</tr>
 	</thead>
 	<tbody>
 	<?php foreach ($List as $key=>$model): ?>
 		<tr>
-			<th><?php echo $model->are_nombre ?></th>
-			<th>
+			<td><?php echo $key+1; ?></td>
+			<td><?php echo $model->are_nombre ?></td>
+			<td>
 <?php
-echo BsHtml::submitButton(BsHtml::icon(BsHtml::GLYPHICON_TRASH).' Eliminar', array(
-	'name'=>'delete',
-	'value'=>$key,
+echo BsHtml::Button(BsHtml::icon(BsHtml::GLYPHICON_TRASH).' Eliminar', array(
     'color' => BsHtml::BUTTON_COLOR_PRIMARY,
-    'size' => BsHtml::BUTTON_SIZE_SMALL
+    'size' => BsHtml::BUTTON_SIZE_SMALL,
+    'data-target'=>'#Eliminar'.$key,
+    'data-toggle'=>'modal'
 ));
+$this->widget('bootstrap.widgets.BsModal', array(
+    'id' => 'Eliminar'.$key,
+    'header' => "¿Desea eliminar a '$model->are_nombre' ?",
+    'content' => "<p>Se quitara de la lista $model->are_nombre</p>",
+    'footer' => array(
+        BsHtml::Button('Eliminar de todos modos', array(
+			'onclick'=>"window.location.href='deleteAO/$model->are_id'",
+		    'color' => BsHtml::BUTTON_COLOR_PRIMARY
+		)),
+        BsHtml::button('Cancelar', array(
+            'data-dismiss' => 'modal'
+        )),
+
+    )
+));
+
 ?>
 <?php
-echo BsHtml::submitButton(BsHtml::icon(BsHtml::GLYPHICON_EDIT).' Actualizar', array(
-	'name'=>'update',
-	'value'=>$key,
+echo BsHtml::Button(BsHtml::icon(BsHtml::GLYPHICON_EDIT).' Modificar', array(
     'color' => BsHtml::BUTTON_COLOR_PRIMARY,
-    'size' => BsHtml::BUTTON_SIZE_SMALL
+    'size' => BsHtml::BUTTON_SIZE_SMALL,
+	'onclick'=>"window.location.href='updateAO/$model->are_id'",
 ));
 ?>
-			</th>
+			</td>
 		</tr>
 	<?php endforeach ?>
 	</tbody>
 </table>
-</div>
-<?php
-$this->endWidget();
-?>

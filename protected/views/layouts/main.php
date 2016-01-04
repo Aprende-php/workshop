@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <?php 
     $baseUrl = Yii::app()->baseUrl; 
 	Yii::app()->getClientScript()
@@ -11,11 +12,18 @@
 		->registerCoreScript('jquery')
 		->registerScriptFile($baseUrl.'/js/bootstrap.js',CClientScript::POS_END);
 	?>
+    <link rel="icon" type="image/png" href="<?=$baseUrl ?>/images/favicon.png" />
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 <body>
-
-<div class="container">    <?php
+<div class="container">
+<?php $this->Widget('ext.toastr.ToastrWidget',array(
+    // 'autoRegister'=>false,  
+    'options'=>array(
+            "positionClass"=> "toast-top-left",
+),
+    )); ?>
+<?php
 $this->widget('bootstrap.widgets.BsNavbar', array(
     'collapse' => true,
     'brandLabel' => BsHtml::icon(BsHtml::GLYPHICON_FIRE).BsHtml::bold(' WorkShop').BsHtml::small(' Qualitatcorp'),
@@ -28,25 +36,36 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
             'items' => array(
                 array(
                     'label' => 'Usuario',
-                    'url' => array(
-                        '#'
-                    ),
                     'items' => array(
+                        BsHtml::menuHeader(BsHtml::italics('Usuarios')),
                         array(
-                            'label' => 'Usuario',
+                            'label' => 'Administar Usuarios',
                             'url' => array(
-                                '#'
-                            )
+                                'usuario/admin'
+                            ),
+                        ),
+                        array(
+                            'label' => 'Crear Usuario',
+                            'url' => array(
+                                'usuario/create'
+                            ),
+                        ),
+                        array(
+                            'label' => 'Registros de ingreso',
+                            'url' => array(
+                                'usuario/records'
+                            ),
                         ),
 
                     )
                 ),
                 array(
                     'label' => 'Empresa',
-                    'url' => array(
-                        '#'
-                    ),
                     'items' => array(
+                        BsHtml::menuHeader(BsHtml::italics('Empresa'), array(
+                            // 'class' => 'text-center',
+                            // 'style' => 'color:#99cc32;font-size:32px;'
+                        )),
                         array(
                             'label' => 'Administrar Empresas',
                             'url' => array(
@@ -54,40 +73,82 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                             )
                         ),
                         array(
-                            'label' => 'Area Operativa',
+                            'label' => 'Crear Empresa',
+                            'url' => array(
+                                'empresa/create'
+                            )
+                        ),
+                        BsHtml::menuDivider(),
+                        BsHtml::menuHeader(BsHtml::italics('Área Operativa')),
+                        array(
+                            'label' => 'Administrar área Operativa',
                             'url' => array(
                                 'empresa/areaoperativa'
                             )
                         ),
+                        array(
+                            'label' => 'Crear área operativa',
+                            'url' => array(
+                                'empresa/createAO'
+                            )
+                        ),
+                        BsHtml::menuDivider(),
+                        BsHtml::menuHeader(BsHtml::italics('Tipo de Empresa')),
                         array(
                             'label' => 'Tipo Empresa',
                             'url' => array(
                                 'empresa/tipoempresa'
                             )
                         ),
-
-                    )
-                ),
-                array(
-                	'label'=>'Licencia',
-                    'url' => array(
-                        '#'
-                    ),
-                    'items' => array(
                         array(
-                			'label'=>'Licencia',
+                            'label' => 'Crear Empresa',
                             'url' => array(
-                                '#'
+                                'empresa/createTE'
                             )
                         ),
 
                     )
                 ),
                 array(
+                	'label'=>'Teléfono',
+                    'items' => array(
+                        BsHtml::menuHeader(BsHtml::italics('Teléfono')),
+                        array(
+                            'label' => 'Administrar Teléfonos',
+                            'url' => array(
+                                'telefono/admin'
+                            )
+                        ),
+                        array(
+                            'label' => 'Crear Teléfono',
+                            'url' => array(
+                                'telefono/create'
+                            )
+                        ),
+                        BsHtml::menuDivider(),
+                        BsHtml::menuHeader(BsHtml::italics('Licencias de uso')),
+                        array(
+                            'label' => 'Administrar Licencias',
+                            'url' => array(
+                                'telefono/licencia'
+                            )
+                        ),
+                        array(
+                            'label' => 'Recargar licencia',
+                            'url' => array(
+                                'telefono/createLI'
+                            )
+                        ),
+                        array(
+                            'label' => 'Listado Recargas',
+                            'url' => array(
+                                'telefono/recargas'
+                            )
+                        ),
+                    )
+                ),
+                array(
                 	'label'=>'Pregunta',
-                    'url' => array(
-                        '#'
-                    ),
                     'items' => array(
                         array(
                 			'label'=>'Pregunta',
@@ -100,9 +161,6 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 ),
                 array(
                 	'label'=>'Informes',
-                    'url' => array(
-                        '#'
-                    ),
                     'items' => array(
                         array(
                 			'label'=>'Informes',
@@ -115,9 +173,6 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 ),
                 array(
                 	'label'=>'Evaluaciones',
-                    'url' => array(
-                        '#'
-                    ),
                     'items' => array(
                         array(
                 			'label'=>'Evaluaciones',
@@ -135,19 +190,19 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
             'type' => 'navbar',
             'activateParents' => true,
             'items' => array(
-                array(
-                    'label' => 'About',
-                    'url' => array(
-                        '/site/page',
-                        'view' => 'about'
-                    )
-                ),
-                array(
-                    'label' => 'Contact',
-                    'url' => array(
-                        '/site/contact'
-                    )
-                ),
+                // array(
+                //     'label' => 'About',
+                //     'url' => array(
+                //         '/site/page',
+                //         'view' => 'about'
+                //     )
+                // ),
+                // array(
+                //     'label' => 'Contact',
+                //     'url' => array(
+                //         '/site/contact'
+                //     )
+                // ),
                 array(
                     'label' => 'Login',
                     'url' => array(
