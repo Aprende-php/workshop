@@ -17,7 +17,12 @@
 </head>
 <body>
 <div class="container">
-<?php $this->Widget('ext.toastr.ToastrWidget'); ?>
+<?php $this->Widget('ext.toastr.ToastrWidget',array(
+    // 'autoRegister'=>false,  
+    'options'=>array(
+            "positionClass"=> "toast-top-left",
+),
+    )); ?>
 <?php
 $this->widget('bootstrap.widgets.BsNavbar', array(
     'collapse' => true,
