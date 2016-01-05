@@ -47,7 +47,7 @@ $this->menu=array(
 		<tr>
 			<th style="width:20px">#</th>
 			<th>Ingreso</th>
-			<th>RUT</th>
+			<th style="width:100px">RUT</th>
 			<th>Navegador</th>
 			<th>IP</th>
 		</tr>
