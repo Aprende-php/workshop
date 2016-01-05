@@ -69,4 +69,35 @@ class Usuario extends CActiveRecord
 		}
 		return false;
 	}
+
+	public function newRecords()
+	{
+			// Guardar Registro de session en la BD
+			$browser=array("IE","OPERA","MOZILLA","NETSCAPE","FIREFOX","SAFARI","CHROME");
+			$os=array("WINDOWS","MAC","LINUX");
+			$info['browser'] = "OTHER";
+			$info['os'] = "OTHER";
+			foreach($browser as $parent)
+			{
+				$s = strpos(strtoupper($_SERVER['HTTP_USER_AGENT']), $parent);
+				$f = $s + strlen($parent);
+				$version = substr($_SERVER['HTTP_USER_AGENT'], $f, 15);
+				$version = preg_replace('/[^0-9,.]/','',$version);
+				if ($s)
+				{
+					$info['browser'] = $parent;
+					$info['version'] = $version;
+				}
+			}
+			foreach($os as $val)
+			{
+				if (strpos(strtoupper($_SERVER['HTTP_USER_AGENT']),$val)!==false)
+					$info['os'] = $val;
+			}
+			Yii::app()->db->createCommand()->insert('ingreso_sistema',array(
+				'usu_rut'=>$this->usu_rut,
+				'ing_navegador'=>$info['os'].' '.$info['browser'].' '.$info['version'],
+				'ing_ip'=>Yii::app()->request->userHostAddress,
+			));
+	}
 }
