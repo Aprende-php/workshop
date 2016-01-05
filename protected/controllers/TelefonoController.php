@@ -26,18 +26,22 @@ class TelefonoController extends Controller
 	*/
 	public function accessRules()
 	{
+		if (!Yii::app()->user->isGuest) {
+			$usuario=Usuario::model()->findByPk(Yii::app()->user->id);
+			if ($usuario->usu_rol=="admins") {
+				$permisos=array('update','admin','delete','create','deleteLI','licencia','createLi');
+			}
+			else
+				$permisos=array('');
+		}
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array(),
+				'actions'=>$permisos,
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>$permisos,
 				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','deleted','deleteLI'),
-				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
