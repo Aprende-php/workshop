@@ -34,8 +34,8 @@ class EvaluacionController extends Controller
 				$permisos=array('update','admin','delete','pdf','excel');
 			}
 			else{
-				if($usuario->usu_rol=="viewver"){
-					if (isset($_GET['id'])) {
+				if($usuario->usu_rol=="users"){
+					if(isset($_GET['id'])){
 						if (Evaluacion::model()->findByPk($_GET['id'])->emp_rut==$usuario->emp_rut)
 							$permisos=array('update','admin','pdf','delete','excel');
 						else
@@ -44,8 +44,17 @@ class EvaluacionController extends Controller
 					else
 						$permisos=array('admin','excel');
 				}
-				else
-					$permisos=array('');
+				else{
+					if ($usuario->usu_rol=="viewver"){
+						if(isset($_GET['id'])){
+							$permisos=array('admin','pdf');
+						}
+						else
+							$permisos=array('admin');
+					}
+					else
+						$permisos=array('');
+				}
 			}
 		}
 		else
@@ -101,8 +110,10 @@ class EvaluacionController extends Controller
 		$model->eva_desabilitado=0;
 		if (!Yii::app()->user->isGuest) {
 			$user=Usuario::model()->findByPk(Yii::app()->user->id);
-			if ($user->usu_rol=="viewver") 
+			if ($user->usu_rol=="users") 
 				$model->emp_rut=$user->emp_rut;
+			if ($user->usu_rol=="viewver") 
+				$model->usu_rut=$user->usu_rut;
 		}
 		if(isset($_GET['Evaluacion'])){
 			$model->attributes=$_GET['Evaluacion'];
@@ -116,11 +127,13 @@ class EvaluacionController extends Controller
    		echo BsHtml::buttonDropdown('', array(
     		array(
         		'label' => 'Editar',
-        		'url' => array('update', 'id'=>$data->eva_id)
+        		'url' => array('update', 'id'=>$data->eva_id),
+        		'visible'=>Usuario::model()->findByPk(Yii::app()->user->id)->usu_rol!="viewver"
     		),
     		array(
         		'label' => 'Eliminar',
-        		'url' => '#','linkOptions'=>array('submit'=>array('delete','id'=>$data->eva_id),'confirm'=>'Esta seguro de borrar este item?')
+        		'url' => '#','linkOptions'=>array('submit'=>array('delete','id'=>$data->eva_id),'confirm'=>'Esta seguro de borrar este item?'),
+        		'visible'=>Usuario::model()->findByPk(Yii::app()->user->id)->usu_rol!="viewver"
     		),
     		array(
         		'label' => 'Infome en PDF',
@@ -163,11 +176,6 @@ class EvaluacionController extends Controller
 								 ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
 								 ->setKeywords("")
 								 ->setCategory("");
-	// $objPHPExcel->setActiveSheetIndex(0)->getStyle('A1')->getFont()->setSize(20);
-	// $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('B')->setWidth(20);
-	// var_dump($objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('A')->getWidth());
-	// var_dump($objPHPExcel->setActiveSheetIndex(0)->getStyle('A1')->getFont()->setSize(20));
-	// die();
 	if (Usuario::model()->findByPk(Yii::app()->user->id)->usu_rol=="admins")
 		$var=Evaluacion::model()->findAll();//  Contiene datos de la Evaluacion a  imprimir
 	else

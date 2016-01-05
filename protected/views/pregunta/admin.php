@@ -12,12 +12,6 @@ $this->menu=array(
 ?>
 <?php 
 
-// echo (CHtml::image(Yii::app()->baseUrl . 
-// 	'/images/pregunta/black-dofus-149440.png.png','black-dofus-149440.png.png',array('width'=>100)));
-// die();
-// var_dump(Usuario::model()->findByPk(Yii::app()->user->id)->usu_rol=="admins");
-// die();
-
  ?>
 
 <?= BsHtml::pageHeader('Administrar', 'Preguntas') ?>
@@ -44,9 +38,6 @@ $this->menu=array(
 		'pre_descripcion',
 		'pre_comentario',
 		'pre_fecha_creacion',
-		// array(	'name'=>'pre_desabilitado',
-		// 		'value'=>'$data->pre_desabilitado',
-		// 		'visible'=>Usuario::model()->findByPk(Yii::app()->user->id)->usu_rol=="admins"),
 		array(
         	//call the function 'renderButtons' from the current controller
         	'value'=>array($this,'renderButtons'),
