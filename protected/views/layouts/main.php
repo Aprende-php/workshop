@@ -155,7 +155,6 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 array(
                 	'label'=>'Pregunta',
                     'items' => array(
-                        BsHtml::menuDivider(),
                         BsHtml::menuHeader(BsHtml::italics('Preguntas',
                             $htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;'))),
                         // BsHtml::menuDivider(),
