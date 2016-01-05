@@ -65,25 +65,6 @@ class EvaluacionController extends Controller
 		);
 	}
 
-	public function actionCreate()
-	{
-		$model=new Evaluacion;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Evaluacion']))
-		{
-			$model->attributes=$_POST['Evaluacion'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->eva_id));
-		}
-
-		$this->render('create',array(
-			'model'=>$model,
-		));
-	}
-
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
@@ -263,24 +244,24 @@ class EvaluacionController extends Controller
 		           	 		->setCellValue(chr($i+65).'1',"Pregunta"." ".$c);
 		        $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension(chr($i+65))->setWidth(50);
 			}
-			else
+			else{
 				$objPHPExcel->setActiveSheetIndex(0)
 		        		    ->setCellValue(chr($j+64).chr($k+65).'1',"Pregunta"." ".$c);
-		        // $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension(chr($j+64).chr($k+65))->setWidth(50);
+		        $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension(chr($j+64).chr($k+65))->setWidth(50);
+				}
 		}
 		else
 		{
 			if ($j==null) {
 				$objPHPExcel->setActiveSheetIndex(0)
 		           	 		->setCellValue(chr($i+65).'1',"Respuesta"." ".($c));
-		        $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension(chr($i+65))->setWidth(20);   	 		
+		        $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension(chr($i+65))->setWidth(15);   	 		
 		        $c++;
 			}
 			else{
-
 				$objPHPExcel->setActiveSheetIndex(0)
 		        		    ->setCellValue(chr($j+64).chr($k+65).'1',"Respuesta"." ".$c);
-		        // $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension(chr($j+64).chr($k+65))->setWidth(20);		    
+		        $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension(chr($j+64).chr($k+65))->setWidth(15);		    
 		       	$c++;
 				}
 		
