@@ -16,14 +16,18 @@
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 <body>
-<div class="container">
-<?php $this->Widget('ext.toastr.ToastrWidget',array(
-    // 'autoRegister'=>false,  
-    'options'=>array(
-            "positionClass"=> "toast-top-left",
-),
-    )); ?>
-<?php
+<div class="container">    <?php
+if(!Yii::app()->user->isGuest){
+    $usuario=Usuario::model()->findBypk(Yii::app()->user->id);
+    if ($usuario->usu_rol=="admins")
+        $ocultar=null;
+    else
+        $ocultar="display:none";
+}
+else{
+    $usuario=new Usuario;
+    $ocultar="display:none";
+    }
 $this->widget('bootstrap.widgets.BsNavbar', array(
     'collapse' => true,
     'brandLabel' => BsHtml::icon(BsHtml::GLYPHICON_FIRE).BsHtml::bold(' WorkShop').BsHtml::small(' Qualitatcorp'),
@@ -36,9 +40,9 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
             'items' => array(
                 array(
                     'label' => 'Usuario',
+                    'visible'=>$usuario->usu_rol=="admins",
                     'items' => array(
-                        BsHtml::menuHeader(BsHtml::italics('Usuarios',
-                            $htmlOptions=array('style'=> 'text-decoration: underline;'))),
+                        BsHtml::menuHeader(BsHtml::italics('Usuarios',$htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;font-weight:bold;'))),
                         array(
                             'label' => 'Administar Usuarios',
                             'url' => array(
@@ -62,11 +66,12 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 ),
                 array(
                     'label' => 'Empresa',
+                    'visible'=>$usuario->usu_rol=="admins",
                     'items' => array(
-                        BsHtml::menuHeader(BsHtml::italics('Empresa',
-                            $htmlOptions=array('style'=> 'text-decoration: underline;'))),
+                        BsHtml::menuHeader(BsHtml::italics('Empresa',$htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;font-weight:bold;')), array(
                             // 'class' => 'text-center',
                             // 'style' => 'color:#99cc32;font-size:32px;'
+                        )),
                         array(
                             'label' => 'Administrar Empresas',
                             'url' => array(
@@ -80,8 +85,7 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                             )
                         ),
                         BsHtml::menuDivider(),
-                        BsHtml::menuHeader(BsHtml::italics('Área Operativa',
-                            $htmlOptions=array('style'=> 'text-decoration: underline;'))),
+                        BsHtml::menuHeader(BsHtml::italics('Área Operativa',$htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;font-weight:bold;'))),
                         array(
                             'label' => 'Administrar área Operativa',
                             'url' => array(
@@ -95,8 +99,7 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                             )
                         ),
                         BsHtml::menuDivider(),
-                        BsHtml::menuHeader(BsHtml::italics('Tipo de Empresa',
-                            $htmlOptions=array('style'=> 'text-decoration: underline;'))),
+                        BsHtml::menuHeader(BsHtml::italics('Tipo de Empresa',$htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;font-weight:bold;'))),
                         array(
                             'label' => 'Tipo Empresa',
                             'url' => array(
@@ -114,24 +117,28 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 ),
                 array(
                 	'label'=>'Teléfono',
+                    'visible'=>$usuario->usu_rol=="admins",
                     'items' => array(
-                        BsHtml::menuHeader(BsHtml::italics('Teléfono',
-                            $htmlOptions=array('style'=> 'text-decoration: underline;'))),
+                        BsHtml::menuHeader(BsHtml::italics('Teléfono',$htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;font-weight:bold;'))
+                            // ,$htmlOptions=array('style'=>$ocultar)
+                            ),
                         array(
                             'label' => 'Administrar Teléfonos',
                             'url' => array(
                                 'telefono/admin'
-                            )
+                            ),
+                            // 'visible'=>$usuario->usu_rol=="admins",
                         ),
                         array(
                             'label' => 'Crear Teléfono',
                             'url' => array(
                                 'telefono/create'
-                            )
+                            ),
+                            // 'visible'=>$usuario->usu_rol=="admins",
                         ),
-                        BsHtml::menuDivider(),
-                        BsHtml::menuHeader(BsHtml::italics('Licencias de uso',
-                            $htmlOptions=array('style'=> 'text-decoration: underline;'))),
+                        BsHtml::menuDivider(//$htmlOptions=array('style'=>$ocultar)
+                            ),
+                        BsHtml::menuHeader(BsHtml::italics('Licencias de uso',$htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;font-weight:bold;'))),
                         array(
                             'label' => 'Administrar Licencias',
                             'url' => array(
@@ -154,9 +161,11 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 ),
                 array(
                 	'label'=>'Pregunta',
+                    'visible'=>$usuario->usu_rol=="admins",
                     'items' => array(
+                        BsHtml::menuDivider(),
                         BsHtml::menuHeader(BsHtml::italics('Preguntas',
-                            $htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;'))),
+                            $htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;font-weight:bold;'))),
                         // BsHtml::menuDivider(),
                         array(
                 			'label'=>'Administrar Preguntas',
@@ -172,8 +181,7 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                         ),
                         BsHtml::menuDivider(),
                         BsHtml::menuHeader(BsHtml::italics('Tipo de Preguntas',
-                            $htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;'))),
-                        // BsHtml::menuDivider(),
+                            $htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;font-weight:bold;'))),
                         array(
                             'label'=>'Administrar Tipos de Preguntas',
                             'url' => array(
@@ -186,47 +194,30 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                                 '//tipopregunta/create'
                             )
                         ),
-                        // BsHtml::menuDivider(),
-                        
-
-                    )
-                ),
-                array(
-                	'label'=>'Informes',
-                    'items' => array(
-                        array(
-                			'label'=>'Informes',
-                            'url' => array(
-                                '#'
-                            )
-                        ),
-
                     )
                 ),
                 array(
                 	'label'=>'Evaluaciones',
                     'items' => array(
-                        BsHtml::menuHeader(BsHtml::italics('Evaluaciones',
-                            $htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;'))),
+                        BsHtml::menuHeader(BsHtml::italics('Evaluaciones')
+                            ,$htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;font-weight:bold;')),
 
                             array(
                                 'label' => 'Administrar Evaluaciones',
                                 'url' => array('evaluacion/admin')
                                 ),
-                            array(
-                                'label' => 'Registrar Evaluación',
-                                'url' => array('evaluacion/create')
-                                ),
-                            BsHtml::menuDivider(),
-                            BsHtml::menuHeader(BsHtml::italics('Tipo de Evaluaciones',
-                                $htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;'))),
+                            BsHtml::menuDivider($htmlOptions=array('style'=>$ocultar)),
+                            BsHtml::menuHeader(BsHtml::italics('Tipo de Evaluaciones')
+                                ,$htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;font-weight:bold;'.$ocultar)),
                             array(
                                 'label' => 'Administrar tipo Evaluaciones',
-                                'url' => array('tipoevaluacion/admin')
+                                'url' => array('tipoevaluacion/admin'),
+                                'visible'=>$usuario->usu_rol=="admins"
                                 ),
                             array(
                                 'label' => 'Registrar tipo Evaluación',
-                                'url' => array('tipoevaluacion/create')
+                                'url' => array('tipoevaluacion/create'),
+                                'visible'=>$usuario->usu_rol=="admins"
                                 ),
 
                     )
@@ -239,32 +230,19 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
             'type' => 'navbar',
             'activateParents' => true,
             'items' => array(
-                // array(
-                //     'label' => 'About',
-                //     'url' => array(
-                //         '/site/page',
-                //         'view' => 'about'
-                //     )
-                // ),
-                // array(
-                //     'label' => 'Contact',
-                //     'url' => array(
-                //         '/site/contact'
-                //     )
-                // ),
-                // array(
-                //     'label' => 'Login',
-                //     'url' => array(
-                //         '/site/login'
-                //     ),
-                //     'pull' => BsHtml::NAVBAR_NAV_PULL_RIGHT,
-                //     'visible' => Yii::app()->user->isGuest
-                // ),
+                array(
+                    'label' => 'Login',
+                    'url' => array(
+                        '/usuario/login'
+                    ),
+                    'pull' => BsHtml::NAVBAR_NAV_PULL_RIGHT,
+                    'visible' => Yii::app()->user->isGuest
+                ),
                 array(
                     'label' => 'Logout (' . Yii::app()->user->name . ')',
                     'pull' => BsHtml::NAVBAR_NAV_PULL_RIGHT,
                     'url' => array(
-                        '/site/logout'
+                        '/usuario/logout'
                     ),
                     'visible' => !Yii::app()->user->isGuest
                 )

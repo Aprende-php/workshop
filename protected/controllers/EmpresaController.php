@@ -26,17 +26,21 @@ class EmpresaController extends Controller
 	*/
 	public function accessRules()
 	{
+		if (!Yii::app()->user->isGuest) {
+			$usuario=Usuario::model()->findByPk(Yii::app()->user->id);
+			if ($usuario->usu_rol=="admins") {
+				$permisos=array('create','update','areaoperativa','deleteE','createAO','deleteAO','updateAO','tipoempresa','createTE','updateTE','deleteTE','admin','delete');
+			}
+			else
+				$permisos=array('');
+		}
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','areaoperativa','deleteE','createAO','deleteAO','updateAO','tipoempresa','createTE','updateTE','deleteTE'),
+				'actions'=>$permisos,
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>$permisos,
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -44,9 +48,6 @@ class EmpresaController extends Controller
 			),
 		);
 	}
-/** 
-	Tipo Empresa
-*/
 
 	public function actionTipoEmpresa()
 	{
