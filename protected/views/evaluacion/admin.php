@@ -5,12 +5,13 @@
 $this->breadcrumbs=array(
 	'Administrar',
 );
-if (Usuario::model()->findByPk(Yii::app()->user->id)->usu_rol=='admins') {
-	$this->menu=array(
-		array('label'=>'Informe Excel','url'=>array('excel'))
-	);
-}
+
 if (!Yii::app()->user->isGuest) {
+	// if (Usuario::model()->findByPk(Yii::app()->user->id)->usu_rol=='admins') 
+		$this->menu=array(
+			array('label'=>'Informe Excel','url'=>array('excel'))
+		);
+
 	if (Usuario::model()->findByPk(Yii::app()->user->id)->usu_rol=='viewver') {
 		$empresa="Empresa"." ".$model->emp_nombre." / ".$model->emp_rut;
 	}

@@ -37,12 +37,12 @@ class EvaluacionController extends Controller
 				if($usuario->usu_rol=="viewver"){
 					if (isset($_GET['id'])) {
 						if (Evaluacion::model()->findByPk($_GET['id'])->emp_rut==$usuario->emp_rut)
-							$permisos=array('update','admin','pdf','delete');
+							$permisos=array('update','admin','pdf','delete','excel');
 						else
 							$permisos=array('admin');
 					}
 					else
-						$permisos=array('admin');
+						$permisos=array('admin','excel');
 				}
 				else
 					$permisos=array('');
@@ -182,17 +182,30 @@ class EvaluacionController extends Controller
 								 ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
 								 ->setKeywords("")
 								 ->setCategory("");
-	$var=Evaluacion::model()->findAll();//  Contiene datos de la Evaluacion a  imprimir
+	// $objPHPExcel->setActiveSheetIndex(0)->getStyle('A1')->getFont()->setSize(20);
+	// $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('B')->setWidth(20);
+	// var_dump($objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('A')->getWidth());
+	// var_dump($objPHPExcel->setActiveSheetIndex(0)->getStyle('A1')->getFont()->setSize(20));
+	// die();
+	if (Usuario::model()->findByPk(Yii::app()->user->id)->usu_rol=="admins")
+		$var=Evaluacion::model()->findAll();//  Contiene datos de la Evaluacion a  imprimir
+	else
+		$var=Evaluacion::model()->findAllByAttributes(array('emp_rut'=>Usuario::model()->findByPk(Yii::app()->user->id)->emp_rut));
 	foreach ($var as $key => $value) {
+		if (Telefono::model()->findByAttributes(array('tel_numero'=>$value->tel_numero,'emp_rut'=>$value->emp_rut))!=null){
+			$fono=Telefono::model()->findByAttributes(array('tel_numero'=>$value->tel_numero,'emp_rut'=>$value->emp_rut))->tel_mac;
+		}
+		else
+			$fono=null;
   		$var2=EvaluacionPregunta::model()->findAllByAttributes(array('eva_id'=>$value->eva_id));// datos de las respuestas a la evaluacion a imprimir
 	    $objPHPExcel->setActiveSheetIndex(0)
 	            ->setCellValue('A'.($key+2), ($key+1))
 	            ->setCellValue('B'.($key+2), $value->eva_fecha)
 	            ->setCellValue('C'.($key+2), $value->usu_rut)
 	            ->setCellValue('D'.($key+2), $value->emp_rut)
-	            ->setCellValue('E'.($key+2), $value->emp_nombre);
-	            // ->setCellValue('F'.($key+2), $fono->tel_numero);
-	            // ->setCellValue('G'.($key+2), $fono->tel->mac);
+	            ->setCellValue('E'.($key+2), $value->emp_nombre)
+	            ->setCellValue('F'.($key+2), $value->tel_numero)
+	            ->setCellValue('G'.($key+2), $fono);
 	    $c=7;
 	    $k=0;
 	    $j=null;
@@ -247,23 +260,27 @@ class EvaluacionController extends Controller
 		if ($i%2!=0) {
 			if ($j==null) {
 				$objPHPExcel->setActiveSheetIndex(0)
-		           	 		->setCellValue(chr($i+65).'1',"P".$c);
+		           	 		->setCellValue(chr($i+65).'1',"Pregunta"." ".$c);
+		        $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension(chr($i+65))->setWidth(50);
 			}
 			else
 				$objPHPExcel->setActiveSheetIndex(0)
-		        		    ->setCellValue(chr($j+64).chr($k+65).'1',"P".$c);
+		        		    ->setCellValue(chr($j+64).chr($k+65).'1',"Pregunta"." ".$c);
+		        // $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension(chr($j+64).chr($k+65))->setWidth(50);
 		}
 		else
 		{
 			if ($j==null) {
 				$objPHPExcel->setActiveSheetIndex(0)
-		           	 		->setCellValue(chr($i+65).'1',"R".($c));
+		           	 		->setCellValue(chr($i+65).'1',"Respuesta"." ".($c));
+		        $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension(chr($i+65))->setWidth(20);   	 		
 		        $c++;
 			}
 			else{
 
 				$objPHPExcel->setActiveSheetIndex(0)
-		        		    ->setCellValue(chr($j+64).chr($k+65).'1',"R".$c);
+		        		    ->setCellValue(chr($j+64).chr($k+65).'1',"Respuesta"." ".$c);
+		        // $objPHPExcel->setActiveSheetIndex(0)->getColumnDimension(chr($j+64).chr($k+65))->setWidth(20);		    
 		       	$c++;
 				}
 		
@@ -275,8 +292,15 @@ class EvaluacionController extends Controller
 	            ->setCellValue('C1', 'Usuario')
 	            ->setCellValue('D1', 'Rut Empresa')
 	            ->setCellValue('E1', 'Empresa')
-	            ->setCellValue('F1', 'N° Telefono!')
+	            ->setCellValue('F1', 'N° Telefono')
 	            ->setCellValue('G1', 'Mac Telefono');
+	$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('A')->setWidth(10);
+	$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('B')->setWidth(20);
+	$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('C')->setWidth(20);
+	$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('D')->setWidth(20);
+	$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('E')->setWidth(20);
+	$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('F')->setWidth(20);
+	$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('G')->setWidth(25);
 
 	// Rename worksheet
 	$objPHPExcel->getActiveSheet()->setTitle('Simple');
