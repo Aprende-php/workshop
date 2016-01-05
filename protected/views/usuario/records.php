@@ -64,5 +64,3 @@ $this->menu=array(
 	<?php endforeach ?>
 	</tbody>
 </table>
-
-<h1><?=Yii::app()->request->getUserHostAddress(); ?></h1>
