@@ -1,4 +1,4 @@
 /index.php
 assets/*
-/protected/config/database.php
+protected/config/database.php
 protected/runtime/*
