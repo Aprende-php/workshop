@@ -37,7 +37,8 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 array(
                     'label' => 'Usuario',
                     'items' => array(
-                        BsHtml::menuHeader(BsHtml::italics('Usuarios')),
+                        BsHtml::menuHeader(BsHtml::italics('Usuarios',
+                            $htmlOptions=array('style'=> 'text-decoration: underline;'))),
                         array(
                             'label' => 'Administar Usuarios',
                             'url' => array(
@@ -62,10 +63,10 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 array(
                     'label' => 'Empresa',
                     'items' => array(
-                        BsHtml::menuHeader(BsHtml::italics('Empresa'), array(
+                        BsHtml::menuHeader(BsHtml::italics('Empresa',
+                            $htmlOptions=array('style'=> 'text-decoration: underline;'))),
                             // 'class' => 'text-center',
                             // 'style' => 'color:#99cc32;font-size:32px;'
-                        )),
                         array(
                             'label' => 'Administrar Empresas',
                             'url' => array(
@@ -79,7 +80,8 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                             )
                         ),
                         BsHtml::menuDivider(),
-                        BsHtml::menuHeader(BsHtml::italics('Área Operativa')),
+                        BsHtml::menuHeader(BsHtml::italics('Área Operativa',
+                            $htmlOptions=array('style'=> 'text-decoration: underline;'))),
                         array(
                             'label' => 'Administrar área Operativa',
                             'url' => array(
@@ -93,7 +95,8 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                             )
                         ),
                         BsHtml::menuDivider(),
-                        BsHtml::menuHeader(BsHtml::italics('Tipo de Empresa')),
+                        BsHtml::menuHeader(BsHtml::italics('Tipo de Empresa',
+                            $htmlOptions=array('style'=> 'text-decoration: underline;'))),
                         array(
                             'label' => 'Tipo Empresa',
                             'url' => array(
@@ -112,7 +115,8 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 array(
                 	'label'=>'Teléfono',
                     'items' => array(
-                        BsHtml::menuHeader(BsHtml::italics('Teléfono')),
+                        BsHtml::menuHeader(BsHtml::italics('Teléfono',
+                            $htmlOptions=array('style'=> 'text-decoration: underline;'))),
                         array(
                             'label' => 'Administrar Teléfonos',
                             'url' => array(
@@ -126,7 +130,8 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                             )
                         ),
                         BsHtml::menuDivider(),
-                        BsHtml::menuHeader(BsHtml::italics('Licencias de uso')),
+                        BsHtml::menuHeader(BsHtml::italics('Licencias de uso',
+                            $htmlOptions=array('style'=> 'text-decoration: underline;'))),
                         array(
                             'label' => 'Administrar Licencias',
                             'url' => array(
@@ -248,14 +253,14 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 //         '/site/contact'
                 //     )
                 // ),
-                array(
-                    'label' => 'Login',
-                    'url' => array(
-                        '/site/login'
-                    ),
-                    'pull' => BsHtml::NAVBAR_NAV_PULL_RIGHT,
-                    'visible' => Yii::app()->user->isGuest
-                ),
+                // array(
+                //     'label' => 'Login',
+                //     'url' => array(
+                //         '/site/login'
+                //     ),
+                //     'pull' => BsHtml::NAVBAR_NAV_PULL_RIGHT,
+                //     'visible' => Yii::app()->user->isGuest
+                // ),
                 array(
                     'label' => 'Logout (' . Yii::app()->user->name . ')',
                     'pull' => BsHtml::NAVBAR_NAV_PULL_RIGHT,
