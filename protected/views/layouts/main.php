@@ -36,6 +36,7 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
             'items' => array(
                 array(
                     'label' => 'Usuario',
+                    'visible'=>in_array("Admins", array('Admins')),
                     'items' => array(
                         BsHtml::menuHeader(BsHtml::italics('Usuarios',
                             $htmlOptions=array('style'=> 'text-decoration: underline;'))),
@@ -62,6 +63,7 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 ),
                 array(
                     'label' => 'Empresa',
+                    'visible'=>in_array("Admins", array('Admins')),
                     'items' => array(
                         BsHtml::menuHeader(BsHtml::italics('Empresa',
                             $htmlOptions=array('style'=> 'text-decoration: underline;'))),
@@ -114,6 +116,7 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 ),
                 array(
                 	'label'=>'Teléfono',
+                    'visible'=>in_array("Admins", array('Admins')),
                     'items' => array(
                         BsHtml::menuHeader(BsHtml::italics('Teléfono',
                             $htmlOptions=array('style'=> 'text-decoration: underline;'))),
@@ -154,6 +157,7 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 ),
                 array(
                 	'label'=>'Pregunta',
+                    'visible'=>in_array("Admins", array('Admins')),
                     'items' => array(
                         BsHtml::menuHeader(BsHtml::italics('Preguntas',
                             $htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;'))),
@@ -205,6 +209,7 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 ),
                 array(
                 	'label'=>'Evaluaciones',
+                    'visible'=>in_array("Admins", array('Admins')),
                     'items' => array(
                         BsHtml::menuHeader(BsHtml::italics('Evaluaciones',
                             $htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;'))),

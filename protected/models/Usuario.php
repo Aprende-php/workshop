@@ -12,6 +12,7 @@ class Usuario extends CActiveRecord
 
 		return array(
 			array('usu_rut, emp_rut, car_id, usu_nombre, usu_apellido, usu_password, usu_rol, usu_fono, usu_email', 'required'),
+			array('usu_rut', 'unique','message'=>'Este usuario ya existe.'), 
 			array('usu_desabilitado', 'numerical', 'integerOnly'=>true),
 			array('usu_rut, emp_rut', 'length', 'max'=>13),
 			array('car_id', 'length', 'max'=>10),
