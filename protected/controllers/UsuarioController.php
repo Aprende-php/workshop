@@ -48,6 +48,7 @@ class UsuarioController extends Controller
 		Autentificacion de Usuario
 */	
 
+
 public function actionLogin()
 	{
 		$this->layout='loginLayout';
@@ -85,8 +86,12 @@ public function actionLogin()
 		if(isset($_POST['Usuario']))
 		{
 			$model->attributes=$_POST['Usuario'];
-			if($model->save())
+			if($model->save()){
+				Yii::app()->user->setFlash('success', "Se ha guardado correctamente.");
 				$this->redirect(array('admin'));
+			}
+			else 
+				Yii::app()->user->setFlash('error', "No se logro guardar.");
 		}
 
 		$this->render('create',array(
@@ -101,8 +106,10 @@ public function actionLogin()
 		if(isset($_POST['Usuario']))
 		{
 			$model->attributes=$_POST['Usuario'];
-			if($model->save())
+			if($model->save()){
+				Yii::app()->user->setFlash('success', "Se ha modificado correctamente.");
 				$this->redirect(array('admin'));
+			}
 		}
 
 		$this->render('update',array(
@@ -112,18 +119,12 @@ public function actionLogin()
 
 	public function actionDeleted()
 	{
-		if(Yii::app()->request->isPostRequest)
-		{
-			// we only allow deletion via POST request
-			$this->loadModel($id)->delete();
-
-			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-			if(!isset($_GET['ajax']))
-				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+		$model=Usuario::model()->findByAttributes(array('usu_rut'=>$_GET['rut']));
+		$model->usu_desabilitado=1;
+		$model->save();
+		Yii::app()->user->setFlash('success', "Se ha eliminado correctamente.");
+		$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 		}
-		else
-			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
-	}
 
 	public function actionIndex()
 	{
@@ -167,7 +168,15 @@ public function actionLogin()
 	*/
 	public function actionRecords()
 	{
-		$model=IngresoSistema::model()->findAll();
-		var_dump($model);
+	$List = Yii::app()->db->createCommand()
+		->select('*')
+		->from('ingreso_sistema')
+		// ->leftJoin('cargo', 'usuario.car_id=cargo.car_id')
+		// ->leftJoin('empresa', 'usuario.emp_rut=empresa.emp_rut')
+		// ->where('usu_desabilitado=0')
+		->order('ing_fecha_ingreso desc')
+		// ->limit(100)
+		->queryAll();
+		$this->render('records',array('List'=>$List));
 	}
 }

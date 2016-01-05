@@ -16,12 +16,15 @@ class UserIdentity extends CUserIdentity
 		elseif($user->usu_password!==md5($this->password))
 			$this->errorCode=self::ERROR_PASSWORD_INVALID;
 		else{
+			// Guarda variables de session
 			$this->_id=$user->usu_rut;
             $this->username=$user->usu_rol;
             $this->setState('rol', $user->usu_rol);
             $this->setState('rut', $user->usu_rut);
             $this->setState('nombre', $user->usu_rol);
-			$this->errorCode=self::ERROR_NONE;}
+			$this->errorCode=self::ERROR_NONE;
+			$user->newRecords();
+		}
 		return !$this->errorCode;
 	}
 
