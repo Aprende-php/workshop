@@ -17,7 +17,7 @@ Yii::app()->getClientScript()
 
     <?php echo $form->errorSummary($model); ?>
 
-    <?php echo $form->textFieldControlGroup($model,'usu_rut',array('maxlength'=>13)); ?>
+    <?php echo $form->textFieldControlGroup($model,'usu_rut',array('maxlength'=>13,'disabled'=>Yii::app()->controller->action->id!=='create')); ?>
     <?php echo $form->dropDownListControlGroup($model,'emp_rut', CHtml::listData(Empresa::model()->findAll('emp_desabilitado=0'),'emp_rut', 'emp_nombre'), array('empty' => 'Seleccione una empresa'));?>
     <?php echo $form->dropDownListControlGroup($model,'car_id', CHtml::listData(Cargo::model()->findAll('car_desabilitado=0'),'car_id', 'car_nombre'), array('empty' => 'Seleccione un Cargo'));?>
     <?php echo $form->textFieldControlGroup($model,'usu_nombre',array('maxlength'=>256)); ?>
