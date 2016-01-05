@@ -18,7 +18,7 @@ Yii::app()->getClientScript()
 
     <?php echo $form->errorSummary($model); ?>
 
-    <?php echo $form->textFieldControlGroup($model,'emp_rut',array('maxlength'=>13)); ?>
+    <?php echo $form->textFieldControlGroup($model,'emp_rut',array('maxlength'=>13,'disabled'=>Yii::app()->controller->action->id!=='create')); ?>
     <?php echo $form->dropDownListControlGroup($model, 'tem_id', CHtml::listData(TipoEmpresa::model()->findAll('tem_desabilitado=0'),'tem_id', 'tem_nombre'), array('empty' => 'Seleccione un tipo'));?>
     <?php echo $form->dropDownListControlGroup($model, 'are_id', CHtml::listData(AreaOperativa::model()->findAll('are_desabilitado=0'),'are_id', 'are_nombre'), array('empty' => 'Seleccione un Área'));?>
     <?php echo $form->textFieldControlGroup($model,'emp_nombre',array('maxlength'=>256)); ?>
@@ -27,5 +27,5 @@ Yii::app()->getClientScript()
     <?php echo $form->textFieldControlGroup($model,'emp_email',array('maxlength'=>256)); ?>
 
     <?php echo BsHtml::formActions(array(BsHtml::submitButton('Guardar', array('color' => BsHtml::BUTTON_COLOR_PRIMARY))));?>
-
+<?php echo Yii::app()->controller->action->id ?>
 <?php $this->endWidget(); ?>
