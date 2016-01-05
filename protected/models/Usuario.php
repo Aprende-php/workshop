@@ -2,7 +2,6 @@
 
 class Usuario extends CActiveRecord
 {
-
 	public function tableName()
 	{
 		return 'usuario';
@@ -55,6 +54,7 @@ class Usuario extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
 
 	public function beforeSave()
 	{

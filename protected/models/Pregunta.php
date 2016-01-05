@@ -32,7 +32,7 @@ class Pregunta extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('tpr_id, tev_id, pre_descripcion, pre_imagen, pre_fecha_creacion', 'required'),
+			array('tpr_id, tev_id, pre_descripcion', 'required'),
 			array('pre_desabilitado', 'numerical', 'integerOnly'=>true),
 			array('tpr_id, tev_id', 'length', 'max'=>10),
 			array('pre_descripcion', 'length', 'max'=>512),
@@ -115,5 +115,13 @@ class Pregunta extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+	public function gettpr_nombre()
+	{
+		return ($model=TipoPregunta::model()->findByPk($this->tpr_id))?$model->tpr_nombre:"Sin Nombre";
+	}
+	public function gettev_nombre()
+	{
+		return ($model=TipoEvaluacion::model()->findByPk($this->tev_id))?$model->tev_nombre:"Sin Nombre";
 	}
 }

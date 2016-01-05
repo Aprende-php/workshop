@@ -26,34 +26,28 @@ class TipoEvaluacionController extends Controller
 	 */
 	public function accessRules()
 	{
+		if (!Yii::app()->user->isGuest) {
+			$usuario=Usuario::model()->findByPk(Yii::app()->user->id);
+			// echo $usuario->usu_rol;
+			if ($usuario->usu_rol=="admins") {
+				$permisos=array('update','admin','delete','create');
+			}
+			else
+				$permisos=array('');
+		}
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>$permisos,
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>$permisos,
 				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
 			),
 		);
-	}
-
-	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
-	public function actionView($id)
-	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
 	}
 
 	/**
@@ -111,25 +105,13 @@ class TipoEvaluacionController extends Controller
 	public function actionDelete($id)
 	{
 		$model= TipoEvaluacion::model()->findByPk($id);
-		$model->tev_desabilitado=0;
+		$model->tev_desabilitado=1;
 		$model->save();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
-
-	/**
-	 * Lists all models.
-	 */
-	public function actionIndex()
-	{
-		$dataProvider=new CActiveDataProvider('TipoEvaluacion');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
-	}
-
 	/**
 	 * Manages all models.
 	 */
@@ -137,6 +119,7 @@ class TipoEvaluacionController extends Controller
 	{
 		$model=new TipoEvaluacion('search');
 		$model->unsetAttributes();  // clear any default values
+		$model->tev_desabilitado=0;
 		if(isset($_GET['TipoEvaluacion']))
 			$model->attributes=$_GET['TipoEvaluacion'];
 
@@ -159,6 +142,27 @@ class TipoEvaluacionController extends Controller
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
 	}
+
+
+	public function renderButtons($data, $row) {
+   		echo BsHtml::buttonDropdown('', array(
+    		array(
+        		'label' => 'Editar',
+        		'url' => array('update', 'id'=>$data->tev_id)
+    		),
+    		array(
+        		'label' => 'Eliminar',
+        		'url' => '#','linkOptions'=>array('submit'=>array('delete','id'=>$data->tev_id),'confirm'=>'Esta seguro de borrar este item?')
+    		),
+			), array(
+    			'split' => false,
+    			'size' => BsHtml::BUTTON_SIZE_SMALL,
+    			'color' => BsHtml::BUTTON_COLOR_PRIMARY,
+    			'icon'=>BsHtml::GLYPHICON_COG,
+			));
+		}
+
+
 
 	/**
 	 * Performs the AJAX validation.

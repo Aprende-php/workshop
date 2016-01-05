@@ -3,7 +3,7 @@
 /* @var $model TipoEvaluacion */
 
 $this->breadcrumbs=array(
-	// 'Tipo Evaluacions'=>array('index'),
+	'Administrar'=>array('admin'),
 	'Registrar',
 );
 
@@ -13,6 +13,9 @@ $this->menu=array(
 );
 ?>
 
-<h1>Registrar Tipo de Evaluación</h1>
-
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<?php echo BsHtml::pageHeader('Crear','Tipo Evaluación') ?>
+		<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+	</div>
+</div>

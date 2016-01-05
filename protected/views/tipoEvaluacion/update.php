@@ -3,19 +3,18 @@
 /* @var $model TipoEvaluacion */
 
 $this->breadcrumbs=array(
-	// 'Tipo Evaluacions'=>array('index'),
-	$model->tev_nombre=>array('view','id'=>$model->tev_id),
+	'Administrar'=>array('admin'),
 	'Editar',
 );
 
 $this->menu=array(
-	// array('label'=>'List TipoEvaluacion', 'url'=>array('index')),
 	array('label'=>'Registrar', 'url'=>array('create')),
-	array('label'=>'Detalle', 'url'=>array('view', 'id'=>$model->tev_id)),
 	array('label'=>'Cancelar', 'url'=>array('admin')),
 );
 ?>
-
-<h1>Editar Tipo de Evaluación <?php echo $model->tev_nombre; ?></h1>
-
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<?php echo BsHtml::pageHeader('Modificar','Tipo Evaluación'." ".$model->tev_nombre) ?>
+		<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+	</div>
+</div>

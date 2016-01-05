@@ -3,58 +3,29 @@
 /* @var $model TipoPregunta */
 
 $this->breadcrumbs=array(
-	// 'Index'=>array('index'),
 	'Administrar',
 );
 
 $this->menu=array(
-	// array('label'=>'index', 'url'=>array('index')),
 	array('label'=>'Registrar', 'url'=>array('create')),
-);
+);?>
 
-// Yii::app()->clientScript->registerScript('search', "
-// $('.search-button').click(function(){
-// 	$('.search-form').toggle();
-// 	return false;
-// });
-// $('.search-form form').submit(function(){
-// 	$('#tipo-pregunta-grid').yiiGridView('update', {
-// 		data: $(this).serialize()
-// 	});
-// 	return false;
-// });
-// ");
-?>
+<?php echo BsHtml::pageHeader('Administar','Tipo Pregunta') ?>
 
-<h1>Administrar Tipo de Preguntas</h1>
-
-<!-- <p>
-You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
-or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
-</p> -->
-
-<?php 
-// echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); 
-?>
-<!-- <div class="search-form" style="display:none"> -->
-<?php 
-// 	$this->renderPartial('_search',array(
-// 	'model'=>$model,
-// )); 
-?>
-<!-- </div>search-form -->
-
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'tipo-pregunta-grid',
+<?php $this->widget('bootstrap.widgets.BsGridView', array(
+	'id'=>'pregunta-grid',
 	'dataProvider'=>$model->search(),
+	'type'=>array(BsHtml::GRID_TYPE_STRIPED,BsHtml::GRID_TYPE_BORDERED),
 	'filter'=>$model,
 	'columns'=>array(
-		// 'tpr_id',
 		'tpr_nombre',
 		'tpr_fecha_creacion',
-		'tpr_desabilitado',
+		array(	'name'=>'tpr_desabilitado',
+				'value'=>'$data->tpr_desabilitado',
+				'visible'=>Usuario::model()->findByPk(Yii::app()->user->id)->usu_rol=="admins"),
 		array(
-			'class'=>'CButtonColumn',
-		),
+        	//call the function 'renderButtons' from the current controller
+        	'value'=>array($this,'renderButtons'),
+    	),
 	),
 )); ?>

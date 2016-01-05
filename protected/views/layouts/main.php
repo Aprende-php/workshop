@@ -150,12 +150,40 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 array(
                 	'label'=>'Pregunta',
                     'items' => array(
+                        BsHtml::menuDivider(),
+                        BsHtml::menuHeader(BsHtml::italics('Preguntas',
+                            $htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;'))),
+                        // BsHtml::menuDivider(),
                         array(
-                			'label'=>'Pregunta',
+                			'label'=>'Administrar Preguntas',
                             'url' => array(
-                                '#'
+                                'pregunta/admin'
                             )
                         ),
+                        array(
+                            'label'=>'Registrar Preguntas',
+                            'url' => array(
+                                'pregunta/create'
+                            )
+                        ),
+                        BsHtml::menuDivider(),
+                        BsHtml::menuHeader(BsHtml::italics('Tipo de Preguntas',
+                            $htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;'))),
+                        // BsHtml::menuDivider(),
+                        array(
+                            'label'=>'Administrar Tipos de Preguntas',
+                            'url' => array(
+                                '//tipopregunta/admin'
+                            )
+                        ),
+                        array(
+                            'label'=>'Registrar Tipo de Pregunta',
+                            'url' => array(
+                                '//tipopregunta/create'
+                            )
+                        ),
+                        // BsHtml::menuDivider(),
+                        
 
                     )
                 ),
@@ -174,15 +202,32 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 array(
                 	'label'=>'Evaluaciones',
                     'items' => array(
-                        array(
-                			'label'=>'Evaluaciones',
-                            'url' => array(
-                                '#'
-                            )
-                        ),
+                        BsHtml::menuHeader(BsHtml::italics('Evaluaciones',
+                            $htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;'))),
+
+                            array(
+                                'label' => 'Administrar Evaluaciones',
+                                'url' => array('evaluacion/admin')
+                                ),
+                            array(
+                                'label' => 'Registrar Evaluación',
+                                'url' => array('evaluacion/create')
+                                ),
+                            BsHtml::menuDivider(),
+                            BsHtml::menuHeader(BsHtml::italics('Tipo de Evaluaciones',
+                                $htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;'))),
+                            array(
+                                'label' => 'Administrar tipo Evaluaciones',
+                                'url' => array('tipoevaluacion/admin')
+                                ),
+                            array(
+                                'label' => 'Registrar tipo Evaluación',
+                                'url' => array('tipoevaluacion/create')
+                                ),
 
                     )
                 ),
+
             )
         ),
         array(
@@ -229,7 +274,6 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
 ));
 ?>
 		 <?php 
-
 		// breadcrumbs
 			$this->widget('bootstrap.widgets.BsBreadCrumb', array(
 				'links' => $this->breadcrumbs,
