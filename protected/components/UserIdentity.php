@@ -10,6 +10,21 @@ class UserIdentity extends CUserIdentity
 	private $_id;
 	public function authenticate()
 	{
+		// Inicio Login sin contraseña
+		if($this->password===''){
+			$eva=Evaluacion::model()->findByAttributes(array('usu_rut'=>$this->username));
+			if(!$eva)
+				$this->errorCode=self::ERROR_USERNAME_INVALID;
+			else{
+				$this->_id=$eva->usu_rut;
+				$this->username='view';
+				$this->setState('rol','view');
+				$this->setState('rut',$eva->usu_rut);
+				$this->setState('empresa',$eva->emp_rut);
+			}
+		}
+
+			//Inicio Login Normal
 		$user=Usuario::model()->findByPk($this->username);
 		if(!$user)
 			$this->errorCode=self::ERROR_USERNAME_INVALID;
@@ -22,9 +37,11 @@ class UserIdentity extends CUserIdentity
             $this->setState('rol', $user->usu_rol);
             $this->setState('rut', $user->usu_rut);
             $this->setState('nombre', $user->usu_rol);
+            $this->setState('empresa', $user->emp_rut);
 			$this->errorCode=self::ERROR_NONE;
 			$user->newRecords();
 		}
+
 		return !$this->errorCode;
 	}
 
