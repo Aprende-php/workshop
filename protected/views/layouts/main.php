@@ -24,6 +24,14 @@
 ),
     )); ?>
 <?php
+if (!Yii::app()->user->isGuest) {
+    if (Yii::app()->user->name=="admins")
+        $ocultar=null;
+    else
+        $ocultar="display:none";
+}
+else
+    $ocultar="display:none";
 $this->widget('bootstrap.widgets.BsNavbar', array(
     'collapse' => true,
     'brandLabel' => BsHtml::icon(BsHtml::GLYPHICON_FIRE).BsHtml::bold(' WorkShop').BsHtml::small(' Qualitatcorp'),
@@ -197,7 +205,7 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 ),
                 array(
                 	'label'=>'Evaluaciones',
-                    'visible'=>in_array(Yii::app()->user->name, array('admins')),
+                    // 'visible'=>in_array(Yii::app()->user->name, array('admins')),
                     'items' => array(
                         BsHtml::menuHeader(BsHtml::italics('Evaluaciones',
                             $htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;'))),
@@ -206,20 +214,18 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                                 'label' => 'Administrar Evaluaciones',
                                 'url' => array('evaluacion/admin')
                                 ),
-                            array(
-                                'label' => 'Registrar Evaluación',
-                                'url' => array('evaluacion/create')
-                                ),
-                            BsHtml::menuDivider(),
+                            BsHtml::menuDivider($htmlOptions=array('style'=>$ocultar)),
                             BsHtml::menuHeader(BsHtml::italics('Tipo de Evaluaciones',
-                                $htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;'))),
+                                $htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;'.$ocultar))),
                             array(
                                 'label' => 'Administrar tipo Evaluaciones',
-                                'url' => array('tipoevaluacion/admin')
+                                'url' => array('tipoevaluacion/admin'),
+                                'visible'=>in_array(Yii::app()->user->name, array('admins')),
                                 ),
                             array(
                                 'label' => 'Registrar tipo Evaluación',
-                                'url' => array('tipoevaluacion/create')
+                                'url' => array('tipoevaluacion/create'),
+                                'visible'=>in_array(Yii::app()->user->name, array('admins')),
                                 ),
 
                     )
@@ -232,27 +238,6 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
             'type' => 'navbar',
             'activateParents' => true,
             'items' => array(
-                // array(
-                //     'label' => 'About',
-                //     'url' => array(
-                //         '/site/page',
-                //         'view' => 'about'
-                //     )
-                // ),
-                // array(
-                //     'label' => 'Contact',
-                //     'url' => array(
-                //         '/site/contact'
-                //     )
-                // ),
-                // array(
-                //     'label' => 'Login',
-                //     'url' => array(
-                //         '/site/login'
-                //     ),
-                //     'pull' => BsHtml::NAVBAR_NAV_PULL_RIGHT,
-                //     'visible' => Yii::app()->user->isGuest
-                // ),
                 array(
                     'label' => 'Cerrar Sesion',
                     'pull' => BsHtml::NAVBAR_NAV_PULL_RIGHT,

@@ -7,16 +7,16 @@ $this->breadcrumbs=array(
 );
 
 if (!Yii::app()->user->isGuest) {
-	if (Usuario::model()->findByPk(Yii::app()->user->id)->usu_rol!='viewver') 
+	if (Yii::app()->user->name!='view') 
 		$this->menu=array(
 			array('label'=>'Informe Excel','url'=>array('excel'))
 		);
 
-	if (Usuario::model()->findByPk(Yii::app()->user->id)->usu_rol=='users') {
+	if (Yii::app()->user->name=='users') {
 		$empresa="Empresa"." ".$model->emp_nombre." / ".$model->emp_rut;
 	}
 	else
-		if (Usuario::model()->findByPk(Yii::app()->user->id)->usu_rol=='viewver') {
+		if (Yii::app()->user->name=='view') {
 			$empresa="Usuario"." ".$model->usu_nombre." / ".$model->usu_rut;
 		}
 		else
@@ -34,10 +34,10 @@ if (!Yii::app()->user->isGuest) {
 	'columns'=>array(
 		array(	'name'=>'emp_rut',
 				'value'=>'$data->emp_rut',
-				'visible'=>Usuario::model()->findByPk(Yii::app()->user->id)->usu_rol!='users'),
+				'visible'=>Yii::app()->user->name!='users'),
 		array(	'name'=>'emp_nombre',
 				'value'=>'$data->emp_nombre',
-				'visible'=>Usuario::model()->findByPk(Yii::app()->user->id)->usu_rol!='users',
+				'visible'=>Yii::app()->user->name!='users',
 				'filter'=>false
 				),
 		array(	'name'=>'tev_id',
@@ -46,7 +46,7 @@ if (!Yii::app()->user->isGuest) {
 				'value'=>'$data->tel_numero'),
 		array(	'name'=>'usu_rut',
 				'value'=>'$data->usu_rut',
-				'visible'=>Usuario::model()->findByPk(Yii::app()->user->id)->usu_rol!='viewver'),
+				'visible'=>Yii::app()->user->name!='view'),
 		array(	'name'=>'eva_fecha',
 				'value'=>'$data->eva_fecha'),
 		array(	'name'=>'eva_numero',

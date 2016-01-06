@@ -45,7 +45,7 @@ class EvaluacionController extends Controller
 						$permisos=array('admin','excel');
 				}
 				else{
-					if ($usuario->usu_rol=="viewver"){
+					if ($usuario->usu_rol=="view"){
 						if(isset($_GET['id'])){
 							$permisos=array('admin','pdf');
 						}
@@ -112,7 +112,7 @@ class EvaluacionController extends Controller
 			$user=Usuario::model()->findByPk(Yii::app()->user->id);
 			if ($user->usu_rol=="users") 
 				$model->emp_rut=$user->emp_rut;
-			if ($user->usu_rol=="viewver") 
+			if ($user->usu_rol=="view") 
 				$model->usu_rut=$user->usu_rut;
 		}
 		if(isset($_GET['Evaluacion'])){
@@ -128,12 +128,12 @@ class EvaluacionController extends Controller
     		array(
         		'label' => 'Editar',
         		'url' => array('update', 'id'=>$data->eva_id),
-        		'visible'=>Usuario::model()->findByPk(Yii::app()->user->id)->usu_rol!="viewver"
+        		'visible'=>Usuario::model()->findByPk(Yii::app()->user->id)->usu_rol!="view"
     		),
     		array(
         		'label' => 'Eliminar',
         		'url' => '#','linkOptions'=>array('submit'=>array('delete','id'=>$data->eva_id),'confirm'=>'Esta seguro de borrar este item?'),
-        		'visible'=>Usuario::model()->findByPk(Yii::app()->user->id)->usu_rol!="viewver"
+        		'visible'=>Usuario::model()->findByPk(Yii::app()->user->id)->usu_rol!="view"
     		),
     		array(
         		'label' => 'Infome en PDF',

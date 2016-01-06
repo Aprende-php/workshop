@@ -15,12 +15,11 @@
 
 	<?php echo $form->errorSummary($model); 
 
-		echo $form->textFieldControlGroup($model,'tev_id',array('size'=>10,'maxlength'=>10)); 
-		echo $form->textFieldControlGroup($model,'emp_rut',array('size'=>13,'maxlength'=>13)); 
+		echo $form->dropDownListControlGroup($model, 'tev_id', CHtml::listData(TipoEvaluacion::model()->findAll('tev_desabilitado=0'),'tev_id', 'tev_nombre'), array('empty' => 'Seleccione un tipo de evaluación'));
+		echo $form->textFieldControlGroup($model,'emp_rut',array('size'=>13,'maxlength'=>13,'disabled'=>true)); 
 		echo $form->numberFieldControlGroup($model,'tel_numero'); 
-		echo $form->textFieldControlGroup($model,'usu_rut',array('size'=>13,'maxlength'=>13)); 
+		echo $form->textFieldControlGroup($model,'usu_rut',array('size'=>13,'maxlength'=>13,'disabled'=>true)); 
 		echo $form->numberFieldControlGroup($model,'eva_numero',array('size'=>10,'maxlength'=>10)); 
-		// echo $form->textFieldControlGroup($model,'eva_desabilitado'); 
 		echo BsHtml::submitButton('Aceptar', array('color' => BsHtml::BUTTON_COLOR_PRIMARY)); 
 
 $this->endWidget(); ?>
