@@ -233,7 +233,7 @@ class PreguntaController extends Controller
 
 		public function renderImage($data, $row) {
 			echo BsHtml::imageThumbnail(
-				Yii::app()->request->baseUrl."/images/pregunta/".$data->pre_imagen,'',$htmlOptions = array(
+				Yii::app()->request->baseUrl."/images/pregunta/".str_replace("/upload/preguntas/default/",'', $data->pre_imagen),'',$htmlOptions = array(
 					'style'=> 'width: 110px; height: 110px;border-radius: 15px;margin-top: 5px;'));
    			}
 
