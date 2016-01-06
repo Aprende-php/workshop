@@ -69,7 +69,7 @@ p {
     'enableClientValidation'=>true,
 )); ?>
 
-<?= $form->textField($model, 'username', array('prepend' => BsHtml::icon(BsHtml::GLYPHICON_USER),'placeholder'=>'Rut','required'=>'required'));?><br>
+<?= $form->textField($model, 'username', array('prepend' => BsHtml::icon(BsHtml::GLYPHICON_USER),'placeholder'=>'Rut : Ej 12.123.123-4','required'=>'required'));?><br>
 <?= $form->passwordField($model, 'password', array('prepend' => BsHtml::icon(BsHtml::GLYPHICON_LOCK),'placeholder'=>'Contraseña','required'=>'required'));?><br>
 <div class="input-group">
 <?= $form->errorSummary($model); ?>
