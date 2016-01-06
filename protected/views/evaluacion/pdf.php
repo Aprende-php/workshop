@@ -19,7 +19,7 @@
       $table.=
     "<tr><td>".("<center>".BsHtml::bold(($key+"1"),
             $htmlOptions=array('style'=>'font-size:110%;color:#000;')))."</td>
-    <td>".("<center>".BsHtml::imageThumbnail(Yii::app()->request->baseUrl."/images/pregunta/".$var3[$key]->pre_imagen,'',$htmlOptions = array(
+    <td>".("<center>".BsHtml::imageThumbnail(Yii::app()->request->baseUrl."/images/pregunta/".str_replace("/upload/preguntas/default/",'', $var3[$key]->pre_imagen),'',$htmlOptions = array(
         'style'=> 'width: 110px; height: 110px;margin-top: 5px;margin-bottom: 5px;border:1px solid #dddddd;')))."</td>
     <td>". ("<center>".BsHtml::bold($var3[$key]->pre_descripcion,
             $htmlOptions=array('style'=>'font-size:110%;color:#000;'))."<br>".BsHtml::italics('"'.$var3[$key]->pre_comentario.'"',

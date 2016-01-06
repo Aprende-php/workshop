@@ -18,7 +18,7 @@
 		 echo $form->textAreaControlGroup($model,'pre_comentario',array('rows'=>6, 'cols'=>50)); 
 		 echo $form->labelEx($model,'pre_imagen'); 
 		 echo $form->fileField($model, 'pre_imagen', array('value'	=>$model->pre_imagen));
-     	 if (is_file('images/pregunta/'.$model->pre_imagen))echo "<br>".CHtml::image(Yii::app()->request->baseUrl."/images/pregunta/".$model->pre_imagen,'',array("width"=>100,"height"=>100));  
+     	 if (is_file('images/pregunta/'.str_replace("/upload/preguntas/default/",'', $model->pre_imagen)))echo "<br>".CHtml::image(Yii::app()->request->baseUrl."/images/pregunta/".str_replace("/upload/preguntas/default/",'', $model->pre_imagen),'',array("width"=>100,"height"=>100));  
 		 // echo $form->textFieldControlGroup($model,'pre_desabilitado'); 
      	 ?>
      	 <div class="row">
