@@ -60,14 +60,14 @@ class Evaluacion extends CActiveRecord
 	{
 		return array(
 			'eva_id' => 'ID',
-			'tev_id' => 'Tipo Evaluación',
-			'emp_rut' => 'Rut Empresa',
+			'tev_id' => 'Evaluación',
+			'emp_rut' => 'Empresa',
 			'emp_nombre' => 'Empresa',
-			'tel_numero' => 'Numero Telefono',
+			'tel_numero' => 'Telefono',
 			'usu_rut' => 'Rut Usuario',
 			// 'usu_nombre' => 'Usuario',
 			'eva_fecha' => 'Fecha',
-			'eva_numero' => 'Numero Evaluación',
+			'eva_numero' => 'Evaluación',
 			'eva_fecha_creacion' => 'Fecha Creación',
 			'eva_desabilitado' => 'Desabilitado',
 		);

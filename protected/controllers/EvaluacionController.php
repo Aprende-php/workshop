@@ -103,7 +103,7 @@ class EvaluacionController extends Controller
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
 
-		public function actionAdmin()
+	public function actionAdmin()
 	{
 		$model=new Evaluacion('search');
 		$model->unsetAttributes();  // clear any default values
@@ -112,8 +112,8 @@ class EvaluacionController extends Controller
 			$user=Usuario::model()->findByPk(Yii::app()->user->id);
 			if ($user->usu_rol=="users") 
 				$model->emp_rut=$user->emp_rut;
-			if ($user->usu_rol=="view") 
-				$model->usu_rut=$user->usu_rut;
+			if (Yii::app()->user->getState('rol')=="view") 
+				$model->usu_rut=Yii::app()->user->getState('rut');
 		}
 		if(isset($_GET['Evaluacion'])){
 			$model->attributes=$_GET['Evaluacion'];

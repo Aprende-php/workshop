@@ -27,5 +27,4 @@ Yii::app()->getClientScript()
     <?php echo $form->textFieldControlGroup($model,'emp_email',array('maxlength'=>256)); ?>
 
     <?php echo BsHtml::formActions(array(BsHtml::submitButton('Guardar', array('color' => BsHtml::BUTTON_COLOR_PRIMARY))));?>
-<?php echo Yii::app()->controller->action->id ?>
 <?php $this->endWidget(); ?>
