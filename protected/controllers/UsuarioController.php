@@ -26,24 +26,18 @@ class UsuarioController extends Controller
 	*/
 	public function accessRules()
 	{
-		if (!Yii::app()->user->isGuest) {
-			$usuario=Usuario::model()->findByPk(Yii::app()->user->id);
-			if ($usuario->usu_rol=="admins") {
-				$permisos=array('update','admin','delete','create','records','logout');
-			}
-			else
-				$permisos=array('records','logout');
-		}
-		else
-			$permisos=array('login');
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>$permisos,
+				'actions'=>array('login'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>$permisos,
+				'actions'=>array('records','logout','index'),
 				'users'=>array('@'),
+			),
+			array('allow', // allow authenticated user to perform 'create' and 'update' actions
+				'actions'=>array('update','admin','delete','create','records','logout'),
+				'users'=>array('admins'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -134,10 +128,7 @@ public function actionLogin()
 
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Usuario');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+		$this->render('index');
 	}
 
 

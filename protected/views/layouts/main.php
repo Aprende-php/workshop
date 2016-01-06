@@ -36,7 +36,7 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
             'items' => array(
                 array(
                     'label' => 'Usuario',
-                    'visible'=>in_array("Admins", array('Admins')),
+                    'visible'=>in_array(Yii::app()->user->name, array('admins')),
                     'items' => array(
                         BsHtml::menuHeader(BsHtml::italics('Usuarios',
                             $htmlOptions=array('style'=> 'text-decoration: underline;'))),
@@ -63,7 +63,7 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 ),
                 array(
                     'label' => 'Empresa',
-                    'visible'=>in_array("Admins", array('Admins')),
+                    'visible'=>in_array(Yii::app()->user->name, array('admins')),
                     'items' => array(
                         BsHtml::menuHeader(BsHtml::italics('Empresa',
                             $htmlOptions=array('style'=> 'text-decoration: underline;'))),
@@ -116,7 +116,7 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 ),
                 array(
                 	'label'=>'Teléfono',
-                    'visible'=>in_array("Admins", array('Admins')),
+                    'visible'=>in_array(Yii::app()->user->name, array('admins')),
                     'items' => array(
                         BsHtml::menuHeader(BsHtml::italics('Teléfono',
                             $htmlOptions=array('style'=> 'text-decoration: underline;'))),
@@ -157,7 +157,7 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 ),
                 array(
                 	'label'=>'Pregunta',
-                    'visible'=>in_array("Admins", array('Admins')),
+                    'visible'=>in_array(Yii::app()->user->name, array('admins')),
                     'items' => array(
                         BsHtml::menuHeader(BsHtml::italics('Preguntas',
                             $htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;'))),
@@ -196,20 +196,8 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                     )
                 ),
                 array(
-                	'label'=>'Informes',
-                    'items' => array(
-                        array(
-                			'label'=>'Informes',
-                            'url' => array(
-                                '#'
-                            )
-                        ),
-
-                    )
-                ),
-                array(
                 	'label'=>'Evaluaciones',
-                    'visible'=>in_array("Admins", array('Admins')),
+                    'visible'=>in_array(Yii::app()->user->name, array('admins')),
                     'items' => array(
                         BsHtml::menuHeader(BsHtml::italics('Evaluaciones',
                             $htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;'))),
@@ -300,6 +288,5 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
 	<?php echo $content ?>
 </div>
 </div>
-
 </body>
 </html>
