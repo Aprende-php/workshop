@@ -254,10 +254,10 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 //     'visible' => Yii::app()->user->isGuest
                 // ),
                 array(
-                    'label' => 'Logout (' . Yii::app()->user->name . ')',
+                    'label' => 'Cerrar Sesion',
                     'pull' => BsHtml::NAVBAR_NAV_PULL_RIGHT,
                     'url' => array(
-                        '/site/logout'
+                        '/Usuario/logout'
                     ),
                     'visible' => !Yii::app()->user->isGuest
                 )
