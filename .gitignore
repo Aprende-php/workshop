@@ -1,6 +1,5 @@
 /index.php
 assets/*
-!assets/.gitignore
+protected/config/database.php
 protected/runtime/*
-!protected/runtime/.gitignore
-/protected/config/database.php
+protected/config/database.php

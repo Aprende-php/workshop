@@ -36,8 +36,10 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
             'items' => array(
                 array(
                     'label' => 'Usuario',
+                    'visible'=>in_array(Yii::app()->user->name, array('admins')),
                     'items' => array(
-                        BsHtml::menuHeader(BsHtml::italics('Usuarios')),
+                        BsHtml::menuHeader(BsHtml::italics('Usuarios',
+                            $htmlOptions=array('style'=> 'text-decoration: underline;'))),
                         array(
                             'label' => 'Administar Usuarios',
                             'url' => array(
@@ -61,11 +63,12 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 ),
                 array(
                     'label' => 'Empresa',
+                    'visible'=>in_array(Yii::app()->user->name, array('admins')),
                     'items' => array(
-                        BsHtml::menuHeader(BsHtml::italics('Empresa'), array(
+                        BsHtml::menuHeader(BsHtml::italics('Empresa',
+                            $htmlOptions=array('style'=> 'text-decoration: underline;'))),
                             // 'class' => 'text-center',
                             // 'style' => 'color:#99cc32;font-size:32px;'
-                        )),
                         array(
                             'label' => 'Administrar Empresas',
                             'url' => array(
@@ -79,7 +82,8 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                             )
                         ),
                         BsHtml::menuDivider(),
-                        BsHtml::menuHeader(BsHtml::italics('Área Operativa')),
+                        BsHtml::menuHeader(BsHtml::italics('Área Operativa',
+                            $htmlOptions=array('style'=> 'text-decoration: underline;'))),
                         array(
                             'label' => 'Administrar área Operativa',
                             'url' => array(
@@ -93,7 +97,8 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                             )
                         ),
                         BsHtml::menuDivider(),
-                        BsHtml::menuHeader(BsHtml::italics('Tipo de Empresa')),
+                        BsHtml::menuHeader(BsHtml::italics('Tipo de Empresa',
+                            $htmlOptions=array('style'=> 'text-decoration: underline;'))),
                         array(
                             'label' => 'Tipo Empresa',
                             'url' => array(
@@ -111,8 +116,10 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 ),
                 array(
                 	'label'=>'Teléfono',
+                    'visible'=>in_array(Yii::app()->user->name, array('admins')),
                     'items' => array(
-                        BsHtml::menuHeader(BsHtml::italics('Teléfono')),
+                        BsHtml::menuHeader(BsHtml::italics('Teléfono',
+                            $htmlOptions=array('style'=> 'text-decoration: underline;'))),
                         array(
                             'label' => 'Administrar Teléfonos',
                             'url' => array(
@@ -126,7 +133,8 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                             )
                         ),
                         BsHtml::menuDivider(),
-                        BsHtml::menuHeader(BsHtml::italics('Licencias de uso')),
+                        BsHtml::menuHeader(BsHtml::italics('Licencias de uso',
+                            $htmlOptions=array('style'=> 'text-decoration: underline;'))),
                         array(
                             'label' => 'Administrar Licencias',
                             'url' => array(
@@ -149,40 +157,74 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 ),
                 array(
                 	'label'=>'Pregunta',
+                    'visible'=>in_array(Yii::app()->user->name, array('admins')),
                     'items' => array(
+                        BsHtml::menuHeader(BsHtml::italics('Preguntas',
+                            $htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;'))),
+                        // BsHtml::menuDivider(),
                         array(
-                			'label'=>'Pregunta',
+                			'label'=>'Administrar Preguntas',
                             'url' => array(
-                                '#'
+                                'pregunta/admin'
                             )
                         ),
-
-                    )
-                ),
-                array(
-                	'label'=>'Informes',
-                    'items' => array(
                         array(
-                			'label'=>'Informes',
+                            'label'=>'Registrar Preguntas',
                             'url' => array(
-                                '#'
+                                'pregunta/create'
                             )
                         ),
+                        BsHtml::menuDivider(),
+                        BsHtml::menuHeader(BsHtml::italics('Tipo de Preguntas',
+                            $htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;'))),
+                        // BsHtml::menuDivider(),
+                        array(
+                            'label'=>'Administrar Tipos de Preguntas',
+                            'url' => array(
+                                '//tipopregunta/admin'
+                            )
+                        ),
+                        array(
+                            'label'=>'Registrar Tipo de Pregunta',
+                            'url' => array(
+                                '//tipopregunta/create'
+                            )
+                        ),
+                        // BsHtml::menuDivider(),
+                        
 
                     )
                 ),
                 array(
                 	'label'=>'Evaluaciones',
+                    'visible'=>in_array(Yii::app()->user->name, array('admins')),
                     'items' => array(
-                        array(
-                			'label'=>'Evaluaciones',
-                            'url' => array(
-                                '#'
-                            )
-                        ),
+                        BsHtml::menuHeader(BsHtml::italics('Evaluaciones',
+                            $htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;'))),
+
+                            array(
+                                'label' => 'Administrar Evaluaciones',
+                                'url' => array('evaluacion/admin')
+                                ),
+                            array(
+                                'label' => 'Registrar Evaluación',
+                                'url' => array('evaluacion/create')
+                                ),
+                            BsHtml::menuDivider(),
+                            BsHtml::menuHeader(BsHtml::italics('Tipo de Evaluaciones',
+                                $htmlOptions=array('style'=> 'font-size:110%;text-decoration: underline;'))),
+                            array(
+                                'label' => 'Administrar tipo Evaluaciones',
+                                'url' => array('tipoevaluacion/admin')
+                                ),
+                            array(
+                                'label' => 'Registrar tipo Evaluación',
+                                'url' => array('tipoevaluacion/create')
+                                ),
 
                     )
                 ),
+
             )
         ),
         array(
@@ -203,19 +245,19 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
                 //         '/site/contact'
                 //     )
                 // ),
+                // array(
+                //     'label' => 'Login',
+                //     'url' => array(
+                //         '/site/login'
+                //     ),
+                //     'pull' => BsHtml::NAVBAR_NAV_PULL_RIGHT,
+                //     'visible' => Yii::app()->user->isGuest
+                // ),
                 array(
-                    'label' => 'Login',
-                    'url' => array(
-                        '/site/login'
-                    ),
-                    'pull' => BsHtml::NAVBAR_NAV_PULL_RIGHT,
-                    'visible' => Yii::app()->user->isGuest
-                ),
-                array(
-                    'label' => 'Logout (' . Yii::app()->user->name . ')',
+                    'label' => 'Cerrar Sesion',
                     'pull' => BsHtml::NAVBAR_NAV_PULL_RIGHT,
                     'url' => array(
-                        '/site/logout'
+                        '/Usuario/logout'
                     ),
                     'visible' => !Yii::app()->user->isGuest
                 )
@@ -229,7 +271,6 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
 ));
 ?>
 		 <?php 
-
 		// breadcrumbs
 			$this->widget('bootstrap.widgets.BsBreadCrumb', array(
 				'links' => $this->breadcrumbs,
@@ -247,6 +288,5 @@ $this->widget('bootstrap.widgets.BsNavbar', array(
 	<?php echo $content ?>
 </div>
 </div>
-
 </body>
 </html>

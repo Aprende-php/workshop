@@ -28,16 +28,16 @@ class UsuarioController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','login'),
+				'actions'=>array('login'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('records','logout','index'),
 				'users'=>array('@'),
 			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','deleted','records'),
-				'users'=>array('@'),
+			array('allow', // allow authenticated user to perform 'create' and 'update' actions
+				'actions'=>array('update','admin','delete','create','records','logout'),
+				'users'=>array('admins'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -128,10 +128,7 @@ public function actionLogin()
 
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Usuario');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+		$this->render('index');
 	}
 
 

@@ -3,19 +3,19 @@
 /* @var $model TipoPregunta */
 
 $this->breadcrumbs=array(
-	// 'Tipo Preguntas'=>array('index'),
-	$model->tpr_nombre=>array('view','id'=>$model->tpr_id),
+	// $model->tpr_nombre=>array('view','id'=>$model->tpr_id),
+	'administrar'=>array('admin'),
 	'Editar',
 );
 
 $this->menu=array(
-	// array('label'=>'List TipoPregunta', 'url'=>array('index')),
 	array('label'=>'Registrar', 'url'=>array('create')),
-	array('label'=>'Detalle', 'url'=>array('view', 'id'=>$model->tpr_id)),
 	array('label'=>'Cancelar', 'url'=>array('admin')),
 );
 ?>
-
-<h1>Editar Tipo de Pregunta <?php echo $model->tpr_nombre; ?></h1>
-
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<?php echo BsHtml::pageHeader('Modificar','Tipo Pregunta'." ".$model->tpr_nombre) ?>
+		<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+	</div>
+</div>

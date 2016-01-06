@@ -47,7 +47,7 @@ $this->menu=array(
 		<tr>
 			<th style="width:20px">#</th>
 			<th>Ingreso</th>
-			<th>RUT</th>
+			<th style="width:100px">RUT</th>
 			<th>Navegador</th>
 			<th>IP</th>
 		</tr>
@@ -64,5 +64,3 @@ $this->menu=array(
 	<?php endforeach ?>
 	</tbody>
 </table>
-
-<h1><?=Yii::app()->request->getUserHostAddress(); ?></h1>

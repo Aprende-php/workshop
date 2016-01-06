@@ -1,20 +1,33 @@
-<?php
-/* @var $this SiteController */
-
-$this->pageTitle=Yii::app()->name;
+<?php 
+$this->beginWidget('bootstrap.widgets.BsPanel',array(
+	'title'=>BsHtml::bold(BsHtml::italics('Bienvenido a QualitatCorp')),
+	'decorationCssClass'=>'panel-x',
+	'contentCssClass'=>'panel-body-x',
+	'titleCssClass'	=>'panel-title-x',
+	'titleTag'=>'panel-title-x',
+	'footer'=>BsHtml::italics('Simulador de qualitat Corp<br>
+Dalcahue 1120, Oficina 201 - San Pedro de la Paz, VIII Región'),
+	'footerCssClass'=>'panel-foot-x'
+	));
+if (!Yii::app()->user->isGuest)
+	$usuario=Usuario::model()->findByPk(Yii::app()->user->id);
+else
+	$usuario=new Usuario;
 ?>
-
-<h1>Welcome to <i><?php echo CHtml::encode(Yii::app()->name); ?></i></h1>
-
-<p>Congratulations! You have successfully created your Yii application.</p>
-
-<p>You may change the content of this page by modifying the following two files:</p>
-<ul>
-	<li>View file: <code><?php echo __FILE__; ?></code></li>
-	<li>Layout file: <code><?php echo $this->getLayoutFile('main'); ?></code></li>
-</ul>
-
-<p>For more details on how to further develop this application, please read
-the <a href="http://www.yiiframework.com/doc/">documentation</a>.
-Feel free to ask in the <a href="http://www.yiiframework.com/forum/">forum</a>,
-should you have any questions.</p>
+<div class="row">
+	<div class="col-xs-10 col-sm-12">
+		<div class="col-xs-4 col-sm-4">
+		<?php echo BsHtml::imageThumbnail(	Yii::app()->request->baseUrl."/images/logo.png",'',$htmlOptions = array(
+					'style'=> 'width: 100%; height: 40%;border-radius: 15px;margin-bottom: 10%;border:none;padding:-5% -5%'));?>
+		</div>
+		<div class="col-xs-8 col-sm-8">
+		<?php  echo "<br><br>Bienvenido "." ".$usuario->usu_nombre." a QualitatCorp<br>Administración - Realidad Virtual Inmersiva
+					Plataforma de administración web Versión 3.0 
+					©2016 Qualitat Corp todos los derechos reservados. ";
+			?>
+		</div>
+	</div>
+</div>
+<?php 
+	$this->endWidget();
+?>

@@ -3,75 +3,45 @@
 /* @var $model Pregunta */
 
 $this->breadcrumbs=array(
-	// 'Preguntas'=>array('index'),
 	'Preguntas',
 );
 
 $this->menu=array(
-	// array('label'=>'Index', 'url'=>array('index')),
 	array('label'=>'Registrar', 'url'=>array('create')),
 );
-
-// Yii::app()->clientScript->registerScript('search', "
-// $('.search-button').click(function(){
-// 	$('.search-form').toggle();
-// 	return false;
-// });
-// $('.search-form form').submit(function(){
-// 	$('#pregunta-grid').yiiGridView('update', {
-// 		data: $(this).serialize()
-// 	});
-// 	return false;
-// });
-// ");
 ?>
-
-<h1>Administrar Preguntas</h1>
-
-<!-- <p>
-You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
-or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
-</p> -->
-
 <?php 
-	// echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); 
-?>
-<!-- <div class="search-form" style="display:none"> -->
-<?php 
-// 	$this->renderPartial('_search',array(
-// 	'model'=>$model,
-// )); 
-?>
 
-<!-- </div>search-form -->
+ ?>
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+<?= BsHtml::pageHeader('Administrar', 'Preguntas') ?>
+
+<?php $this->widget('bootstrap.widgets.BsGridView', array(
 	'id'=>'pregunta-grid',
 	'dataProvider'=>$model->search(),
+	'type'=>array(BsHtml::GRID_TYPE_STRIPED,BsHtml::GRID_TYPE_BORDERED),
 	'filter'=>$model,
+	'htmlOptions'=>array('style'=>"color:#000"),
 	'columns'=>array(
-		// 'pre_id',
-		// 'tpr_id',
-		// 'pre_imagen',
-		array(	'name'=>'pre_imagen',
-				'type'=>'image',
-				// 'htmlOptions'=>array('width'=>'40px','height'=>'30px'),
-				'value'=>'Yii::app()->request->baseUrl."/images/pregunta/".$data->pre_id.".png"'),
+		array('name'=>'pre_imagen',
+        	//call the function 'renderImage' from the current controller
+        	'value'=>array($this,'renderImage'),
+        	'filter'=>false,
+        	'htmlOptions'=>array('style'=>"width:135px"),
+    		),
 		array(	'name'=>'tpr_id',
-				'value'=>'TipoPregunta::model()->findByPk($data->tpr_id)->tpr_nombre'),
-		// 'tev_id',
+				'value'=>'$data->tpr_nombre',
+				// 'htmlOptions'=>array('style'=>"color:#000"),
+				),
 		array(	'name'=>'tev_id',
-				'value'=>'TipoEvaluacion::model()->findByPk($data->tev_id)->tev_nombre'),
+				'value'=>'$data->tev_nombre'),
 		'pre_descripcion',
 		'pre_comentario',
-		
-		/*
-		'pre_imagen_admin',
 		'pre_fecha_creacion',
-		'pre_desabilitado',
-		*/
 		array(
-			'class'=>'CButtonColumn',
-		),
+        	//call the function 'renderButtons' from the current controller
+        	'value'=>array($this,'renderButtons'),
+    		),
+		
 	),
 )); ?>

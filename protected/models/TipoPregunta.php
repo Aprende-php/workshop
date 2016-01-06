@@ -55,7 +55,7 @@ class TipoPregunta extends CActiveRecord
 		return array(
 			'tpr_id' => 'ID',
 			'tpr_nombre' => 'Nombre',
-			'tpr_fecha_creacion' => 'Fecha Creacion',
+			'tpr_fecha_creacion' => 'Fecha',
 			'tpr_desabilitado' => 'Estado',
 		);
 	}
