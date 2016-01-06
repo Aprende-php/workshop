@@ -16,11 +16,14 @@ class UserIdentity extends CUserIdentity
 			if(!$eva)
 				$this->errorCode=self::ERROR_USERNAME_INVALID;
 			else{
+			var_dump($eva);
 				$this->_id=$eva->usu_rut;
 				$this->username='view';
 				$this->setState('rol','view');
 				$this->setState('rut',$eva->usu_rut);
 				$this->setState('empresa',$eva->emp_rut);
+				$this->errorCode=self::ERROR_NONE;
+				return !$this->errorCode;
 			}
 		}
 
