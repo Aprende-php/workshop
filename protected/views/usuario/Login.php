@@ -21,7 +21,7 @@ font-family: 'Raleway', sans-serif;
 }
 
 p {
-  color:#CCC;
+  text-align: justify;
 }
 
 .spacing {
@@ -59,7 +59,7 @@ p {
   <div class="row">
   
 <div class="col-md-5" >
-  <?= BsHtml::lead('Si desea conocer su evaluacion favor hacer click '.BsHtml::button('Aquí', array('color' => BsHtml::BUTTON_COLOR_LINK,'onclick'=>"location.href='Link Evaluacion'")));?>
+  <?= BsHtml::lead('Sí desea conocer su evaluación, solo debe ingresar el RUT, dejando en blanco la contraseña. ');?>
 
 </div>
 
@@ -69,8 +69,8 @@ p {
     'enableClientValidation'=>true,
 )); ?>
 
-<?= $form->textField($model, 'username', array('prepend' => BsHtml::icon(BsHtml::GLYPHICON_USER),'placeholder'=>'Rut','required'=>'required'));?><br>
-<?= $form->passwordField($model, 'password', array('prepend' => BsHtml::icon(BsHtml::GLYPHICON_LOCK),'placeholder'=>'Contraseña','required'=>'required'));?><br>
+<?= $form->textField($model, 'username', array('prepend' => BsHtml::icon(BsHtml::GLYPHICON_USER),'placeholder'=>'Rut : Ej 12.123.123-4','required'=>'required'));?><br>
+<?= $form->passwordField($model, 'password', array('prepend' => BsHtml::icon(BsHtml::GLYPHICON_LOCK),'placeholder'=>'Contraseña',));?><br>
 <div class="input-group">
 <?= $form->errorSummary($model); ?>
 </div>
